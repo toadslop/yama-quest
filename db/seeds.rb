@@ -73,14 +73,22 @@ require 'open-uri'
 # puts '...done'
 
 base_url = 'https://www.momonayama.net/'
+# mountain = Mountain.first
+# url = "#{base_url}#{mountain.url}"
+# site_file = open(url).read
+# html_doc = Nokogiri::HTML(site_file)
 
-puts "Scrapting individual mountain's data"
+# match = result.match(/(\d.*)～(\d.*)/)
+# p match[1]
+# p match[2]
+
+puts "Scraping individual mountain's data"
 Mountain.all.each do |mountain|
   url = "#{base_url}#{mountain.url}"
   site_file = open(url).read
   html_doc = Nokogiri::HTML(site_file)
 
-  # scraping lat and lng data
+  # puts "scraping lat and lng data for #{mountain.name}"
   # result = html_doc.search('.sen-01')
   # result.children.search('a').each do |element|
   #   matched = element['href'].match(/longitude=(\d*.\d*)&latitude=(\d*.\d*)/)
@@ -92,6 +100,54 @@ Mountain.all.each do |mountain|
   #   mountain.save!
   # end
 
+  # puts "getting hiking season data for #{mountain.name}"
+  # result = html_doc.search('.bas_tim-01 .sen-01').text.strip
+  # match = result.match(/(\d.*)～(\d.*)/)
 
+  # if match
+  #   mountain.hike_season_start = match[1]
+  #   mountain.hike_season_end = match[2]
+  # else
+  #   mountain.hike_season_start = result
+  #   mountain.hike_season_end = result
+  # end
+
+  puts "getting maple season data for #{mountain.name}"
+  result = html_doc.search('.bas_tim-02 .sen-01').text.strip
+  match = result.match(/(\d.*)～(\d.*)/)
+
+  if match
+    mountain.maple_season_start = match[1]
+    mountain.maple_season_end = match[2]
+  else
+    mountain.maple_season_start = result
+    mountain.maple_season_end = result
+  end
+
+  puts "getting snow season data for #{mountain.name}"
+  result = html_doc.search('.bas_tim-02 .sen-01').text.strip
+  match = result.match(/(\d.*)～(\d.*)/)
+
+  if match
+    mountain.snow_season_start = match[1]
+    mountain.snow_season_end = match[2]
+  else
+    mountain.snow_season_start = result
+    mountain.snow_season_end = result
+  end
+
+  puts "getting remaining snow data for #{mountain.name}"
+  result = html_doc.search('.bas_tim-02 .sen-01').text.strip
+  match = result.match(/(\d.*)～(\d.*)/)
+
+  if match
+    mountain.remaining_snow_start = match[1]
+    mountain.remaining_snow_end = match[2]
+  else
+    mountain.remaining_snow_start = result
+    mountain.remaining_snow_end = result
+  end
+
+  mountain.save!
 end
 puts '...done'
