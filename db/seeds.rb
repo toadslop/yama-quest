@@ -5,3 +5,66 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+# frozen_string_literal: true
+puts 'Destroying all mountains...'
+Mountain.destroy_all
+puts 'Done'
+
+require 'nokogiri'
+require 'open-uri'
+
+puts 'Scraping mountain data'
+# get html file to parse
+url = 'https://www.momonayama.net/hundred_mt_list_data/list.html'
+site_file = open(url).read
+html_doc = Nokogiri::HTML(site_file)
+mountains = html_doc.search('tr')
+
+# set up array to store the data
+mountains_array = []
+
+# iterate over the mountains to parse out the data
+mountains.each do |mountain|
+  # find all the data from each mountain
+  data = mountain.search('td')
+
+  # set up an array to catch the table data
+  data_array = []
+
+  # iterate over the tds and strip out the text
+  data.each do |datum|
+    data_array << datum
+  end
+
+  # organize data into a hash
+  data_hash = {}
+  data_hash[:number] = data_array[0].text.strip unless data_array[0].nil?
+  data_hash[:name] = data_array[1].text.strip unless data_array[1].nil?
+  data_hash[:region] = data_array[2].text.strip unless data_array[2].nil?
+  data_hash[:altitude] = data_array[3].text.strip unless data_array[3].nil?
+  data_hash[:terrain_diff] = data_array[4].text.strip unless data_array[4].nil?
+  data_hash[:physical_diff] = data_array[5].text.strip unless data_array[5].nil?
+  data_hash[:length] = data_array[6].text.strip unless data_array[6].nil?
+  data_hash[:url] = data_array[1].css('a')[0]['href'] unless data_array[1].nil?
+
+  mountains_array << data_hash
+end
+puts '...done'
+
+
+puts 'Adding scraped mountain data to DB'
+mountains_array.each do |mountain|
+  next if mountain[:number].nil?
+
+  Mountain.create(
+    number: mountain[:number].to_i,
+    name: mountain[:name],
+    region: mountain[:region],
+    altitude: mountain[:altitude].to_i,
+    terrain_diff: mountain[:terrain_diff],
+    physical_diff: mountain[:physical_diff],
+    length: mountain[:length],
+    url: mountain[:url]
+  )
+end
+puts '...done'

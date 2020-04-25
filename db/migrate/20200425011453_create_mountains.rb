@@ -5,7 +5,7 @@ class CreateMountains < ActiveRecord::Migration[6.0]
       t.string :name
       t.string :region
       t.integer :altitude
-      t.string :terraint_diff
+      t.string :terrain_diff
       t.string :physical_diff
       t.string :length
       t.string :url
