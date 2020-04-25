@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_25_011453) do
+ActiveRecord::Schema.define(version: 2020_04_25_102041) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,7 +18,6 @@ ActiveRecord::Schema.define(version: 2020_04_25_011453) do
   create_table "mountains", force: :cascade do |t|
     t.integer "number"
     t.string "name"
-    t.string "region"
     t.integer "altitude"
     t.string "terrain_diff"
     t.string "physical_diff"
@@ -26,6 +25,27 @@ ActiveRecord::Schema.define(version: 2020_04_25_011453) do
     t.string "url"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "region_id", null: false
+    t.float "lat"
+    t.float "lng"
+    t.string "volcano_rank"
+    t.string "eruption_alert"
+    t.string "hike_season_start"
+    t.string "hike_season_end"
+    t.string "maple_season_end"
+    t.string "maple_season_start"
+    t.string "snow_season_start"
+    t.string "snow_season_end"
+    t.string "remaining_snow_start"
+    t.string "remaining_snow_end"
+    t.index ["region_id"], name: "index_mountains_on_region_id"
   end
 
+  create_table "regions", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  add_foreign_key "mountains", "regions"
 end
