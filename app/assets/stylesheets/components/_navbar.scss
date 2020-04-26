@@ -1,0 +1,44 @@
+.navbar {
+  display: flex;
+  background-color: $dark-blue;
+  height: 48px;
+  justify-content: space-between;
+  padding: 8px;
+
+  .fas {
+    font-size: 32px;
+    color: white;
+  }
+}
+
+.left-group {
+  width: 33.3%;
+}
+
+.center-group {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 33.3%
+}
+
+.right-group {
+  width: 33.3%;
+}
+
+.logo-holder {
+  height:45px;
+  width: 45px;
+  display: inline-block;
+  border-radius: 50%;
+  background-color: white;
+  margin-left: 8px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  .nav-logo {
+    height: 140%;
+    position: absolute;
+    top: -8px;
+  }
+}

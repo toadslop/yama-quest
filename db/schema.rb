@@ -10,10 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_25_102041) do
+ActiveRecord::Schema.define(version: 2020_04_26_014401) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "lists", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "lists_mountains", force: :cascade do |t|
+    t.bigint "list_id", null: false
+    t.bigint "mountain_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["list_id"], name: "index_lists_mountains_on_list_id"
+    t.index ["mountain_id"], name: "index_lists_mountains_on_mountain_id"
+  end
 
   create_table "mountains", force: :cascade do |t|
     t.integer "number"
@@ -47,5 +62,7 @@ ActiveRecord::Schema.define(version: 2020_04_25_102041) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "lists_mountains", "lists"
+  add_foreign_key "lists_mountains", "mountains"
   add_foreign_key "mountains", "regions"
 end
