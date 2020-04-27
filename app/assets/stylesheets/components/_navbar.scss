@@ -8,22 +8,24 @@
   .fas {
     font-size: 32px;
     color: white;
+    margin: 0 8px;
   }
 }
 
 .left-group {
-  width: 33.3%;
+  flex-grow: 1;
 }
 
 .center-group {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  width: 33.3%
+  flex-grow: 2;
+  max-width: 33%;
 }
 
 .right-group {
-  width: 33.3%;
+  flex-grow: 1;
 }
 
 .logo-holder {

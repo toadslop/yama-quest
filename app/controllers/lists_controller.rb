@@ -8,7 +8,7 @@ class ListsController < ApplicationController
       redirect_to list_path(List.first)
     else
       @list = List.find(params[:id])
-      @mountains = @list.mountains.order(:number)
+      @mountains = @list.mountains.order(:number).group(:region)
       @mountain = @mountains.first
     end
   end

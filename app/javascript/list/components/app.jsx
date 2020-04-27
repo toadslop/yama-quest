@@ -1,9 +1,15 @@
 import React from 'react';
+import ListNameHeader from '../containers/ListNameHeader'
+import MountainsSidebar from '../containers/MountainsSidebar'
+import
 
-const App = (props) => {
+const App = () => {
   return (
     <div className="app">
-      <h1>In the react app.</h1>
+      <ListNameHeader />
+      <div className="list-app-container">
+        <MountainsSidebar />
+      </div>
     </div>
   );
 };
