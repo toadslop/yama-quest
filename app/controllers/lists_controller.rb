@@ -17,7 +17,7 @@ class ListsController < ApplicationController
   private
 
   def mountains_by_region(list)
-    mountains = list.mountains
+    mountains = list.mountains.includes([:region])
     regions = {}
     mountains.each do |mountain|
       if regions.key?(mountain.region.name)
