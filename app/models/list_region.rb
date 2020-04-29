@@ -1,0 +1,2 @@
+class ListRegion < ApplicationRecord
+end

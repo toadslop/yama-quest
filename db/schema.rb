@@ -10,24 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_26_014401) do
+ActiveRecord::Schema.define(version: 2020_04_29_020136) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "list_region_mountains", force: :cascade do |t|
+    t.bigint "list_regions_id"
+    t.bigint "mountains_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["list_regions_id"], name: "index_list_region_mountains_on_list_regions_id"
+    t.index ["mountains_id"], name: "index_list_region_mountains_on_mountains_id"
+  end
+
+  create_table "list_regions", force: :cascade do |t|
+    t.bigint "lists_id"
+    t.bigint "regions_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["lists_id"], name: "index_list_regions_on_lists_id"
+    t.index ["regions_id"], name: "index_list_regions_on_regions_id"
+  end
 
   create_table "lists", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "lists_mountains", force: :cascade do |t|
-    t.bigint "list_id", null: false
-    t.bigint "mountain_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["list_id"], name: "index_lists_mountains_on_list_id"
-    t.index ["mountain_id"], name: "index_lists_mountains_on_mountain_id"
   end
 
   create_table "mountains", force: :cascade do |t|
@@ -62,7 +71,5 @@ ActiveRecord::Schema.define(version: 2020_04_26_014401) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "lists_mountains", "lists"
-  add_foreign_key "lists_mountains", "mountains"
   add_foreign_key "mountains", "regions"
 end
