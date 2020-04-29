@@ -4,8 +4,7 @@
 
 class List < ApplicationRecord
   validates :name, presence: true
-  has_many :list_regions
-  has_many :regions, through: :list_regions
-  has_many :list_region_mountains, through: :list_regions
-  has_many :mountains, through: :list_region_mountains
+  has_many :list_mountains
+  has_many :mountains, through: :list_mountains
+  has_many :regions, through: :mountains
 end

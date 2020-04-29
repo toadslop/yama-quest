@@ -13,8 +13,10 @@
 require 'csv'
 
 puts 'destroying old data...'
-# Region.destroy_all
-# List.destroy_all
+ListMountain.destroy_all
+List.destroy_all
+Mountain.destroy_all
+Region.destroy_all
 puts '...done'
 
 def csv_text(model_name)
@@ -39,30 +41,30 @@ def hash_csv(model_name)
   end
 end
 
-# puts 'creating regions...'
-# regions_hash = hash_csv('region')
-# regions_hash.each do |region|
-#   Region.create(region)
-# end
-# puts '...done'
+puts 'creating regions...'
+regions_hash = hash_csv('region')
+regions_hash.each do |region|
+  Region.create(region)
+end
+puts '...done'
 
-# famous_100 = List.create(name: '100 Famous Mountains')
-# Region.all.each do |region|
-#   ListRegion.create(region: region, list: famous_100)
-# end
+puts 'creating lists...'
+famous_100 = List.create(name: '100 Famous Mountains')
+puts '...done'
 
+puts 'creating mountains...'
 mountains_hash = hash_csv('mountain')
 
 mountains_hash.each do |mountain|
   number = mountain.delete('number')
   new_mountain = Mountain.new(mountain)
   new_mountain.region = Region.find(mountain['region_id'].to_i - 1)
-  p mountain
   new_mountain.save
-  new_lrm = ListRegionMountain.new(
+  new_list_mountain = ListMountain.new(
     mountain: new_mountain,
     number: number,
-    list_region: ListRegion.find(new_mountain.region.id)
+    list: famous_100
   )
-  new_lrm.save
+  new_list_mountain.save
 end
+puts '...dones'

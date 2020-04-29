@@ -1,11 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  list_region: one
-  mountain: one
   number: 1
+  list: one
+  mountain: one
 
 two:
-  list_region: two
-  mountain: two
   number: 1
+  list: two
+  mountain: two
