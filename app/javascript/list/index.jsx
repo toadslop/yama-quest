@@ -15,8 +15,7 @@ const listApp = document.getElementById('list_app');
 
 const initialState = {
   list: JSON.parse(listApp.dataset.list),
-  mountains: JSON.parse(listApp.dataset.mountains), // TODO: get that from Rails DB.
-  mountain: JSON.parse(listApp.dataset.mountain)
+  mountains: JSON.parse(listApp.dataset.mountains)
 };
 
 const reducers = combineReducers({

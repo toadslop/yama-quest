@@ -10,27 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_29_020136) do
+ActiveRecord::Schema.define(version: 2020_04_29_034030) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "list_region_mountains", force: :cascade do |t|
-    t.bigint "list_regions_id"
-    t.bigint "mountains_id"
+    t.bigint "list_region_id", null: false
+    t.bigint "mountain_id", null: false
+    t.integer "number"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["list_regions_id"], name: "index_list_region_mountains_on_list_regions_id"
-    t.index ["mountains_id"], name: "index_list_region_mountains_on_mountains_id"
+    t.index ["list_region_id"], name: "index_list_region_mountains_on_list_region_id"
+    t.index ["mountain_id"], name: "index_list_region_mountains_on_mountain_id"
   end
 
   create_table "list_regions", force: :cascade do |t|
-    t.bigint "lists_id"
-    t.bigint "regions_id"
+    t.bigint "list_id", null: false
+    t.bigint "region_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["lists_id"], name: "index_list_regions_on_lists_id"
-    t.index ["regions_id"], name: "index_list_regions_on_regions_id"
+    t.index ["list_id"], name: "index_list_regions_on_list_id"
+    t.index ["region_id"], name: "index_list_regions_on_region_id"
   end
 
   create_table "lists", force: :cascade do |t|
@@ -40,7 +41,6 @@ ActiveRecord::Schema.define(version: 2020_04_29_020136) do
   end
 
   create_table "mountains", force: :cascade do |t|
-    t.integer "number"
     t.string "name"
     t.integer "altitude"
     t.string "terrain_diff"
@@ -71,5 +71,9 @@ ActiveRecord::Schema.define(version: 2020_04_29_020136) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "list_region_mountains", "list_regions"
+  add_foreign_key "list_region_mountains", "mountains"
+  add_foreign_key "list_regions", "lists"
+  add_foreign_key "list_regions", "regions"
   add_foreign_key "mountains", "regions"
 end

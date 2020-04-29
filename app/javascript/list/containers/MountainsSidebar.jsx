@@ -3,12 +3,25 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 class ListNameHeader extends Component {
+  render_mountains(mountains, region) {
+    return( mountains[`${region}`].mountains.map((mountain) => {
+      console.log(mountain.name)
+      return <p>{mountain.name}</p>
+    })
+    )
+  }
+  
   render() {
     const { mountains } = this.props
     return (
       <div>
-        {mountains.map((mountain) => {
-          return <p>{mountain.name}</p>
+        {Object.keys(mountains).map((region) => {
+          return(
+            <div>
+              <h3 key={mountains[`${region}`].id}>{region}</h3>
+              <div>{this.render_mountains(mountains, region)}</div>
+            </div>
+          )
         })}
       </div>
     );

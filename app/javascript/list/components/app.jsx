@@ -1,7 +1,6 @@
 import React from 'react';
 import ListNameHeader from '../containers/ListNameHeader'
 import MountainsSidebar from '../containers/MountainsSidebar'
-import
 
 const App = () => {
   return (
