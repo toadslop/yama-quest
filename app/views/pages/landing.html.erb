@@ -1,5 +1,5 @@
 <h1>Hello world</h1>
 <% @lists.each do |list| %>
-  <%= list.name %>
+  <%= t("lists.#{list.name}") %>
   <%= t('regions.北海道') %>
 <% end %>
