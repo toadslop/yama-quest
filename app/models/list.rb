@@ -8,7 +8,7 @@ class List < ApplicationRecord
   has_many :mountains, -> { select(:name, :region_id) }, through: :list_mountains
   has_many :regions, -> { select(:id, :name) }, through: :mountains
 
-  def sidebar_data
-    list_mountains.includes(:mountain).includes(:region)
+  def regions_list
+    regions.distinct.select(:name, :id).order(:id)
   end
 end

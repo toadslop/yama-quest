@@ -8,18 +8,18 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import App from './components/app';
 import listReducer from './reducers/listReducer';
-import regionsReducer from './reducers/regionsReducer';
+import regionsListReducer from './reducers/regionsListReducer';
 
 const listApp = document.getElementById('list_app');
 
 const initialState = {
   list: JSON.parse(listApp.dataset.list),
-  regions: JSON.parse(listApp.dataset.regions)
+  regionsList: JSON.parse(listApp.dataset.regions_list)
 };
 
 const reducers = combineReducers({
   list: listReducer,
-  regions: regionsReducer
+  regionsList: regionsListReducer
 });
 
 const middlewares = applyMiddleware(logger, ReduxPromise);
