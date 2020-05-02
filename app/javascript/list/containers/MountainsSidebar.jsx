@@ -12,6 +12,7 @@ class ListNameHeader extends Component {
   
   render() {
     const { regionsList } = this.props
+    console.log(regionsList)
     return (
       <div>
         {regionsList.map((region) => {

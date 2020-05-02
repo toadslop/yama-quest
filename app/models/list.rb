@@ -9,6 +9,6 @@ class List < ApplicationRecord
   has_many :regions, -> { select(:id, :name) }, through: :mountains
 
   def regions_list
-    regions.distinct.select(:name, :id).order(:id)
+    region_list = regions.distinct.select(:name, :id).order(:id)
   end
 end
