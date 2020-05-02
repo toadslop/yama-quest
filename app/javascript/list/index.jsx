@@ -25,11 +25,14 @@ const reducers = combineReducers({
 const middlewares = applyMiddleware(logger, ReduxPromise);
 const store = createStore(reducers, initialState, middlewares);
 
+const lang = JSON.parse(listApp.dataset.language)
+const langBase = (lang === 'en' ? '' : `/${lang}` )
+
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
       <Switch>
-        <Route path="/lists/:list" component={App} />
+        <Route path={`${langBase}/lists/:list`} component={App} />
       </Switch>
     </BrowserRouter>
   </Provider>,
