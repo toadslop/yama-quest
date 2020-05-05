@@ -21,7 +21,8 @@ const initialState = {
 
 const reducers = combineReducers({
   list: listReducer,
-  regionsList: regionsListReducer
+  regionsList: regionsListReducer,
+  locale: localeReducer
 });
 
 const middlewares = applyMiddleware(logger, ReduxPromise);
