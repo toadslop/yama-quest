@@ -15,5 +15,10 @@
     <i class="fas fa-home nav-icon"></i>
   </div>
   <div class="right-group">
+    <% if I18n.locale == I18n.default_locale %>
+      <%= link_to "日", { locale: 'jp' }, class: "set_lang jp" %>
+    <% else %>
+      <%= link_to "En", { locale: nil }, class: "set_lang en" %>
+    <%end%>
   </div>
 </div>

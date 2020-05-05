@@ -9,12 +9,14 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import App from './components/app';
 import listReducer from './reducers/listReducer';
 import regionsListReducer from './reducers/regionsListReducer';
+import localeReducer from './reducers/localeReducer';
 
 const listApp = document.getElementById('list_app');
 
 const initialState = {
   list: JSON.parse(listApp.dataset.list),
-  regionsList: JSON.parse(listApp.dataset.regions_list)
+  regionsList: JSON.parse(listApp.dataset.regions_list),
+  locale: JSON.parse(listApp.dataset.language)
 };
 
 const reducers = combineReducers({

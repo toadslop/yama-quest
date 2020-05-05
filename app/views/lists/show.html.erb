@@ -1,10 +1,12 @@
-<div id="list_app"
-    data-list="<%= @list.to_json %>"
-    data-regions_list="<%= @regions_list.to_json %>"
-    data-language="<%= I18n.locale.to_json %>"
-    >
+<div class="app">
+  <%= render 'shared/navbar' %>
+  <div id="list_app"
+      data-list="<%= @list.to_json %>"
+      data-regions_list="<%= @regions_list.to_json %>"
+      data-language="<%= I18n.locale.to_json %>"
+      >
+  </div>
 </div>
-
 <% content_for :after_js do %>
   <%= javascript_pack_tag "list" %>
 <% end %>

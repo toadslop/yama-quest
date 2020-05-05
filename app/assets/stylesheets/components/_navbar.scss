@@ -26,6 +26,22 @@
 
 .right-group {
   flex-grow: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  .set_lang {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    background-color: white;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    font-size: 28px;
+  }
 }
 
 .logo-holder {
@@ -44,3 +60,4 @@
     top: -8px;
   }
 }
+

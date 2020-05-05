@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 
 class ListNameHeader extends Component {
   render() {
-    const { list, mountains } = this.props
+    const { list, locale } = this.props
     return (
       <div>
-        <h1 className="list-header">{list.name}</h1>
+        <h1 className={`list-header ${locale}`}>{list.name}</h1>
       </div>
     );
   }
@@ -23,7 +23,7 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
   return {
     list: state.list,
-    mountains: state.mountains
+    locale: state.locale
   };
 }
 
