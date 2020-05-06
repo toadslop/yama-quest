@@ -4,6 +4,7 @@
       data-list="<%= @list.to_json %>"
       data-regions_list="<%= @regions_list.to_json %>"
       data-language="<%= I18n.locale.to_json %>"
+      data-translations=<%= I18n::JS.translations.to_json %>
       >
   </div>
 </div>
