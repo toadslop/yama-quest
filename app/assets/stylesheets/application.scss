@@ -15,6 +15,7 @@
  @import 'font-awesome';
  @import 'config/colors';
  @import 'config/fonts';
+ @import 'config/scrollbar';
  @import 'components/index';
  
  body {
@@ -24,6 +25,18 @@
  .app {
   height: 100vh;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
- 
+#list_app {
+  height: 100%;
+  overflow: hidden;
+}
+
+.box {
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}

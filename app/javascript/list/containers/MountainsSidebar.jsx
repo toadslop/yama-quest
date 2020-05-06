@@ -6,13 +6,11 @@ class ListNameHeader extends Component {
   render() {
     const { regionsList } = this.props
     return (
-      <div>
-        <h3>{I18n.t('left-sidebar.area')}</h3>
+      <div className="mountain-sidebar">
+        <h3 className={I18n.locale}>{I18n.t('left-sidebar.area')}</h3>
         {regionsList.map((region) => {
           return(
-            <div key={region.id}>
-              <h3>{region.name}</h3>
-            </div>
+            <h3 key={region.id} className={I18n.locale}>{region.name}</h3>
           )
         })}
       </div>

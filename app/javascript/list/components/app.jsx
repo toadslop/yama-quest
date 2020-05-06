@@ -4,7 +4,7 @@ import MountainsSidebar from '../containers/MountainsSidebar'
 
 const App = () => {
   return (
-    <div className="app">
+    <div className="box">
       <ListNameHeader />
       <div className="list-app-container">
         <MountainsSidebar />
