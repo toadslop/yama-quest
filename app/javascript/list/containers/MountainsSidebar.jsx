@@ -7,12 +7,14 @@ class ListNameHeader extends Component {
     const { regionsList } = this.props
     return (
       <div className="mountain-sidebar">
-        <h3 className={I18n.locale}>{I18n.t('left-sidebar.area')}</h3>
-        {regionsList.map((region) => {
-          return(
-            <h3 key={region.id} className={I18n.locale}>{region.name}</h3>
-          )
-        })}
+        <h2 className={I18n.locale}>{I18n.t('left-sidebar.area')}</h2>
+        <div className="area-list">
+          {regionsList.map((region) => {
+            return(
+              <h3 key={region.id} className={I18n.locale}>{region.name}</h3>
+            )
+          })}
+        </div>
       </div>
     );
   }
