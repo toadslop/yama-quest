@@ -7,6 +7,7 @@ class ListNameHeader extends Component {
     const { regionsList } = this.props
     return (
       <div>
+        <h3>{I18n.t('left-sidebar.area')}</h3>
         {regionsList.map((region) => {
           return(
             <div key={region.id}>

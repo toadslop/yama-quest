@@ -9,23 +9,18 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import App from './components/app';
 import listReducer from './reducers/listReducer';
 import regionsListReducer from './reducers/regionsListReducer';
-import localeReducer from './reducers/localeReducer';
-import I18n from 'i18n-js';
 
 const listApp = document.getElementById('list_app');
-
-//I18n.translations = JSON.parse(listApp.dataset.translations);
+I18n.locale = JSON.parse(listApp.dataset.language)
 
 const initialState = {
   list: JSON.parse(listApp.dataset.list),
-  regionsList: JSON.parse(listApp.dataset.regions_list),
-  locale: JSON.parse(listApp.dataset.language),
+  regionsList: JSON.parse(listApp.dataset.regions_list)
 };
 
 const reducers = combineReducers({
   list: listReducer,
-  regionsList: regionsListReducer,
-  locale: localeReducer
+  regionsList: regionsListReducer
 });
 
 const middlewares = applyMiddleware(logger, ReduxPromise);
