@@ -25,7 +25,6 @@ class MountainMap extends Component {
   }
   
   render() {
-    console.log(process.env.MAPBOX_KEY)
     return (
       <div className="main-box">
         <div ref={el => this.mapContainer = el} className="mapContainer" />

@@ -46,7 +46,7 @@ end
 puts '...done'
 
 puts 'creating lists...'
-famous_100 = List.create(name: '100 Famous Mountains')
+famous_100 = List.create(name: '百名山')
 puts '...done'
 
 puts 'creating mountains...'
