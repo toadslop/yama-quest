@@ -21,7 +21,7 @@ class MountainMap extends Component {
     center: [this.state.lng, this.state.lat],
     zoom: this.state.zoom
    });
-   console.log(this.mapContainer);
+   map.addControl(new mapboxgl.NavigationControl());
   }
   
   render() {

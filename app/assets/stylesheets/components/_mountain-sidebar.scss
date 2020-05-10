@@ -21,3 +21,9 @@
     height: 100%;
   }
 }
+
+.sidebar-item {
+  &:hover {
+    background-color: $med-blue;
+  }
+}
