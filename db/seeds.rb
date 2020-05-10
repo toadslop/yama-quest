@@ -6,9 +6,6 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 # frozen_string_literal: true
-# puts 'Destroying all mountains...'
-# Mountain.destroy_all
-# puts 'Done'
 
 require 'csv'
 
