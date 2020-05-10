@@ -1,20 +1,30 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title>YamaQuest</title>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>YamaQuest</title>
+    
     <link ref="alternate" hreflang="jp" href="/jp">
     <link ref="alternate" hreflang="en" href="/en">
+    
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <script src="https://kit.fontawesome.com/bcc235fa38.js" crossorigin="anonymous"></script>
-    <%= javascript_include_tag "i18n" %>
-    <%# check if necessary, delete if not %>
-    <script i18n.locale ="<%= I18n.locale %>"></script> 
-    <%= javascript_include_tag "translations", skip_pipeline: true %>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+
+    <% if content_for?(:head) %>
+      <%= yield(:head) %>
+    <% end %>
+
+    <script src="https://kit.fontawesome.com/bcc235fa38.js" crossorigin="anonymous"></script>
+    
+    <%# check if necessary, delete if not %>
+    <%= javascript_include_tag "i18n" %>
+    <script i18n.locale ="<%= I18n.locale %>"></script> 
+
+    <%= javascript_include_tag "translations", skip_pipeline: true %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
