@@ -29,6 +29,9 @@
     "typescript": "^3.8.3",
     "webpack": "^4.0.0"
   },
+  "scripts": {
+    "start": "react-scripts start"
+  },
   "version": "0.1.0",
   "devDependencies": {
     "webpack-dev-server": "^3.10.3"
