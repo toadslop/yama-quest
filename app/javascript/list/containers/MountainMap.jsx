@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import mapboxgl from 'mapbox-gl';
 
 class MountainMap extends Component {
   render() {
