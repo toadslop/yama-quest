@@ -5,6 +5,7 @@ import mapboxgl from 'mapbox-gl';
 
 class MountainMap extends Component {
   render() {
+    console.log(process.env.MAPBOX_KEY);
     return (
       <div id="map">
       </div>
