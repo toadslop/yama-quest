@@ -14,6 +14,7 @@ const App = () => {
         <MountainsSidebar />
         <MountainMap />
       </div>
+    <Navbar />
     </div>
   );
 };
