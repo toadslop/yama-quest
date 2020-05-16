@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 
 class LeftNav extends Component {
   render() {
+    const { mobileClass } = this.props
     return (
-      <div className="left-group">
+      <div className={`left-group ${mobileClass}`}>
         <div className="logo-holder"></div>
       </div>
     );

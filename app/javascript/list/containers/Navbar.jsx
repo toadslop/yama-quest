@@ -8,9 +8,9 @@ class Navbar extends Component {
     const { mobileClass } = this.props;
     return (
       <div className={`navbar ${mobileClass}`}>
-        <LeftNav />
-        <CenterNav />
-        <RightNav />
+        <LeftNav mobileClass={`left-${mobileClass}`} />
+        <CenterNav mobileClass={`center-${mobileClass}`} />
+        <RightNav mobileClass={`right-${mobileClass}`} />
       </div>
     );
   }

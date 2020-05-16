@@ -4,9 +4,10 @@ import { connect } from 'react-redux';
 
 class RightNav extends Component {
   render() {
+    const { mobileClass } = this.props
     return (
-      <div className="right-group">
-        <div className="set_lang jp">日</div>
+      <div className={`right-group ${mobileClass}`}>
+        <div className="set-lang jp">日</div>
       </div>
     );
   }

@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 
 class CenterNav extends Component {
   render() {
+    const { mobileClass} = this.props
     return (
-      <div className="center-group">
+      <div className={`center-group ${mobileClass}`}>
         <i className="fas fa-mountain nav-icon"></i>
         <i className="fas fa-user nav-icon"></i>
         <i className="fas fa-scroll nav-icon"></i>
