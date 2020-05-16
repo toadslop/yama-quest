@@ -9,25 +9,27 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import App from './components/app';
 import listReducer from './reducers/listReducer';
 import regionsListReducer from './reducers/regionsListReducer';
+import localeReducer from './reducers/localeReducer';
 
 const listApp = document.getElementById('list_app');
-const lang = JSON.parse(listApp.dataset.language)
-I18n.locale = lang
+I18n.locale = JSON.parse(listApp.dataset.language)
 
 const initialState = {
   list: JSON.parse(listApp.dataset.list),
-  regionsList: JSON.parse(listApp.dataset.regions_list)
+  regionsList: JSON.parse(listApp.dataset.regions_list),
+  locale: I18n.locale
 };
 
 const reducers = combineReducers({
   list: listReducer,
-  regionsList: regionsListReducer
+  regionsList: regionsListReducer,
+  locale: localeReducer
 });
 
 const middlewares = applyMiddleware(logger, ReduxPromise);
 const store = createStore(reducers, initialState, middlewares);
 
-const langBase = (lang === 'en' ? '' : `/${lang}` )
+const langBase = (I18n.locale === 'en' ? '' : `/${I18n.locale}` )
 
 ReactDOM.render(
   <Provider store={store}>

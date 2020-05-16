@@ -11,7 +11,7 @@ class ListNameHeader extends Component {
         <div className="area-list">
           {regionsList.map((region) => {
             return(
-              <h3 key={region.id} className={`sidebar-item ${I18n.locale}`}>{region.name}</h3>
+              <h3 key={region.id} className={`sidebar-item ${I18n.locale}`}>{I18n.t(`regions.${region.name}`)}</h3>
             )
           })}
         </div>
@@ -29,7 +29,8 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   return {
-    regionsList: state.regionsList
+    regionsList: state.regionsList,
+    locale: state.locale
   };
 }
 

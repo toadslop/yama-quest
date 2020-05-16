@@ -7,7 +7,7 @@ class ListNameHeader extends Component {
     const { list } = this.props
     return (
       <div>
-        <h1 className={`list-header ${I18n.locale}`}>{list.name}</h1>
+        <h1 className={`list-header ${I18n.locale}`}>{I18n.t(`lists.${list.name}`)}</h1>
       </div>
     );
   }
@@ -22,7 +22,8 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   return {
-    list: state.list
+    list: state.list,
+    locale: state.locale
   };
 }
 
