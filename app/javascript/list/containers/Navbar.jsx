@@ -1,14 +1,21 @@
+import React, { Component } from 'react';
+import LeftNav from './navbarElements/LeftNav'
 
+class Navbar extends Component {
+  render() {
+    const { mobileClass } = this.props;
+    return (
+      <div className={`navbar ${mobileClass}`}>
+        <LeftNav />
+      </div>
+    );
+  }
+};
 
+export default Navbar;
 
 {/* <div class="navbar">
-  <div class="left-group">
-    <%= link_to root_path do %>
-      <div class="logo-holder">
-        <%= image_tag "logo.png", class: "nav-logo" %>
-      </div>
-    <% end %>
-  </div>
+  
   <div class="center-group">
     <%= link_to list_path(1) do %>
       <i class="fas fa-mountain nav-icon"></i>

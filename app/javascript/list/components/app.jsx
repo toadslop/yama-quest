@@ -2,7 +2,7 @@ import React from 'react';
 import ListNameHeader from '../containers/ListNameHeader'
 import MountainsSidebar from '../containers/MountainsSidebar'
 import MountainMap from '../containers/MountainMap'
-import Navbar from './Navbar'
+import Navbar from '../containers/Navbar'
 
 const App = () => {
   return (
