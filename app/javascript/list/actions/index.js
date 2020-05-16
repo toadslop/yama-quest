@@ -4,3 +4,10 @@ export function setLocale(newLocale) {
     payload: newLocale
   }
 }
+
+export function toggleSidebar(sidebarVisible) {
+  return {
+    type: 'TOGGLE_SIDEBAR',
+    payload: {visible: sidebarVisible}
+  }
+}

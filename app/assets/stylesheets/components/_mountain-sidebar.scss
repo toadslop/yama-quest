@@ -1,9 +1,10 @@
 .mountain-sidebar {
   background-color: $light-blue;
-  max-width: 200px;
+  // max-width: 200px;
   height: 100%;
   display: flex;
   flex-direction: column;
+  transition: 2s;
   h2 {
     background-color: $dark-blue;
     color: white;
@@ -25,5 +26,17 @@
 .sidebar-item {
   &:hover {
     background-color: $med-blue;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .mountain-sidebar {
+    display: none;
+    width: 90%;
+  }
+
+  .visible {
+    display: flex !important;
+    transition-duration: display 2s;
   }
 }

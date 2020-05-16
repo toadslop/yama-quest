@@ -4,9 +4,10 @@ import { connect } from 'react-redux';
 
 class ListNameHeader extends Component {
   render() {
-    const { regionsList } = this.props
+    const { regionsList, sidebar } = this.props
+    const mobileClass = ( sidebar.visible ? 'visible' : '')
     return (
-      <div className="mountain-sidebar">
+      <div className={`mountain-sidebar ${mobileClass}`}>
         <h2 className={I18n.locale}>{I18n.t('left-sidebar.area')}</h2>
         <div className="area-list">
           {regionsList.map((region) => {
@@ -30,7 +31,8 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
   return {
     regionsList: state.regionsList,
-    locale: state.locale
+    locale: state.locale,
+    sidebar: state.sidebar
   };
 }
 

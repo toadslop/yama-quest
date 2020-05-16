@@ -25,8 +25,10 @@ class MountainMap extends Component {
   }
   
   render() {
+    const { sidebar } = this.props
+    const mobileClass = (sidebar.visible ? 'sidebar-visible' : '')
     return (
-      <div className="main-box">
+      <div className={`main-box ${mobileClass}`}>
         <div ref={el => this.mapContainer = el} className="mapContainer" />
       </div>
     );
@@ -42,6 +44,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   return {
+    sidebar: state.sidebar
   };
 }
 
