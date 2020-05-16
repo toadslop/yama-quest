@@ -8,13 +8,13 @@ const App = () => {
   return (
     
     <div className="box">
-    <Navbar />
+    <Navbar mobileClass="" />
       <ListNameHeader />
       <div className="list-app-container">
         <MountainsSidebar />
         <MountainMap />
       </div>
-    <Navbar />
+    <Navbar mobileClass="bottom-nav" />
     </div>
   );
 };

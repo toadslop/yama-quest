@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-const Navbar = () => {
-  return (
-    <div className="navbar">
-    </div>
-  );
+class Navbar extends Component {
+  render() {
+    const { mobileClass } = this.props;
+    return (
+      <div className={`navbar ${mobileClass}`}>
+      </div>
+    );
+  }
 };
 
 export default Navbar;
