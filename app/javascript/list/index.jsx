@@ -11,7 +11,8 @@ import listReducer from './reducers/listReducer';
 import regionsListReducer from './reducers/regionsListReducer';
 
 const listApp = document.getElementById('list_app');
-I18n.locale = JSON.parse(listApp.dataset.language)
+const lang = JSON.parse(listApp.dataset.language)
+I18n.locale = lang
 
 const initialState = {
   list: JSON.parse(listApp.dataset.list),
@@ -26,7 +27,6 @@ const reducers = combineReducers({
 const middlewares = applyMiddleware(logger, ReduxPromise);
 const store = createStore(reducers, initialState, middlewares);
 
-const lang = JSON.parse(listApp.dataset.language)
 const langBase = (lang === 'en' ? '' : `/${lang}` )
 
 ReactDOM.render(
