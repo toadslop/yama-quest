@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 class LeftNav extends Component {
   render() {
     return (
-      <div class="left-group">
-        <div class="logo-holder"></div>
+      <div className="left-group">
+        <div className="logo-holder"></div>
       </div>
     );
   }

@@ -8,7 +8,7 @@ const App = () => {
   return (
     
     <div className="box">
-    <Navbar mobileClass="" />
+    <Navbar mobileClass="top-nav" />
       <ListNameHeader />
       <div className="list-app-container">
         <MountainsSidebar />
