@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import LeftNav from './navbarElements/LeftNav'
 import CenterNav from './navbarElements/CenterNav'
+import RightNav from './navbarElements/RightNav'
 
 class Navbar extends Component {
   render() {
@@ -9,21 +10,10 @@ class Navbar extends Component {
       <div className={`navbar ${mobileClass}`}>
         <LeftNav />
         <CenterNav />
+        <RightNav />
       </div>
     );
   }
 };
 
 export default Navbar;
-
-{/* <div class="navbar">
-  
-  
-  <div class="right-group">
-    <% if I18n.locale == I18n.default_locale %>
-      <%= link_to "日", { locale: 'jp' }, class: "set_lang jp" %>
-    <% else %>
-      <%= link_to "En", { locale: nil }, class: "set_lang en" %>
-    <%end%>
-  </div>
-</div> */}
