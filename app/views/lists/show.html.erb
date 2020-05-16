@@ -3,7 +3,11 @@
 <% end %>
 
 <div class="app">
-  <%= render 'shared/navbar' %>
+  <%
+=begin%>
+ <%= render 'shared/navbar' %> 
+<%
+=end%>
   <div id="list_app"
       data-list="<%= @list.to_json %>"
       data-regions_list="<%= @regions_list.to_json %>"
