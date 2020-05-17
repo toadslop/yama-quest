@@ -15,13 +15,26 @@ class MountainMap extends Component {
     }
 
   componentDidMount() {
-  const map = new mapboxgl.Map({
-    container: this.mapContainer,
-    style: 'mapbox://styles/haiji/cka0n94d20qqd1immb3aotoo8',
-    center: [this.state.lng, this.state.lat],
-    zoom: this.state.zoom
-   });
-   map.addControl(new mapboxgl.NavigationControl());
+    const { geojson } = this.props
+    const map = new mapboxgl.Map({
+      container: this.mapContainer,
+      style: 'mapbox://styles/haiji/cka0n94d20qqd1immb3aotoo8',
+      center: [this.state.lng, this.state.lat],
+      zoom: this.state.zoom
+    });
+    map.addControl(new mapboxgl.NavigationControl());
+
+    geojson.features.forEach(function(marker) {
+
+      // create a HTML element for each feature
+      var el = document.createElement('i');
+      el.className = 'marker fas fa-mountain';
+    
+      // make a marker for each feature and add to the map
+      new mapboxgl.Marker(el)
+        .setLngLat(marker.geometry.coordinates)
+        .addTo(map);
+    });
   }
   
   render() {
@@ -44,7 +57,8 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   return {
-    sidebar: state.sidebar
+    sidebar: state.sidebar,
+    geojson: state.geojson
   };
 }
 
