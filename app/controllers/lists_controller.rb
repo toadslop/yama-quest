@@ -4,6 +4,7 @@ class ListsController < ApplicationController
   # before_action :fetch_lists, only: [:index]
   before_action :fetch_list, only: [:show]
   before_action :fetch_regions_list, only: [:show]
+  before_action :fetch_geojson, only: [:show]
   # before_action :fetch_mountains, only: [:show]
   # before_action :fetch_regions, only: [:show]
 
@@ -25,5 +26,9 @@ class ListsController < ApplicationController
   def fetch_regions_list
     # @regions_list = localize_name(@list.regions_list)
     @regions_list = @list.regions_list
+  end
+
+  def fetch_geojson
+    @geojson = @list.feature_collection
   end
 end

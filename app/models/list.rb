@@ -18,11 +18,11 @@ class List < ApplicationRecord
   end
 
   def feature_collection
-    @collection = GEOJSON_TEMPLATE
-    @collection[:type] = 'FeatureCollection'
+    collection = GEOJSON_TEMPLATE
+    collection[:type] = 'FeatureCollection'
     mountains.each do |mountain|
-      @collection[:features] << mountain.geojson_feature
+      collection[:features] << mountain.geojson_feature
     end
-    @collection
+    collection
   end
 end
