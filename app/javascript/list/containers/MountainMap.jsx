@@ -35,8 +35,8 @@ class MountainMap extends Component {
           <h3>${marker.properties.title}</h3>
           <p>Altitude: ${marker.properties.description.altitude}m</p>
           <p>Terrain difficulty: ${marker.properties.description.terrain}</p>
-          <p>Physical Difficulty: ${marker.properties.description.effort}m</p>
-          <p>Trip length: ${marker.properties.description.length}m</p>
+          <p>Physical Difficulty: ${marker.properties.description.effort}</p>
+          <p>Trip length: ${marker.properties.description.length}</p>
         `))
         .addTo(map);
     });
