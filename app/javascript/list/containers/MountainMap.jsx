@@ -8,31 +8,36 @@ class MountainMap extends Component {
   constructor(props) {
     super(props);
       this.state = {
-        lng: 142.84879846697,
-        lat: 43.527117778633,
-        zoom: 15
+        zoom: 5.25
       };
     }
 
   componentDidMount() {
-    const { geojson } = this.props
+    const { mapData } = this.props
     const map = new mapboxgl.Map({
       container: this.mapContainer,
-      style: 'mapbox://styles/haiji/cka0n94d20qqd1immb3aotoo8',
-      center: [this.state.lng, this.state.lat],
-      zoom: this.state.zoom
+      style: 'mapbox://styles/haiji/ckacho7mr2xse1ipfgqs7zwye',
+      center: [mapData.center.lng, mapData.center.lat],
+      zoom: this.state.zoom,
+      bearing: -30
     });
     map.addControl(new mapboxgl.NavigationControl());
 
-    geojson.features.forEach(function(marker) {
+    mapData.geojson.features.forEach(function(marker) {
 
-      // create a HTML element for each feature
-      var el = document.createElement('i');
+      const el = document.createElement('i');
       el.className = 'marker fas fa-mountain';
     
-      // make a marker for each feature and add to the map
-      new mapboxgl.Marker(el)
+      new mapboxgl.Marker(el, {offset: [40/2, 40/2]})
         .setLngLat(marker.geometry.coordinates)
+        .setPopup(new mapboxgl.Popup({ offset: 5 }) // add popups
+        .setHTML(`
+          <h3>${marker.properties.title}</h3>
+          <p>Altitude: ${marker.properties.description.altitude}m</p>
+          <p>Terrain difficulty: ${marker.properties.description.terrain}</p>
+          <p>Physical Difficulty: ${marker.properties.description.effort}m</p>
+          <p>Trip length: ${marker.properties.description.length}m</p>
+        `))
         .addTo(map);
     });
   }
@@ -58,7 +63,7 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
   return {
     sidebar: state.sidebar,
-    geojson: state.geojson
+    mapData: state.mapData
   };
 }
 

@@ -11,7 +11,7 @@ import listReducer from './reducers/listReducer';
 import regionsListReducer from './reducers/regionsListReducer';
 import localeReducer from './reducers/localeReducer';
 import sidebarReducer from './reducers/sidebarReducer';
-import geojsonReducer from './reducers/geojsonReducer';
+import mapDataReducer from './reducers/mapDataReducer';
 
 const listApp = document.getElementById('list_app');
 I18n.locale = JSON.parse(listApp.dataset.language)
@@ -21,7 +21,10 @@ const initialState = {
   regionsList: JSON.parse(listApp.dataset.regions_list),
   locale: I18n.locale,
   sidebar: {visible: null},
-  geojson: JSON.parse(listApp.dataset.geojson)
+  mapData: {
+    geojson: JSON.parse(listApp.dataset.geojson),
+    center: JSON.parse(listApp.dataset.map_center)
+  }
 };
 
 const reducers = combineReducers({
@@ -29,7 +32,7 @@ const reducers = combineReducers({
   regionsList: regionsListReducer,
   locale: localeReducer,
   sidebar: sidebarReducer,
-  geojson: geojsonReducer
+  mapData: mapDataReducer
 });
 
 const middlewares = applyMiddleware(logger, ReduxPromise);

@@ -24,7 +24,12 @@ class Mountain < ApplicationRecord
       },
       properties: {
         title: name,
-        description: name
+        description: {
+          altitude: altitude,
+          terrain: terrain_diff,
+          effort: physical_diff,
+          length: length
+        }
       }
     }
   end

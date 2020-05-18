@@ -25,4 +25,10 @@ class List < ApplicationRecord
     end
     collection
   end
+
+  def map_center
+    lat = mountains.sum(:lat) / mountains.count
+    lng = mountains.sum(:lng) / mountains.count
+    { lng: lng, lat: lat }
+  end
 end
