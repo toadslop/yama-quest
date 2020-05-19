@@ -36,4 +36,8 @@ class ListsController < ApplicationController
   def fetch_map_center
     @map_center = @list.map_center
   end
+
+  def fetch_map_bounds
+    @map_bounds = @list.map_bounds
+  end
 end

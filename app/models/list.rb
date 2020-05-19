@@ -27,8 +27,23 @@ class List < ApplicationRecord
   end
 
   def map_center
-    lat = mountains.sum(:lat) / mountains.count
-    lng = mountains.sum(:lng) / mountains.count
+    lats = mountains.select(:lat).order(:lat)
+    lngs = mountains.select(:lng).order(:lng)
+    lat = (lats.first.lat + lats.last.lat) / 2
+    lng = (lngs.first.lng + lngs.last.lng) / 2
     { lng: lng, lat: lat }
+  end
+
+  def map_bounds
+    lats = mountains.select(:lat).order(:lat)
+    lngs = mountains.select(:lng).order(:lng)
+    south_bound = lats.last.lat
+    north_bound = lats.first.lat
+    west_bound = lngs.first.lng
+    east_bound = lngs.last.lng
+    {
+      northeast: [east_bound, north_bound],
+      southwest: [west_bound, south_bound]
+    }
   end
 end

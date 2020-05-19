@@ -20,7 +20,7 @@ const initialState = {
   list: JSON.parse(listApp.dataset.list),
   regionsList: JSON.parse(listApp.dataset.regions_list),
   locale: I18n.locale,
-  sidebar: {visible: null},
+  sidebar: { visible: null },
   mapData: {
     geojson: JSON.parse(listApp.dataset.geojson),
     center: JSON.parse(listApp.dataset.map_center)

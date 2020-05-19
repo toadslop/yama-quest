@@ -8,18 +8,18 @@ class MountainMap extends Component {
   constructor(props) {
     super(props);
       this.state = {
-        zoom: 5.25
       };
     }
 
   componentDidMount() {
     const { mapData } = this.props
+
     const map = new mapboxgl.Map({
       container: this.mapContainer,
       style: 'mapbox://styles/haiji/ckacho7mr2xse1ipfgqs7zwye',
       center: [mapData.center.lng, mapData.center.lat],
-      zoom: this.state.zoom,
-      bearing: -30
+      zoom: 5,
+      bearing: -25
     });
     map.addControl(new mapboxgl.NavigationControl());
 
