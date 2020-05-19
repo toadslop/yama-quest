@@ -7,8 +7,6 @@ mapboxgl.accessToken = process.env.MAPBOX_KEY;
 class MountainMap extends Component {
   constructor(props) {
     super(props);
-      this.state = {
-      };
     }
 
   componentDidMount() {
@@ -17,10 +15,12 @@ class MountainMap extends Component {
     const map = new mapboxgl.Map({
       container: this.mapContainer,
       style: 'mapbox://styles/haiji/ckacho7mr2xse1ipfgqs7zwye',
-      center: [mapData.center.lng, mapData.center.lat],
-      zoom: 5,
-      bearing: -25
+      //center: [mapData.center.lng, mapData.center.lat],
+      bounds: [mapData.bounds.northeast, mapData.bounds.southwest]
     });
+    const bearing = (this.mapContainer.offsetWidth > this.mapContainer.offsetHeight ? -25 : 0);
+    console.log(bearing);
+    map.setBearing(bearing);
     map.addControl(new mapboxgl.NavigationControl());
 
     mapData.geojson.features.forEach(function(marker) {

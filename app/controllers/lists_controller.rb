@@ -6,6 +6,7 @@ class ListsController < ApplicationController
   before_action :fetch_regions_list, only: [:show]
   before_action :fetch_geojson, only: [:show]
   before_action :fetch_map_center, only: [:show]
+  before_action :fetch_map_bounds, only: [:show]
   # before_action :fetch_mountains, only: [:show]
   # before_action :fetch_regions, only: [:show]
 

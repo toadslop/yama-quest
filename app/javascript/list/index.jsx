@@ -23,7 +23,8 @@ const initialState = {
   sidebar: { visible: null },
   mapData: {
     geojson: JSON.parse(listApp.dataset.geojson),
-    center: JSON.parse(listApp.dataset.map_center)
+    center: JSON.parse(listApp.dataset.map_center),
+    bounds: JSON.parse(listApp.dataset.map_bounds)
   }
 };
 
