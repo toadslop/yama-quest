@@ -31,14 +31,24 @@ class MountainMap extends Component {
   
   renderMap = () => {
     const { mapData } = this.props
-
+    const screenHorizontal = this.mapContainer.offsetWidth > this.mapContainer.offsetHeight;
+    if (!screenHorizontal) {
+      const { northeast, southwest } = mapData.bounds
+      const shiftVert = (northeast[0] - southwest[0]) * 0.05
+      const shiftHor = (northeast[1] - southwest[1]) * 0.05
+      mapData.bounds.northeast[0] += shiftVert;
+      mapData.bounds.southwest[0] -= shiftVert;
+      mapData.bounds.northeast[1] += shiftHor;
+      mapData.bounds.southwest[1] -= shiftHor;
+    }
+    
     const map = new mapboxgl.Map({
       container: this.mapContainer,
       style: 'mapbox://styles/haiji/ckacho7mr2xse1ipfgqs7zwye',
       bounds: [mapData.bounds.northeast, mapData.bounds.southwest]
     });
-    console.log(map)
-    const bearing = (this.mapContainer.offsetWidth > this.mapContainer.offsetHeight ? -25 : 0);
+    
+    const bearing = (screenHorizontal ? -25 : 0);
     map.setBearing(bearing);
     map.addControl(new mapboxgl.NavigationControl());
 
