@@ -30,33 +30,8 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  regions:
-    北海道: 'Hokkaido'
-    東北: 'Tohoku'
-    北関東: 'North Kanto'
-    尾瀬: 'Oze'
-    上州: 'Joshu'
-    日光: 'Nikko'
-    足尾: 'Ashio'
-    上信越: 'Joshin-etsu'
-    秩父: 'Chichibu'
-    奥秩父: 'Oku-Chichibu'
-    南関東: 'South Kanto'
-    北アルプス: 'Northern Alps'
-    美ヶ原: 'Utsukushi-ga-Hara'
-    霧ヶ峰: 'Kiri-ga-Mine'
-    蓼科山: 'Mt. Tateshina'
-    八ヶ岳: 'Yatsu-ga-Take'
-    御嶽山: 'Mt. Ontake'
-    中央アルプス: 'Central Alps'
-    南アルプス: 'Southern Alps'
-    北陸: 'Hokuriku'
-    近畿: 'Kinki'
-    中国: 'Chukoku'
-    四国: 'Shikoku'
-    九州: 'Kyushu'
   lists:
     百名山: '100 Famous Mountains'
   left-sidebar:
     area: 'Area'
-  locales:
+  mountains:

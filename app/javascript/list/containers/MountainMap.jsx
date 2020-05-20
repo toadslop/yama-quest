@@ -26,7 +26,38 @@ class MountainMap extends Component {
         .setLngLat(marker.geometry.coordinates)
         .setPopup(new mapboxgl.Popup({ offset: 5 }) // add popups
         .setHTML(`
-          <h3>${marker.properties.title}</h3>
+          <h3>${I18n.t(`mountains.${marker.properties.title}`)}</h3>
+          <p>Altitude: ${marker.properties.description.altitude}m</p>
+          <p>Terrain difficulty: ${marker.properties.description.terrain}</p>
+          <p>Physical Difficulty: ${marker.properties.description.effort}</p>
+          <p>Trip length: ${marker.properties.description.length}</p>
+        `))
+        .addTo(map);
+    });
+  }
+  
+  componentDidUpdate() {
+    const { mapData } = this.props
+
+    const map = new mapboxgl.Map({
+      container: this.mapContainer,
+      style: 'mapbox://styles/haiji/ckacho7mr2xse1ipfgqs7zwye',
+      bounds: [mapData.bounds.northeast, mapData.bounds.southwest]
+    });
+    const bearing = (this.mapContainer.offsetWidth > this.mapContainer.offsetHeight ? -25 : 0);
+    map.setBearing(bearing);
+    map.addControl(new mapboxgl.NavigationControl());
+
+    mapData.geojson.features.forEach(function(marker) {
+
+      const el = document.createElement('i');
+      el.className = 'marker fas fa-mountain';
+    
+      new mapboxgl.Marker(el, {offset: [40/2, 40/2]})
+        .setLngLat(marker.geometry.coordinates)
+        .setPopup(new mapboxgl.Popup({ offset: 5 }) // add popups
+        .setHTML(`
+          <h3>${`${marker.properties.title}`}</h3>
           <p>Altitude: ${marker.properties.description.altitude}m</p>
           <p>Terrain difficulty: ${marker.properties.description.terrain}</p>
           <p>Physical Difficulty: ${marker.properties.description.effort}</p>
@@ -37,11 +68,11 @@ class MountainMap extends Component {
   }
   
   render() {
-    const { sidebar } = this.props
+    const { sidebar, locale } = this.props
     const mobileClass = (sidebar.visible ? 'sidebar-visible' : '')
     return (
       <div className={`main-box ${mobileClass}`}>
-        <div ref={el => this.mapContainer = el} className="mapContainer" />
+        <div locale={locale} ref={el => this.mapContainer = el} className="mapContainer" />
       </div>
     );
   }
@@ -57,7 +88,8 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
   return {
     sidebar: state.sidebar,
-    mapData: state.mapData
+    mapData: state.mapData,
+    locale: state.locale
   };
 }
 
