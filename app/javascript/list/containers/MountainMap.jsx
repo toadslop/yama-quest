@@ -7,33 +7,34 @@ mapboxgl.accessToken = process.env.MAPBOX_KEY;
 class MountainMap extends Component {
   constructor(props) {
     super(props);
-    this.state = { };
+    this.state = {
+      markers: []
+    };
   }
 
-  renderMarkers = (map, mapData) => {
-    mapData.geojson.features.forEach(function(marker) {
+  renderMarkers = () => {
+    const { mapData } = this.props
+    this.state.markers = mapData.geojson.features.map(function(marker) {
       const el = document.createElement('i');
+      const { title, description } = marker.properties;
+      const { altitude, terrain, effort, length } = description;
+
       el.className = 'marker fas fa-mountain';
-
-      const { title, description } = marker.properties
-      const { altitude, terrain, effort, length } = description
-
-      new mapboxgl.Marker(el, {offset: [40/2, 40/2]})
-        .setLngLat(marker.geometry.coordinates)
-        .setPopup(new mapboxgl.Popup({ offset: 5 }) // add popups
-        .setHTML(`
-          <h3>${I18n.t(`mountains.${title}`)}</h3>
-          <p>${I18n.t(`attributes.altitude`)}: ${altitude}m</p>
-          <p>${I18n.t(`attributes.terrain`)}: ${terrain}</p>
-          <p>${I18n.t(`attributes.effort`)}: ${effort}</p>
-          <p>${I18n.t(`attributes.length`)}: ${I18n.t(`lengths.${length}`)}</p>
-        `))
-        .addTo(map);
+      return new mapboxgl.Marker(el, {offset: [40/2, 40/2]})
+      .setLngLat(marker.geometry.coordinates)
+      .setPopup(new mapboxgl.Popup({ offset: 5 }) // add popups
+      .setHTML(`
+        <h3>${I18n.t(`mountains.${title}`)}</h3>
+        <p>${I18n.t(`attributes.altitude`)}: ${altitude}m</p>
+        <p>${I18n.t(`attributes.terrain`)}: ${terrain}</p>
+        <p>${I18n.t(`attributes.effort`)}: ${effort}</p>
+        <p>${I18n.t(`attributes.length`)}: ${I18n.t(`lengths.${length}`)}</p>
+      `))
     });
   }
-  
+
   renderMap = () => {
-    const { mapData } = this.props
+    const { mapData, locale } = this.props
     const screenHorizontal = this.mapContainer.offsetWidth > this.mapContainer.offsetHeight;
     if (!screenHorizontal) {
       const { northeast, southwest } = mapData.bounds
@@ -48,7 +49,8 @@ class MountainMap extends Component {
     const map = new mapboxgl.Map({
       container: this.mapContainer,
       style: 'mapbox://styles/haiji/ckacho7mr2xse1ipfgqs7zwye',
-      bounds: [mapData.bounds.northeast, mapData.bounds.southwest]
+      bounds: [mapData.bounds.northeast, mapData.bounds.southwest],
+      locale: locale
     });
     
     const bearing = (screenHorizontal ? -25 : 0);
@@ -56,14 +58,25 @@ class MountainMap extends Component {
     map.addControl(new mapboxgl.NavigationControl());
 
     this.renderMarkers(map, mapData)
+    this.state.map = map;
   }
   
   componentDidMount() {
     this.renderMap()
+    this.renderMarkers()
+    const { map, markers } = this.state
+    console.log(markers);
+    markers.forEach(function(marker) {
+      marker.addTo(map);
+    })
   }
   
   componentDidUpdate() {
-    this.renderMap()
+    this.renderMarkers()
+    const { map, markers } = this.state
+    markers.forEach(function(marker) {
+      marker.addTo(map);
+    })
   }
   
   render() {
