@@ -108,3 +108,8 @@
     1泊2日: 2 days
     前夜泊日帰り: overnighter
     2泊3日: 3 days
+  attributes:
+    altitude: Altitude
+    terrain: Terrain defficulty
+    effort: Physical difficulty
+    length: Trip length

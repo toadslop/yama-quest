@@ -107,3 +107,8 @@ jp:
     1泊2日: 1泊2日
     前夜泊日帰り: 前夜泊日帰り
     2泊3日: 2泊3日
+  attributes:
+    altitude: 標高
+    terrain: 難易度
+    effort: 体力度
+    length: 参考日程

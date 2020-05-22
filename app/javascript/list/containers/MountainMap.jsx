@@ -14,16 +14,19 @@ class MountainMap extends Component {
     mapData.geojson.features.forEach(function(marker) {
       const el = document.createElement('i');
       el.className = 'marker fas fa-mountain';
-    
+
+      const { title, description } = marker.properties
+      const { altitude, terrain, effort, length } = description
+
       new mapboxgl.Marker(el, {offset: [40/2, 40/2]})
         .setLngLat(marker.geometry.coordinates)
         .setPopup(new mapboxgl.Popup({ offset: 5 }) // add popups
         .setHTML(`
-          <h3>${I18n.t(`mountains.${marker.properties.title}`)}</h3>
-          <p>Altitude: ${marker.properties.description.altitude}m</p>
-          <p>Terrain difficulty: ${marker.properties.description.terrain}</p>
-          <p>Physical Difficulty: ${marker.properties.description.effort}</p>
-          <p>Trip length: ${I18n.t(`lengths.${marker.properties.description.length}`)}</p>
+          <h3>${I18n.t(`mountains.${title}`)}</h3>
+          <p>${I18n.t(`attributes.altitude`)}: ${altitude}m</p>
+          <p>${I18n.t(`attributes.terrain`)}: ${terrain}</p>
+          <p>${I18n.t(`attributes.effort`)}: ${effort}</p>
+          <p>${I18n.t(`attributes.length`)}: ${I18n.t(`lengths.${length}`)}</p>
         `))
         .addTo(map);
     });
