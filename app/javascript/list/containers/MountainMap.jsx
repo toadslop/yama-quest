@@ -1,8 +1,12 @@
+// import external components
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import mapboxgl from 'mapbox-gl'; // remember to delete later
 import MapGL, { Popup, NavigationControl, FullscreenControl, ScaleControl } from 'react-map-gl';
+
+// import internal components
+import MountainInfo from '../components/MountainInfo.jsx'
 
 mapboxgl.accessToken = process.env.MAPBOX_KEY;
 
