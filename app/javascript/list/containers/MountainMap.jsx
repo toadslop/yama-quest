@@ -126,7 +126,7 @@ class MountainMap extends Component {
         {...viewport}
         width="100%"
         height="100%"
-        mapStyle="mapbox://styles/mapbox/dark-v9"
+        mapStyle="mapbox://styles/haiji/ckacho7mr2xse1ipfgqs7zwye"
         // onViewportChange={this._updateViewport}
         mapboxApiAccessToken={process.env.MAPBOX_KEY}
       >
