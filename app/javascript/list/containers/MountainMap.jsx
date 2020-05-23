@@ -7,15 +7,43 @@ import MapGL, { Popup, NavigationControl, FullscreenControl, ScaleControl } from
 
 // import internal components
 import MountainInfo from '../components/MountainInfo'
-import MountainMarker from '../components/MountainMarker'
+import MountainMarkers from '../components/MountainMarkers'
 
 mapboxgl.accessToken = process.env.MAPBOX_KEY;
+
+const fullscreenControlStyle = {
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  padding: '10px'
+};
+
+const navStyle = {
+  position: 'absolute',
+  top: 36,
+  left: 0,
+  padding: '10px'
+};
+
+const scaleControlStyle = {
+  position: 'absolute',
+  bottom: 36,
+  left: 0,
+  padding: '10px'
+};
 
 class MountainMap extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      markers: []
+      viewport: {
+        latitude: 37.785164,
+        longitude: -100,
+        zoom: 3.5,
+        bearing: 0,
+        pitch: 0
+      },
+      popupInfo: null
     };
   }
 
@@ -70,30 +98,52 @@ class MountainMap extends Component {
   }
   
   componentDidMount() {
-    this.renderMap()
-    this.renderMarkers()
-    const { map, markers } = this.state
-    console.log(markers);
-    markers.forEach(function(marker) {
-      marker.addTo(map);
-    })
+    // this.renderMap()
+    // this.renderMarkers()
+    // const { map, markers } = this.state
+    // console.log(markers);
+    // markers.forEach(function(marker) {
+    //   marker.addTo(map);
+    // })
   }
   
   componentDidUpdate() {
-    this.renderMarkers()
-    const { map, markers } = this.state
-    markers.forEach(function(marker) {
-      marker.addTo(map);
-    })
+    // this.renderMarkers()
+    // const { map, markers } = this.state
+    // markers.forEach(function(marker) {
+    //   marker.addTo(map);
+    // })
   }
   
   render() {
-    const { sidebar, locale } = this.props
-    const mobileClass = (sidebar.visible ? 'sidebar-visible' : '')
+    const { viewport } = this.state;
+    const { mapData } = this.props
+    const { geojson, bounds } = mapData;
+    const { features } = geojson;
+
     return (
-      <div className={`main-box ${mobileClass}`}>
-        <div locale={locale} ref={el => this.mapContainer = el} className="mapContainer" />
-      </div>
+      <MapGL
+        {...viewport}
+        width="100%"
+        height="100%"
+        mapStyle="mapbox://styles/mapbox/dark-v9"
+        // onViewportChange={this._updateViewport}
+        mapboxApiAccessToken={process.env.MAPBOX_KEY}
+      >
+        {/* <MountainMarkers data={features} /> */}
+        {/* onClick={this._onClickMarker}  add to above line*/}
+        {/* {this._renderPopup()} */}
+
+        <div style={fullscreenControlStyle}>
+          <FullscreenControl />
+        </div>
+        <div style={navStyle}>
+          <NavigationControl />
+        </div>
+        <div style={scaleControlStyle}>
+          <ScaleControl />
+        </div>
+      </MapGL>
     );
   }
 }
