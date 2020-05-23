@@ -14,6 +14,7 @@ class MountainMap extends Component {
 
   renderMarkers = () => {
     const { mapData } = this.props
+    this.state.markers = []
     this.state.markers = mapData.geojson.features.map(function(marker) {
       const el = document.createElement('i');
       const { title, description } = marker.properties;
