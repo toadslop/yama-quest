@@ -6,7 +6,8 @@ import mapboxgl from 'mapbox-gl'; // remember to delete later
 import MapGL, { Popup, NavigationControl, FullscreenControl, ScaleControl } from 'react-map-gl';
 
 // import internal components
-import MountainInfo from '../components/MountainInfo.jsx'
+import MountainInfo from '../components/MountainInfo'
+import MountainMarker from '../components/MountainMarker'
 
 mapboxgl.accessToken = process.env.MAPBOX_KEY;
 

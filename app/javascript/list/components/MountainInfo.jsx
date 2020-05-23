@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
-export default class MountainInfo extends Component {
+export default class MountainInfo extends PureComponent {
   render() {
     const { feature } = this.props;
     const { title, description } = feature.properties;
