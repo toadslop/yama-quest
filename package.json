@@ -8,6 +8,7 @@
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "4.2.2",
+    "@turf/bbox": "^6.0.1",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "dotenv": "^8.2.0",
     "file-loader": "^6.0.0",
@@ -29,6 +30,7 @@
     "redux-promise": "^0.6.0",
     "turbolinks": "^5.2.0",
     "typescript": "^3.8.3",
+    "viewport-mercator-project": "^7.0.1",
     "webpack": "^4.0.0"
   },
   "scripts": {
