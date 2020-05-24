@@ -37,6 +37,8 @@
 
   .visible {
     display: flex !important;
+    position: absolute;
+    z-index: 2;
     transition-duration: display 2s;
   }
 }

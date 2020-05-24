@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import MapGL, { Popup, NavigationControl, FullscreenControl, ScaleControl } from 'react-map-gl';
-import { fitBounds } from 'viewport-mercator-project';
+import { fitBounds, lngLatToWorld } from 'viewport-mercator-project';
 import mapboxgl from 'mapbox-gl';
 
 // import internal components
@@ -42,11 +42,49 @@ class MountainMap extends Component {
         longitude: -100,
         zoom: 3.5,
         bearing: 0,
-        pitch: 0
+        pitch: 0,
+        height: 200,
+        width: 200
       },
       popupInfo: null,
       boundsSet: false
     };
+  }
+
+  radians_to_degrees = (radians) => {
+    const pi = Math.PI;
+    return radians * (180/pi);
+  }
+
+  getSlope = (coords) => {
+    return (coords.y2 - coords.y1) / (coords.x2 - coords.x1)
+  }
+
+  getAngle = (slopes) => {
+    const { m1, m2 } = slopes
+    const radians = Math.atan(Math.abs((m2 - m1) / (1 + m1*m2)))
+    const degrees = this.radians_to_degrees(radians)
+    return -degrees
+  }
+  getBearing = (viewport) => {
+    const { bounds } = this.props.mapData
+    const boxCoords = {y2: viewport.height, y1: 0, x2: viewport.width, x1: 0}
+    const convertedNortheast = lngLatToWorld(bounds.northeast)
+    const convertedSouthwest = lngLatToWorld(bounds.southwest)
+    const markerCoords = {
+      y2: convertedNortheast[1],
+      y1: convertedSouthwest[1],
+      x1: convertedNortheast[0],
+      x2: convertedSouthwest[0]
+    }
+    console.log(markerCoords)
+
+    const boxSlope = this.getSlope(boxCoords)
+    const markerSlope = this.getSlope(markerCoords)
+    console.log("box slope", boxSlope)
+    console.log("marker slope", markerSlope)
+    const slopes = { m1: boxSlope, m2: markerSlope }
+    return this.getAngle(slopes)
   }
 
   onClickMarker = mountain => {
@@ -73,8 +111,10 @@ class MountainMap extends Component {
     );
   }
 
-  updateViewport = viewport => {
+  updateViewport = viewport => {    
     if (this.state.boundsSet) {
+      viewport.bearing = this.getBearing(viewport)
+      this.setBounds(viewport)
       this.setState({viewport})
     } else {
       this.setBounds(viewport)
