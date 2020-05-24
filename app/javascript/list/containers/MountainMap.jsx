@@ -53,15 +53,20 @@ class MountainMap extends Component {
     this.setState({viewport});
   };
 
-  componentDidMount() {
+  setBounds = () => {
     const { bounds } = this.props.mapData
     const options = {
       height: this.mapRef.clientHeight,
       width: this.mapRef.clientWidth,
       bounds: [bounds.northeast, bounds.southwest]
     }
+
     const viewport = fitBounds(options)
     this.setState({viewport});
+  }
+
+  componentDidMount() {
+    this.setBounds();
   }
   
   render() {
