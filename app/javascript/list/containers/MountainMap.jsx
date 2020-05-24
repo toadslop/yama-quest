@@ -2,9 +2,9 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import mapboxgl from 'mapbox-gl'; // remember to delete later
 import MapGL, { Popup, NavigationControl, FullscreenControl, ScaleControl } from 'react-map-gl';
-import WebMercatorViewport, { fitBounds } from 'viewport-mercator-project';
+import { fitBounds } from 'viewport-mercator-project';
+import mapboxgl from 'mapbox-gl';
 
 // import internal components
 import MountainInfo from '../components/MountainInfo'
@@ -45,28 +45,28 @@ class MountainMap extends Component {
         bearing: 0,
         pitch: 0
       },
-      popupInfo: null
+      popupInfo: null,
+      boundsSet: false
     };
   }
 
   updateViewport = viewport => {
-    this.setState({viewport});
+    if (this.state.boundsSet) {
+      this.setState({viewport})
+    } else {
+      this.setBounds(viewport)
+    }
   };
 
-  setBounds = () => {
+  setBounds = (viewport) => {
     const { bounds } = this.props.mapData
     const options = {
-      height: this.mapRef.clientHeight,
-      width: this.mapRef.clientWidth,
+      height: viewport.height,
+      width: viewport.width,
       bounds: [bounds.northeast, bounds.southwest]
     }
-
-    const viewport = fitBounds(options)
-    this.setState({viewport});
-  }
-
-  componentDidMount() {
-    this.setBounds();
+    viewport = fitBounds(options);
+    this.setState({viewport, boundsSet: true})
   }
   
   render() {
@@ -76,30 +76,28 @@ class MountainMap extends Component {
     const { viewport } = this.state;
 
     return (
-      <div className="map-container" ref={mapContainer => this.mapRef = mapContainer}>
-        <MapGL
-          {...viewport}
-          width="100%"
-          height="100%"
-          mapStyle="mapbox://styles/haiji/ckacho7mr2xse1ipfgqs7zwye"
-          onViewportChange={this.updateViewport}
-          mapboxApiAccessToken={process.env.MAPBOX_KEY}
-        >
-          {/* <MountainMarkers data={features} /> */}
-          {/* onClick={this._onClickMarker}  add to above line*/}
-          {/* {this._renderPopup()} */}
+      <MapGL
+        {...viewport}
+        width="100%"
+        height="100%"
+        mapStyle="mapbox://styles/haiji/ckacho7mr2xse1ipfgqs7zwye"
+        onViewportChange={this.updateViewport}
+        mapboxApiAccessToken={process.env.MAPBOX_KEY}
+      >
+        <MountainMarkers data={features} />
+        {/* onClick={this._onClickMarker}  add to above line*/}
+        {/* {this._renderPopup()} */}
 
-          <div style={fullscreenControlStyle}>
-            <FullscreenControl />
-          </div>
-          <div style={navStyle}>
-            <NavigationControl />
-          </div>
-          <div style={scaleControlStyle}>
-            <ScaleControl />
-          </div>
-        </MapGL>
-      </div>
+        <div style={fullscreenControlStyle}>
+          <FullscreenControl />
+        </div>
+        <div style={navStyle}>
+          <NavigationControl />
+        </div>
+        <div style={scaleControlStyle}>
+          <ScaleControl />
+        </div>
+      </MapGL>
     );
   }
 }

@@ -7,10 +7,17 @@ const SIZE = 20;
 export default class MountainMarkers extends PureComponent {
   render() {
     const {data, onClick} = this.props;
-
-    return data.map((city, index) => (
-      <Marker key={`marker-${index}`} longitude={city.longitude} latitude={city.latitude}>
-        <svg
+    return data.map((mountain, index) => (
+      <Marker
+        key={`marker-${index}`}
+        longitude={mountain.geometry.coordinates[0]}
+        latitude={mountain.geometry.coordinates[1]}
+        offsetLeft={-5}
+        offsetTop={-5}
+        className="marker"
+      >
+        
+        {/* <svg
           height={SIZE}
           viewBox="0 0 24 24"
           style={{
@@ -21,7 +28,8 @@ export default class MountainMarkers extends PureComponent {
           }}
           // onClick={() => onClick(city)}
         >
-        </svg>
+        </svg> */}
+        <i className="fas fa-mountain"></i>
       </Marker>
     ));
   }
