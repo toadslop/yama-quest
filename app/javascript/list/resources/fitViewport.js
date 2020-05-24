@@ -1,7 +1,6 @@
 import WebMercatorViewport from 'viewport-mercator-project';
 import bbox from '@turf/bbox';
 import { Map } from 'mapbox-gl';
-import { FeatureCollection, Feature } from 'geojson';
 
 export const fitViewportToFeature = (map, feature, options = {}) => {
     /** Invariants */

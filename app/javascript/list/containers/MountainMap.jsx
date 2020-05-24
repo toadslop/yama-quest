@@ -4,10 +4,12 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import mapboxgl from 'mapbox-gl'; // remember to delete later
 import MapGL, { Popup, NavigationControl, FullscreenControl, ScaleControl } from 'react-map-gl';
+import WebMercatorViewport, { fitBounds } from 'viewport-mercator-project';
 
 // import internal components
 import MountainInfo from '../components/MountainInfo'
 import MountainMarkers from '../components/MountainMarkers'
+import fitViewportToFeature from '../resources/fitViewport'
 
 mapboxgl.accessToken = process.env.MAPBOX_KEY;
 
@@ -97,29 +99,16 @@ class MountainMap extends Component {
     this.state.map = map;
   }
   
-  componentDidMount() {
-    // this.renderMap()
-    // this.renderMarkers()
-    // const { map, markers } = this.state
-    // console.log(markers);
-    // markers.forEach(function(marker) {
-    //   marker.addTo(map);
-    // })
-  }
-  
-  componentDidUpdate() {
-    // this.renderMarkers()
-    // const { map, markers } = this.state
-    // markers.forEach(function(marker) {
-    //   marker.addTo(map);
-    // })
-  }
-  
   render() {
-    const { viewport } = this.state;
     const { mapData } = this.props
+    const height = this.innerHeight
     const { geojson, bounds } = mapData;
     const { features } = geojson;
+    const options = { width: 400, height: 400, bounds: [[145,45],[130,30]]}
+    const viewportOptions = fitBounds(options);
+    const viewport = new WebMercatorViewport(viewportOptions);
+    
+    
 
     return (
       <MapGL
