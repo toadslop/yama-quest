@@ -51,6 +51,22 @@ class MountainMap extends Component {
     };
   }
 
+  screenVertical = (viewport) => {
+    const {height, width} = viewport
+    return height > width
+  }
+
+  addMarginToMap = (bounds) => {
+    const { northeast, southwest } = bounds
+    const shiftVert = (northeast[0] - southwest[0]) * 0.05
+    const shiftHor = (northeast[1] - southwest[1]) * 0.15
+    northeast[0] += shiftVert;
+    southwest[0] -= shiftVert;
+    northeast[1] += shiftHor;
+    southwest[1] -= shiftHor;
+    return { northeast, southwest }
+  }
+
   radians_to_degrees = (radians) => {
     const pi = Math.PI;
     return radians * (180/pi);
@@ -77,12 +93,9 @@ class MountainMap extends Component {
       x1: convertedNortheast[0],
       x2: convertedSouthwest[0]
     }
-    console.log(markerCoords)
 
     const boxSlope = this.getSlope(boxCoords)
     const markerSlope = this.getSlope(markerCoords)
-    console.log("box slope", boxSlope)
-    console.log("marker slope", markerSlope)
     const slopes = { m1: boxSlope, m2: markerSlope }
     return this.getAngle(slopes)
   }
@@ -111,10 +124,9 @@ class MountainMap extends Component {
     );
   }
 
-  updateViewport = viewport => {    
+  updateViewport = viewport => {  
     if (this.state.boundsSet) {
       viewport.bearing = this.getBearing(viewport)
-      this.setBounds(viewport)
       this.setState({viewport})
     } else {
       this.setBounds(viewport)
@@ -122,7 +134,11 @@ class MountainMap extends Component {
   };
 
   setBounds = (viewport) => {
-    const { bounds } = this.props.mapData
+    let { bounds } = this.props.mapData
+    if (this.screenVertical(viewport)) {
+      bounds = this.addMarginToMap(bounds)
+    }
+    console.log(bounds)
     const options = {
       height: viewport.height,
       width: viewport.width,
