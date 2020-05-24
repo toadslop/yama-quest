@@ -99,17 +99,30 @@ class MountainMap extends Component {
     this.state.map = map;
   }
 
+  updateViewport = viewport => {
+    console.log("update viewprot, new viewport", viewport)
+    this.setState({viewport});
+    console.log("in update viewport, check state", this.state.viewport)
+  };
+
   componentDidMount() {
-    //console.log(this.mapRef.clientHeight);
+    const { bounds } = this.props.mapData
+    const options = {
+      height: this.mapRef.clientHeight,
+      width: this.mapRef.clientWidth,
+      bounds: [bounds.northeast, bounds.southwest]
+    }
+    const viewport = fitBounds(options)
+    console.log("did mount from fit bounds", viewport);
+    this.setState({viewport});
+    console.log("did mount new state", this.state.viewport)
   }
   
   render() {
     const { mapData } = this.props
     const { geojson, bounds } = mapData;
     const { features } = geojson;
-    const options = { width: 400, height: 400, bounds: [[145,45],[130,30]]}
-    const viewportOptions = fitBounds(options);
-    const viewport = new WebMercatorViewport(viewportOptions);
+    const { viewport } = this.state;
 
     return (
       <div className="map-container" ref={mapContainer => this.mapRef = mapContainer}>
@@ -118,7 +131,7 @@ class MountainMap extends Component {
           width="100%"
           height="100%"
           mapStyle="mapbox://styles/haiji/ckacho7mr2xse1ipfgqs7zwye"
-          // onViewportChange={this._updateViewport}
+          onViewportChange={this.updateViewport}
           mapboxApiAccessToken={process.env.MAPBOX_KEY}
         >
           {/* <MountainMarkers data={features} /> */}
