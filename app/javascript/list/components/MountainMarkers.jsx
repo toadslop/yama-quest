@@ -16,20 +16,7 @@ export default class MountainMarkers extends PureComponent {
         offsetTop={-5}
         className="marker"
       >
-        
-        {/* <svg
-          height={SIZE}
-          viewBox="0 0 24 24"
-          style={{
-            cursor: 'pointer',
-            fill: '#d00',
-            stroke: 'none',
-            transform: `translate(${-SIZE / 2}px,${-SIZE}px)`
-          }}
-          // onClick={() => onClick(city)}
-        >
-        </svg> */}
-        <i className="fas fa-mountain"></i>
+        <i className="fas fa-mountain" onClick={() => onClick(mountain)}></i>
       </Marker>
     ));
   }

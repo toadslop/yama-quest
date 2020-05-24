@@ -1,9 +1,11 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
-export default class MountainInfo extends PureComponent {
+class MountainInfo extends Component {
   render() {
-    const { feature } = this.props;
-    const { title, description } = feature.properties;
+    const { info } = this.props;
+    const { title, description } = info.properties;
     const { altitude, terrain, effort, length } = description;
 
     return (
@@ -20,3 +22,18 @@ export default class MountainInfo extends PureComponent {
     );
   }
 }
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(
+    {  },
+    dispatch
+  );
+}
+
+function mapStateToProps(state) {
+  return {
+    locale: state.locale
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MountainInfo);

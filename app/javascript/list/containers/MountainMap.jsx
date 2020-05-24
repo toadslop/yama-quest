@@ -9,7 +9,6 @@ import mapboxgl from 'mapbox-gl';
 // import internal components
 import MountainInfo from '../components/MountainInfo'
 import MountainMarkers from '../components/MountainMarkers'
-import fitViewportToFeature from '../resources/fitViewport'
 
 mapboxgl.accessToken = process.env.MAPBOX_KEY;
 
@@ -50,6 +49,30 @@ class MountainMap extends Component {
     };
   }
 
+  onClickMarker = mountain => {
+    this.setState({popupInfo: mountain});
+  };
+
+  renderPopup() {
+    const {popupInfo} = this.state;
+    const {coordinates} = (popupInfo ? popupInfo.geometry : [0,0])
+    return (
+      popupInfo && (
+        <Popup
+          className="popup"
+          tipSize={5}
+          anchor="top"
+          longitude={coordinates[0]}
+          latitude={coordinates[1]}
+          closeOnClick={false}
+          onClose={() => this.setState({popupInfo: null})}
+        >
+          <MountainInfo info={popupInfo} />
+        </Popup>
+      )
+    );
+  }
+
   updateViewport = viewport => {
     if (this.state.boundsSet) {
       this.setState({viewport})
@@ -84,9 +107,8 @@ class MountainMap extends Component {
         onViewportChange={this.updateViewport}
         mapboxApiAccessToken={process.env.MAPBOX_KEY}
       >
-        <MountainMarkers data={features} />
-        {/* onClick={this._onClickMarker}  add to above line*/}
-        {/* {this._renderPopup()} */}
+        <MountainMarkers data={features} onClick={this.onClickMarker} />
+        {this.renderPopup()}
 
         <div style={fullscreenControlStyle}>
           <FullscreenControl />
