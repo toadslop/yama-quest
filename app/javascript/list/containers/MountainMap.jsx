@@ -98,41 +98,44 @@ class MountainMap extends Component {
     this.renderMarkers(map, mapData)
     this.state.map = map;
   }
+
+  componentDidMount() {
+    //console.log(this.mapRef.clientHeight);
+  }
   
   render() {
     const { mapData } = this.props
-    const height = this.innerHeight
     const { geojson, bounds } = mapData;
     const { features } = geojson;
     const options = { width: 400, height: 400, bounds: [[145,45],[130,30]]}
     const viewportOptions = fitBounds(options);
     const viewport = new WebMercatorViewport(viewportOptions);
-    
-    
 
     return (
-      <MapGL
-        {...viewport}
-        width="100%"
-        height="100%"
-        mapStyle="mapbox://styles/haiji/ckacho7mr2xse1ipfgqs7zwye"
-        // onViewportChange={this._updateViewport}
-        mapboxApiAccessToken={process.env.MAPBOX_KEY}
-      >
-        {/* <MountainMarkers data={features} /> */}
-        {/* onClick={this._onClickMarker}  add to above line*/}
-        {/* {this._renderPopup()} */}
+      <div className="map-container" ref={mapContainer => this.mapRef = mapContainer}>
+        <MapGL
+          {...viewport}
+          width="100%"
+          height="100%"
+          mapStyle="mapbox://styles/haiji/ckacho7mr2xse1ipfgqs7zwye"
+          // onViewportChange={this._updateViewport}
+          mapboxApiAccessToken={process.env.MAPBOX_KEY}
+        >
+          {/* <MountainMarkers data={features} /> */}
+          {/* onClick={this._onClickMarker}  add to above line*/}
+          {/* {this._renderPopup()} */}
 
-        <div style={fullscreenControlStyle}>
-          <FullscreenControl />
-        </div>
-        <div style={navStyle}>
-          <NavigationControl />
-        </div>
-        <div style={scaleControlStyle}>
-          <ScaleControl />
-        </div>
-      </MapGL>
+          <div style={fullscreenControlStyle}>
+            <FullscreenControl />
+          </div>
+          <div style={navStyle}>
+            <NavigationControl />
+          </div>
+          <div style={scaleControlStyle}>
+            <ScaleControl />
+          </div>
+        </MapGL>
+      </div>
     );
   }
 }
