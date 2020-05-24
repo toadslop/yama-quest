@@ -49,60 +49,8 @@ class MountainMap extends Component {
     };
   }
 
-  renderMarkers = () => {
-    const { mapData } = this.props
-    this.state.markers = []
-    this.state.markers = mapData.geojson.features.map(function(marker) {
-      const el = document.createElement('i');
-      const { title, description } = marker.properties;
-      const { altitude, terrain, effort, length } = description;
-
-      el.className = 'marker fas fa-mountain';
-      return new mapboxgl.Marker(el, {offset: [40/2, 40/2]})
-      .setLngLat(marker.geometry.coordinates)
-      .setPopup(new mapboxgl.Popup({ offset: 5 }) // add popups
-      .setHTML(`
-        <h3>${I18n.t(`mountains.${title}`)}</h3>
-        <p>${I18n.t(`attributes.altitude`)}: ${altitude}m</p>
-        <p>${I18n.t(`attributes.terrain`)}: ${terrain}</p>
-        <p>${I18n.t(`attributes.effort`)}: ${effort}</p>
-        <p>${I18n.t(`attributes.length`)}: ${I18n.t(`lengths.${length}`)}</p>
-      `))
-    });
-  }
-
-  renderMap = () => {
-    const { mapData, locale } = this.props
-    const screenHorizontal = this.mapContainer.offsetWidth > this.mapContainer.offsetHeight;
-    if (!screenHorizontal) {
-      const { northeast, southwest } = mapData.bounds
-      const shiftVert = (northeast[0] - southwest[0]) * 0.05
-      const shiftHor = (northeast[1] - southwest[1]) * 0.05
-      mapData.bounds.northeast[0] += shiftVert;
-      mapData.bounds.southwest[0] -= shiftVert;
-      mapData.bounds.northeast[1] += shiftHor;
-      mapData.bounds.southwest[1] -= shiftHor;
-    }
-    
-    const map = new mapboxgl.Map({
-      container: this.mapContainer,
-      style: 'mapbox://styles/haiji/ckacho7mr2xse1ipfgqs7zwye',
-      bounds: [mapData.bounds.northeast, mapData.bounds.southwest],
-      locale: locale
-    });
-    
-    const bearing = (screenHorizontal ? -25 : 0);
-    map.setBearing(bearing);
-    map.addControl(new mapboxgl.NavigationControl());
-
-    this.renderMarkers(map, mapData)
-    this.state.map = map;
-  }
-
   updateViewport = viewport => {
-    console.log("update viewprot, new viewport", viewport)
     this.setState({viewport});
-    console.log("in update viewport, check state", this.state.viewport)
   };
 
   componentDidMount() {
@@ -113,14 +61,12 @@ class MountainMap extends Component {
       bounds: [bounds.northeast, bounds.southwest]
     }
     const viewport = fitBounds(options)
-    console.log("did mount from fit bounds", viewport);
     this.setState({viewport});
-    console.log("did mount new state", this.state.viewport)
   }
   
   render() {
     const { mapData } = this.props
-    const { geojson, bounds } = mapData;
+    const { geojson } = mapData;
     const { features } = geojson;
     const { viewport } = this.state;
 
