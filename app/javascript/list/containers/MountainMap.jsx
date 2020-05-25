@@ -1,81 +1,181 @@
+// import external components
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import MapGL, { Popup, NavigationControl, FullscreenControl, ScaleControl } from 'react-map-gl';
+import { fitBounds, lngLatToWorld } from 'viewport-mercator-project';
 import mapboxgl from 'mapbox-gl';
+
+// import internal components
+import MountainInfo from '../components/MountainInfo'
+import MountainMarkers from '../components/MountainMarkers'
+
 mapboxgl.accessToken = process.env.MAPBOX_KEY;
+
+const fullscreenControlStyle = {
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  padding: '10px'
+};
+
+const navStyle = {
+  position: 'absolute',
+  top: 36,
+  left: 0,
+  padding: '10px'
+};
+
+const scaleControlStyle = {
+  position: 'absolute',
+  bottom: 36,
+  left: 0,
+  padding: '10px'
+};
 
 class MountainMap extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      markers: []
+      viewport: {
+        latitude: 37.785164,
+        longitude: -100,
+        zoom: 3.5,
+        bearing: 0,
+        pitch: 0,
+        height: 200,
+        width: 200
+      },
+      popupInfo: null,
+      boundsSet: false
     };
   }
 
-  createMarkers = (mapData) => {
-    mapData.geojson.features.forEach(function(marker) {
-      const el = document.createElement('i');
-      el.className = 'marker fas fa-mountain';
-
-      const { title, description } = marker.properties
-      const { altitude, terrain, effort, length } = description
-
-      this.state.markers.push(
-        new mapboxgl.Marker(el, {offset: [40/2, 40/2]})
-        .setLngLat(marker.geometry.coordinates)
-        .setPopup(new mapboxgl.Popup({ offset: 5 }) // add popups
-        .setHTML(`
-          <h3>${I18n.t(`mountains.${title}`)}</h3>
-          <p>${I18n.t(`attributes.altitude`)}: ${altitude}m</p>
-          <p>${I18n.t(`attributes.terrain`)}: ${terrain}</p>
-          <p>${I18n.t(`attributes.effort`)}: ${effort}</p>
-          <p>${I18n.t(`attributes.length`)}: ${I18n.t(`lengths.${length}`)}</p>
-        `))
-      );
-    });
+  screenVertical = (viewport) => {
+    const {height, width} = viewport
+    return height > width
   }
-  
-  renderMap = () => {
-    const { mapData } = this.props
-    const screenHorizontal = this.mapContainer.offsetWidth > this.mapContainer.offsetHeight;
-    if (!screenHorizontal) {
-      const { northeast, southwest } = mapData.bounds
-      const shiftVert = (northeast[0] - southwest[0]) * 0.05
-      const shiftHor = (northeast[1] - southwest[1]) * 0.05
-      mapData.bounds.northeast[0] += shiftVert;
-      mapData.bounds.southwest[0] -= shiftVert;
-      mapData.bounds.northeast[1] += shiftHor;
-      mapData.bounds.southwest[1] -= shiftHor;
+
+  addMarginToMap = (bounds) => {
+    const { northeast, southwest } = bounds
+    const shiftVert = (northeast[0] - southwest[0]) * 0.05
+    const shiftHor = (northeast[1] - southwest[1]) * 0.15
+    northeast[0] += shiftVert;
+    southwest[0] -= shiftVert;
+    northeast[1] += shiftHor;
+    southwest[1] -= shiftHor;
+    return { northeast, southwest }
+  }
+
+  radians_to_degrees = (radians) => {
+    const pi = Math.PI;
+    return radians * (180/pi);
+  }
+
+  getSlope = (coords) => {
+    return (coords.y2 - coords.y1) / (coords.x2 - coords.x1)
+  }
+
+  getAngle = (slopes) => {
+    const { m1, m2 } = slopes
+    const radians = Math.atan(Math.abs((m2 - m1) / (1 + m1*m2)))
+    const degrees = this.radians_to_degrees(radians)
+    return -degrees
+  }
+  getBearing = (viewport) => {
+    const { bounds } = this.props.mapData
+    const boxCoords = {y2: viewport.height, y1: 0, x2: viewport.width, x1: 0}
+    const convertedNortheast = lngLatToWorld(bounds.northeast)
+    const convertedSouthwest = lngLatToWorld(bounds.southwest)
+    const markerCoords = {
+      y2: convertedNortheast[1],
+      y1: convertedSouthwest[1],
+      x1: convertedNortheast[0],
+      x2: convertedSouthwest[0]
     }
-    
-    const map = new mapboxgl.Map({
-      container: this.mapContainer,
-      style: 'mapbox://styles/haiji/ckacho7mr2xse1ipfgqs7zwye',
-      bounds: [mapData.bounds.northeast, mapData.bounds.southwest]
-    });
-    
-    const bearing = (screenHorizontal ? -25 : 0);
-    map.setBearing(bearing);
-    map.addControl(new mapboxgl.NavigationControl());
 
-    this.renderMarkers(map, mapData)
+    const boxSlope = this.getSlope(boxCoords)
+    const markerSlope = this.getSlope(markerCoords)
+    const slopes = { m1: boxSlope, m2: markerSlope }
+    return this.getAngle(slopes)
   }
-  
-  componentDidMount() {
-    this.renderMap()
+
+  onClickMarker = mountain => {
+    this.setState({popupInfo: mountain});
+  };
+
+  renderPopup() {
+    const {popupInfo} = this.state;
+    const {coordinates} = (popupInfo ? popupInfo.geometry : [0,0])
+    return (
+      popupInfo && (
+        <Popup
+          className="popup"
+          tipSize={5}
+          anchor="top"
+          longitude={coordinates[0]}
+          latitude={coordinates[1]}
+          closeOnClick={false}
+          onClose={() => this.setState({popupInfo: null})}
+        >
+          <MountainInfo info={popupInfo} />
+        </Popup>
+      )
+    );
   }
-  
-  componentDidUpdate() {
-    this.renderMap()
+
+  updateViewport = viewport => {  
+    if (this.state.boundsSet) {
+      viewport.bearing = this.getBearing(viewport)
+      this.setState({viewport})
+    } else {
+      this.setBounds(viewport)
+    }
+  };
+
+  setBounds = (viewport) => {
+    let { bounds } = this.props.mapData
+    if (this.screenVertical(viewport)) {
+      bounds = this.addMarginToMap(bounds)
+    }
+    console.log(bounds)
+    const options = {
+      height: viewport.height,
+      width: viewport.width,
+      bounds: [bounds.northeast, bounds.southwest]
+    }
+    viewport = fitBounds(options);
+    this.setState({viewport, boundsSet: true})
   }
   
   render() {
-    const { sidebar, locale } = this.props
-    const mobileClass = (sidebar.visible ? 'sidebar-visible' : '')
+    const { mapData } = this.props
+    const { geojson } = mapData;
+    const { features } = geojson;
+    const { viewport } = this.state;
+
     return (
-      <div className={`main-box ${mobileClass}`}>
-        <div locale={locale} ref={el => this.mapContainer = el} className="mapContainer" />
-      </div>
+      <MapGL
+        {...viewport}
+        width="100%"
+        height="100%"
+        mapStyle="mapbox://styles/haiji/ckacho7mr2xse1ipfgqs7zwye"
+        onViewportChange={this.updateViewport}
+        mapboxApiAccessToken={process.env.MAPBOX_KEY}
+      >
+        <MountainMarkers data={features} onClick={this.onClickMarker} />
+        {this.renderPopup()}
+
+        <div style={fullscreenControlStyle}>
+          <FullscreenControl />
+        </div>
+        <div style={navStyle}>
+          <NavigationControl />
+        </div>
+        <div style={scaleControlStyle}>
+          <ScaleControl />
+        </div>
+      </MapGL>
     );
   }
 }
