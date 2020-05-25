@@ -7,10 +7,12 @@ mapboxgl.accessToken = process.env.MAPBOX_KEY;
 class MountainMap extends Component {
   constructor(props) {
     super(props);
-    this.state = { };
+    this.state = {
+      markers: []
+    };
   }
 
-  renderMarkers = (map, mapData) => {
+  createMarkers = (mapData) => {
     mapData.geojson.features.forEach(function(marker) {
       const el = document.createElement('i');
       el.className = 'marker fas fa-mountain';
@@ -18,7 +20,8 @@ class MountainMap extends Component {
       const { title, description } = marker.properties
       const { altitude, terrain, effort, length } = description
 
-      new mapboxgl.Marker(el, {offset: [40/2, 40/2]})
+      this.state.markers.push(
+        new mapboxgl.Marker(el, {offset: [40/2, 40/2]})
         .setLngLat(marker.geometry.coordinates)
         .setPopup(new mapboxgl.Popup({ offset: 5 }) // add popups
         .setHTML(`
@@ -28,7 +31,7 @@ class MountainMap extends Component {
           <p>${I18n.t(`attributes.effort`)}: ${effort}</p>
           <p>${I18n.t(`attributes.length`)}: ${I18n.t(`lengths.${length}`)}</p>
         `))
-        .addTo(map);
+      );
     });
   }
   
