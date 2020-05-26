@@ -14,9 +14,8 @@ export default class MountainMarkers extends PureComponent {
         latitude={mountain.geometry.coordinates[1]}
         offsetLeft={-5}
         offsetTop={-5}
-        className="marker"
       >
-        <i className="fas fa-mountain" onClick={() => onClick(mountain)}></i>
+        <i className="fas fa-mountain marker" onClick={() => onClick(mountain)}></i>
       </Marker>
     ));
   }

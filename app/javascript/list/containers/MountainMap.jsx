@@ -16,8 +16,6 @@ class MountainMap extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      popupInfo: null,
-      boundsSet: false
     };
   }
 
