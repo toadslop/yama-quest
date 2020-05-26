@@ -12,27 +12,6 @@ import MountainMarkers from '../components/MountainMarkers'
 
 mapboxgl.accessToken = process.env.MAPBOX_KEY;
 
-const fullscreenControlStyle = {
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  padding: '10px'
-};
-
-const navStyle = {
-  position: 'absolute',
-  top: 36,
-  left: 0,
-  padding: '10px'
-};
-
-const scaleControlStyle = {
-  position: 'absolute',
-  bottom: 36,
-  left: 0,
-  padding: '10px'
-};
-
 class MountainMap extends Component {
   constructor(props) {
     super(props);
@@ -166,13 +145,13 @@ class MountainMap extends Component {
         <MountainMarkers data={features} onClick={this.onClickMarker} />
         {this.renderPopup()}
 
-        <div style={fullscreenControlStyle}>
+        <div className="map-control">
           <FullscreenControl />
         </div>
-        <div style={navStyle}>
+        <div className="map-nav-control">
           <NavigationControl />
         </div>
-        <div style={scaleControlStyle}>
+        <div className="map-scale-control">
           <ScaleControl />
         </div>
       </MapGL>

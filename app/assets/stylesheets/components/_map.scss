@@ -5,6 +5,27 @@
   width: 100%;
 }
 
+.map-control {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px;
+}
+
+.map-nav-control {
+  position: absolute;
+  top: 36px;
+  left: 0;
+  padding: 10px;
+}
+
+.map-scale-control {
+  position: absolute;
+  bottom: 36px;
+  left: 0;
+  padding: 10px;
+}
+
 .mapboxgl-popup {
   max-width: 200px;
 }
