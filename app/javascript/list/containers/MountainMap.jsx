@@ -16,15 +16,6 @@ class MountainMap extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      viewport: {
-        latitude: 37.785164,
-        longitude: -100,
-        zoom: 3.5,
-        bearing: 0,
-        pitch: 0,
-        height: 200,
-        width: 200
-      },
       popupInfo: null,
       boundsSet: false
     };
