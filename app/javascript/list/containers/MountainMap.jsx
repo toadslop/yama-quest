@@ -10,8 +10,6 @@ import mapboxgl from 'mapbox-gl';
 import MountainInfo from '../components/MountainInfo'
 import MountainMarkers from '../components/MountainMarkers'
 
-mapboxgl.accessToken = process.env.MAPBOX_KEY;
-
 class MountainMap extends Component {
   constructor(props) {
     super(props);
@@ -50,6 +48,7 @@ class MountainMap extends Component {
     const degrees = this.radians_to_degrees(radians)
     return -degrees
   }
+  
   getBearing = (viewport) => {
     const { bounds } = this.props.mapData
     const boxCoords = {y2: viewport.height, y1: 0, x2: viewport.width, x1: 0}
