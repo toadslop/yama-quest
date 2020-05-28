@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_29_105558) do
+ActiveRecord::Schema.define(version: 2020_05_28_124105) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(version: 2020_04_29_105558) do
     t.string "snow_season_end"
     t.string "remaining_snow_start"
     t.string "remaining_snow_end"
+    t.string "img_url"
     t.index ["region_id"], name: "index_mountains_on_region_id"
   end
 

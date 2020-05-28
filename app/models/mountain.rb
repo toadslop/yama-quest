@@ -28,7 +28,8 @@ class Mountain < ApplicationRecord
           altitude: altitude,
           terrain: terrain_diff,
           effort: physical_diff,
-          length: length
+          length: length,
+          img_url: img_url
         }
       }
     }

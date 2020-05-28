@@ -83,6 +83,7 @@ class MountainMap extends Component {
           longitude={coordinates[0]}
           latitude={coordinates[1]}
           closeOnClick={false}
+          offsetTop={4}
           onClose={() => this.setState({popupInfo: null})}
         >
           <MountainInfo info={popupInfo} />

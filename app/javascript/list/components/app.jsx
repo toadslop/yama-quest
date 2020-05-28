@@ -6,7 +6,6 @@ import Navbar from '../containers/Navbar'
 
 const App = () => {
   return (
-    
     <div className="box">
     <Navbar mobileClass="top-nav" />
       <ListNameHeader />
