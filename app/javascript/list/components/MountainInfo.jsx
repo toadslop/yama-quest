@@ -7,6 +7,7 @@ class MountainInfo extends Component {
     const { info } = this.props;
     const { title, description } = info.properties;
     const { altitude, terrain, effort, length, img_url } = description;
+    const imgClass = (img_url ? 'popup-img' : 'img-hiden')
 
     return (
       <div className="popup-content">
@@ -17,7 +18,7 @@ class MountainInfo extends Component {
           <p>{I18n.t(`attributes.effort`)}: {effort}</p>
           <p>{I18n.t(`attributes.length`)}: {I18n.t(`lengths.${length}`)}</p>
         </div>
-        <img className="popup-img" src={img_url} />
+        <img className={imgClass} src={img_url} />
       </div>
     );
   }
