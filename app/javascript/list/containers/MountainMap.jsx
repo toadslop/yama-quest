@@ -86,7 +86,7 @@ class MountainMap extends Component {
           anchor="top"
           longitude={coordinates[0]}
           latitude={coordinates[1]}
-          closeOnClick={false}
+          closeOnClick={true}
           offsetTop={4}
           onClose={() => this.setState({popupInfo: null})}
         >
@@ -110,7 +110,7 @@ class MountainMap extends Component {
     if (this.screenVertical(viewport)) {
       bounds = this.addMarginToMap(bounds)
     }
-    console.log(bounds)
+    
     const options = {
       height: viewport.height,
       width: viewport.width,
