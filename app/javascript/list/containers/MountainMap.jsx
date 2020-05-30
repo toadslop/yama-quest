@@ -83,12 +83,11 @@ class MountainMap extends Component {
         <Popup
           className="popup"
           tipSize={5}
-          anchor="top"
           longitude={coordinates[0]}
           latitude={coordinates[1]}
-          closeOnClick={true}
           offsetTop={4}
           onClose={() => this.setState({popupInfo: null})}
+          dynamicPosition={true}
         >
           <MountainInfo locale={this.props.locale} info={popupInfo} />
         </Popup>
