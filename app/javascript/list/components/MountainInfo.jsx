@@ -27,10 +27,14 @@ class MountainInfo extends Component {
   renderDesktopContent = (info) => {
     const { img_url } = info.properties.description;
     const imgClass = (img_url ? 'popup-img' : 'img-hidden')
+    const { title } = info.properties
 
     return (
       <div className="popup-content">
-        {this.renderInfo(info)}
+        <div className="main-box">
+          <h3>{I18n.t(`mountains.${title}`)}</h3>
+          {this.renderInfo(info)}
+        </div>
         <img className={imgClass} src={img_url} />
       </div>
     )
@@ -65,7 +69,6 @@ class MountainInfo extends Component {
       rotationAngle: 0,                      // set a rotation angle
     }
     const { title } = info.properties
-    console.log(this.state.popupHeight)
 
     return (
       <Swipeable
