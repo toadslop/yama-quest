@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import withSizes from 'react-sizes';
 
 class MountainInfo extends Component {
-  render() {
+  renderInfo = () => {
     const { info } = this.props;
     const { title, description } = info.properties;
     const { altitude, terrain, effort, length, img_url } = description;
@@ -19,22 +20,20 @@ class MountainInfo extends Component {
           <p>{I18n.t(`attributes.length`)}: {I18n.t(`lengths.${length}`)}</p>
         </div>
         <img className={imgClass} src={img_url} />
+        <div>{this.props.isMobile ? 'Is Mobile' : 'Is Not Mobile'}</div>
       </div>
-    );
+    )
+  }
+  
+  render() {
+    return (
+      this.renderInfo()
+    )
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    {  },
-    dispatch
-  );
-}
+const mapSizesToProps = ({ width }) => ({
+  isMobile: width < 480,
+})
 
-function mapStateToProps(state) {
-  return {
-    locale: state.locale
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(MountainInfo);
+export default withSizes(mapSizesToProps)(MountainInfo);
