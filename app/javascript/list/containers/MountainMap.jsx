@@ -90,7 +90,7 @@ class MountainMap extends Component {
           offsetTop={4}
           onClose={() => this.setState({popupInfo: null})}
         >
-          <MountainInfo info={popupInfo} />
+          <MountainInfo locale={this.props.locale} info={popupInfo} />
         </Popup>
       )
     );
