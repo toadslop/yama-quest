@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import withSizes from 'react-sizes';
 import { Swipeable } from 'react-swipeable'
 
+
+//TODO Refactor this component
+//TODO update styling with mountain name displayed above picture and content on fullscreen
 class MountainInfo extends Component {
   constructor(props) {
     super(props);
