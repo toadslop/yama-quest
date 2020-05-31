@@ -16,9 +16,11 @@ class LeftNav extends Component {
     return (
       <div className={`left-group ${mobileClass}`}>
         <i className="fas fa-bars" onClick={this.onClickBar}></i>
-        <div className="logo-holder">
-          <img className="nav-logo" src={logo} />
-        </div>
+        <a href="/">
+          <div className="logo-holder">
+            <img className="nav-logo" src={logo} />
+          </div>
+        </a>
       </div>
     );
   }
