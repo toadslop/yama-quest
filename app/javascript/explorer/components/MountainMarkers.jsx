@@ -1,12 +1,10 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Marker } from 'react-map-gl';
 
-const SIZE = 20;
-
-// Important for perf: the markers never change, avoid rerender when the map viewport changes
-export default class MountainMarkers extends Component {
+export default class MountainMarkers extends PureComponent {
   render() {
     const {data, onClick} = this.props;
+    console.log("loaded markers")
     return data.map((mountain, index) => (
       <Marker
         key={`marker-${index}`}
