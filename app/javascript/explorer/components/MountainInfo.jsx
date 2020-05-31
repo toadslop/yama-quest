@@ -10,7 +10,7 @@ class MountainInfo extends Component {
     super(props);
     this.state = {
       onInfo: true,
-      popupHeight: 197
+      popupHeight: 200
     }
   }
 
@@ -18,11 +18,11 @@ class MountainInfo extends Component {
     const { description } = info.properties;
     const { altitude, terrain, effort, length } = description;
     return (
-      <div>
-        <p>{I18n.t(`attributes.altitude`)}: {altitude}m</p>
-        <p>{I18n.t(`attributes.terrain`)}: {terrain}</p>
-        <p>{I18n.t(`attributes.effort`)}: {effort}</p>
-        <p>{I18n.t(`attributes.length`)}: {I18n.t(`lengths.${length}`)}</p>
+      <div className="info-div">
+        <p><b>{I18n.t(`attributes.altitude`)}:</b> {altitude}m</p>
+        <p><b>{I18n.t(`attributes.terrain`)}:</b> {terrain}</p>
+        <p><b>{I18n.t(`attributes.effort`)}:</b> {effort}</p>
+        <p><b>{I18n.t(`attributes.length`)}:</b> {I18n.t(`lengths.${length}`)}</p>
       </div>
     )
   }
@@ -34,11 +34,11 @@ class MountainInfo extends Component {
 
     return (
       <div className="popup-content">
+        <h3>{I18n.t(`mountains.${title}`)}</h3>
         <div className="main-box">
-          <h3>{I18n.t(`mountains.${title}`)}</h3>
           {this.renderInfo(info)}
+          <img className={imgClass} src={img_url} />
         </div>
-        <img className={imgClass} src={img_url} />
       </div>
     )
   }
