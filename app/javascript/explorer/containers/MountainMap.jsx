@@ -6,6 +6,13 @@ import MapGL, { Popup, NavigationControl, FullscreenControl, ScaleControl } from
 import { fitBounds, lngLatToWorld } from 'viewport-mercator-project';
 import mapboxgl from 'mapbox-gl';
 import { throttle } from 'lodash';
+import {
+  Switch,
+  Route,
+  Link,
+  useParams,
+  useRouteMatch
+} from "react-router-dom";
 
 // import internal components
 import MountainInfo from '../components/MountainInfo'
