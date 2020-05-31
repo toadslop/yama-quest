@@ -1,6 +1,9 @@
 {
   "name": "yama_quest",
   "private": true,
+  "optionalDependencies": {
+    "fsevents": "*"
+  },
   "dependencies": {
     "@babel/core": "^7.0.0-0",
     "@babel/preset-react": "^7.9.4",
