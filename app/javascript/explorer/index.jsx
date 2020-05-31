@@ -1,3 +1,4 @@
+// External imports
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -41,13 +42,16 @@ const reducers = combineReducers({
 const middlewares = applyMiddleware(logger, ReduxPromise);
 const store = createStore(reducers, initialState, middlewares);
 
-const langBase = (I18n.locale === 'en' ? '' : `/${I18n.locale}` )
+export const getLangBase = () => {
+  return (I18n.locale === 'en' ? '/jp' : '')
+} 
 
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
       <Switch>
-        <Route path={`${langBase}/explorer/:list`} component={App} />
+        <Route path={`/explorer/:list`} component={App} />
+        <Route path={`/:locale/explorer/:list`} component={App} />
       </Switch>
     </BrowserRouter>
   </Provider>,

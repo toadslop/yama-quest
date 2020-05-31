@@ -98,7 +98,6 @@ class MountainMap extends Component {
   }
 
   updateViewport = viewport => {  
-    console.log("updated vioewport")
     if (this.state.boundsSet) {
       viewport.bearing = this.getBearing(viewport)
       this.setState({viewport})
