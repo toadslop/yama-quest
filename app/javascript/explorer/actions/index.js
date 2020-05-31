@@ -1,4 +1,5 @@
-export function setLocale(newLocale) {
+export function setLocale() {
+  const newLocale = (I18n.locale === 'en' ? 'jp' : 'en')
   return {
     type: 'SET_LOCALE',
     payload: newLocale

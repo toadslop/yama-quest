@@ -6,12 +6,11 @@ import { setLocale } from '../../actions';
 import { Link } from 'react-router-dom';
 
 // Internal imports
-import { getLangBase } from '../../index';
+import { getLangBase } from '../../index'; // to handle i18n rounting
 
 class RightNav extends Component {
   handleClick = () => {
-    const newLocale = (I18n.locale === 'en' ? 'jp' : 'en')
-    this.props.setLocale(newLocale)
+    this.props.setLocale()
   }
 
   render() {
