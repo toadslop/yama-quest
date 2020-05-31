@@ -25,6 +25,9 @@ gem 'jbuilder', '~> 2.7'
 gem 'bullet', group: 'development'
 gem "i18n-js"
 
+# to handle image upload
+gem 'cloudinary'
+
 gem "font-awesome-rails"
 
 # Use Active Storage variant
