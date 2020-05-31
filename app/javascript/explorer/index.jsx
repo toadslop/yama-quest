@@ -13,17 +13,17 @@ import localeReducer from './reducers/localeReducer';
 import sidebarReducer from './reducers/sidebarReducer';
 import mapDataReducer from './reducers/mapDataReducer';
 
-const listApp = document.getElementById('list_app');
-I18n.locale = JSON.parse(listApp.dataset.language)
+const explorer = document.getElementById('explorer');
+I18n.locale = JSON.parse(explorer.dataset.language)
 
 const initialState = {
-  list: JSON.parse(listApp.dataset.list),
-  regionsList: JSON.parse(listApp.dataset.regions_list),
+  list: JSON.parse(explorer.dataset.list),
+  regionsList: JSON.parse(explorer.dataset.regions_list),
   locale: I18n.locale,
   sidebar: { visible: null },
   mapData: {
-    geojson: JSON.parse(listApp.dataset.geojson),
-    bounds: JSON.parse(listApp.dataset.map_bounds),
+    geojson: JSON.parse(explorer.dataset.geojson),
+    bounds: JSON.parse(explorer.dataset.map_bounds),
     viewport: null,
     popupInfo: null,
     boundsSet: false
@@ -51,5 +51,5 @@ ReactDOM.render(
       </Switch>
     </BrowserRouter>
   </Provider>,
-  listApp
+  explorer
 );

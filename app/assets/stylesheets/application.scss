@@ -24,18 +24,13 @@
 
  a {
    text-decoration: none;
- }
+}
 
- .app {
+#explorer {
   height: 100vh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-}
-
-#list_app {
-  height: 100%;
-  overflow: hidden;
 }
 
 .box {

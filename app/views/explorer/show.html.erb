@@ -2,17 +2,16 @@
   <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.css' rel='stylesheet' />
 <% end %>
 
-<div class="app">
-  <div id="list_app"
-      data-list="<%= @list.to_json %>"
-      data-regions_list="<%= @regions_list.to_json %>"
-      data-language="<%= I18n.locale.to_json %>"
-      data-geojson="<%= @geojson.to_json %>"
-      data-map_center="<%= @map_center.to_json %>"
-      data-map_bounds="<%= @map_bounds.to_json %>"
-      >
-  </div>
+<div id="explorer"
+    data-list="<%= @list.to_json %>"
+    data-regions_list="<%= @regions_list.to_json %>"
+    data-language="<%= I18n.locale.to_json %>"
+    data-geojson="<%= @geojson.to_json %>"
+    data-map_center="<%= @map_center.to_json %>"
+    data-map_bounds="<%= @map_bounds.to_json %>"
+    >
 </div>
+
 <% content_for :after_js do %>
-  <%= javascript_pack_tag "list" %>
+  <%= javascript_pack_tag "explorer" %>
 <% end %>
