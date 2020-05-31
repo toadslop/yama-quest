@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import MapGL, { Popup, NavigationControl, FullscreenControl, ScaleControl } from 'react-map-gl';
 import { fitBounds, lngLatToWorld } from 'viewport-mercator-project';
 import mapboxgl from 'mapbox-gl';
+import { throttle } from 'lodash';
 
 // import internal components
 import MountainInfo from '../components/MountainInfo'
@@ -19,6 +20,7 @@ class MountainMap extends Component {
         width: 200
       }
     };
+    this.handleUpdateThrottled = throttle(this.updateViewport, 100)
   }
 
   screenVertical = (viewport) => {
@@ -96,6 +98,7 @@ class MountainMap extends Component {
   }
 
   updateViewport = viewport => {  
+    console.log("updated vioewport")
     if (this.state.boundsSet) {
       viewport.bearing = this.getBearing(viewport)
       this.setState({viewport})
@@ -131,7 +134,7 @@ class MountainMap extends Component {
         width="100%"
         height="100%"
         mapStyle="mapbox://styles/haiji/ckacho7mr2xse1ipfgqs7zwye"
-        onViewportChange={this.updateViewport}
+        onViewportChange={this.handleUpdateThrottled}
         mapboxApiAccessToken={process.env.MAPBOX_KEY}
       >
         <MountainMarkers data={features} onClick={this.onClickMarker} />
