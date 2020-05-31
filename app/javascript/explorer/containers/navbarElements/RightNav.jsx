@@ -16,10 +16,11 @@ class RightNav extends Component {
   render() {
     const langBase = getLangBase();
     const { mobileClass } = this.props
+    const { name } = this.props.list
     const localeSymbol = (I18n.locale === 'en' ? '日' : 'en')
     return (
       <div className={`right-group ${mobileClass}`}>
-        <Link to={`${langBase}/explorer/${this.props.list.name}`}>
+        <Link to={`${langBase}/explorer/${name}`}>
           <div className={`set-lang ${I18n.locale}`} onClick={this.handleClick}>{localeSymbol}</div>
         </Link>
       </div>

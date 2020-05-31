@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 class ListNameHeader extends Component {
@@ -13,13 +12,6 @@ class ListNameHeader extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    {  },
-    dispatch
-  );
-}
-
 function mapStateToProps(state) {
   return {
     list: state.list,
@@ -27,4 +19,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ListNameHeader);
+export default connect(mapStateToProps)(ListNameHeader);
