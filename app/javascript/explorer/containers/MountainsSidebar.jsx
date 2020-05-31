@@ -21,6 +21,7 @@ class ListNameHeader extends Component {
   }
 }
 
+// TODO: Add functionality to change the markers displayed based on the region clicked
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {  },
