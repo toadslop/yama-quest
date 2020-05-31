@@ -65,3 +65,26 @@ mountains_hash.each do |mountain|
   new_list_mountain.save
 end
 puts '...dones'
+
+puts 'adding urls to mountains'
+csv_text = File.read(
+  Rails.root.join(
+    'lib',
+    'seeds',
+    "#{Dir.pwd}/db/csvs/img_url.csv"
+  )
+)
+parsed_csv = CSV.parse(
+  csv_text,
+  headers: true,
+  encoding: 'ISO-8859-1'
+)
+
+parsed_csv.each do |csv_line|
+  mountain = Mountain.find_by_name(csv_line[0])
+  mountain.img_url = csv_line[1]
+  puts mountain.name
+  puts mountain.img_url
+  mountain.save
+end
+puts 'done'
