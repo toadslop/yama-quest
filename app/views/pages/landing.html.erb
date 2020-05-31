@@ -1,5 +1,16 @@
-<h1>Hello world</h1>
-<% @lists.each do |list| %>
-  <%= t("lists.#{list.name}") %>
-  <%= t('regions.北海道') %>
-<% end %>
+<div id="landing">
+  <div id="landing-info">
+    <h1 class=<%= I18n.locale %>><%= I18n.t('yama-quest') %></h1>
+    <p class=<%= I18n.locale %>>
+      <%= I18n.t('landing.text1')%>
+    </p>
+    <p class=<%= I18n.locale %>>
+      <%= I18n.t('landing.text2') %>
+    </p>
+    <div class="button">
+      <p class=<%= I18n.locale %>>
+        <%= I18n.t('landing.enter') %>
+      </p>
+    </div>
+  </div>
+</div>

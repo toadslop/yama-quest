@@ -30,6 +30,11 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
+  yama-quest: Yama Quest
+  landing:
+    text1: Mountains make up 73% of Japan. If you don't go see them, aren't you missing out?
+    text2: Discover their beauty and majesty in Yama Quest...
+    enter: Enter
   lists:
     百名山: '100 Famous Mountains'
   left-sidebar:
