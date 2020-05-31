@@ -4,20 +4,21 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import MapGL, { Popup, NavigationControl, FullscreenControl, ScaleControl } from 'react-map-gl';
 import { fitBounds, lngLatToWorld } from 'viewport-mercator-project';
-import mapboxgl from 'mapbox-gl';
 import { throttle } from 'lodash';
-import {
-  Switch,
-  Route,
-  Link,
-  useParams,
-  useRouteMatch
-} from "react-router-dom";
 
 // import internal components
 import MountainInfo from '../components/MountainInfo'
 import MountainMarkers from '../components/MountainMarkers'
 
+// import internal fuctions
+import {
+  screenVertical,
+  addMarginToMap,
+  getSlope,
+  getAngle
+} from '../functions'
+
+// TODO: replace the state with redux state
 class MountainMap extends Component {
   constructor(props) {
     super(props);
@@ -28,56 +29,6 @@ class MountainMap extends Component {
       }
     };
     this.handleUpdateThrottled = throttle(this.updateViewport, 100)
-  }
-
-  screenVertical = (viewport) => {
-    const {height, width} = viewport
-    return height > width
-  }
-
-  addMarginToMap = (bounds) => {
-    const { northeast, southwest } = bounds
-    const shiftVert = (northeast[0] - southwest[0]) * 0.05
-    const shiftHor = (northeast[1] - southwest[1]) * 0.15
-    northeast[0] += shiftVert;
-    southwest[0] -= shiftVert;
-    northeast[1] += shiftHor;
-    southwest[1] -= shiftHor;
-    return { northeast, southwest }
-  }
-
-  radians_to_degrees = (radians) => {
-    const pi = Math.PI;
-    return radians * (180/pi);
-  }
-
-  getSlope = (coords) => {
-    return (coords.y2 - coords.y1) / (coords.x2 - coords.x1)
-  }
-
-  getAngle = (slopes) => {
-    const { m1, m2 } = slopes
-    const radians = Math.atan(Math.abs((m2 - m1) / (1 + m1*m2)))
-    const degrees = this.radians_to_degrees(radians)
-    return -degrees
-  }
-  
-  getBearing = (viewport) => {
-    const { bounds } = this.props.mapData
-    const boxCoords = {y2: viewport.height, y1: 0, x2: viewport.width, x1: 0}
-    const convertedNortheast = lngLatToWorld(bounds.northeast)
-    const convertedSouthwest = lngLatToWorld(bounds.southwest)
-    const markerCoords = {
-      y2: convertedNortheast[1],
-      y1: convertedSouthwest[1],
-      x1: convertedNortheast[0],
-      x2: convertedSouthwest[0]
-    }
-
-    const boxSlope = this.getSlope(boxCoords)
-    const markerSlope = this.getSlope(markerCoords)
-    const slopes = { m1: boxSlope, m2: markerSlope }
-    return this.getAngle(slopes)
   }
 
   onClickMarker = mountain => {
@@ -104,19 +55,50 @@ class MountainMap extends Component {
     );
   }
 
-  updateViewport = viewport => {  
+  // takes a viewport hash and a hash of map data and returns the bearing
+  // for the map such that the most extreme data points in all directions
+  // are angled to minimize empty space on the map
+  // IMPORTANT: RELIES ON lngLatToWorld from 'viewport-mercator-project'
+
+  getBearing = (viewport, mapData) => {
+    const { bounds } = mapData
+
+    // the coordinates of the viewport height with bottom-left defined as 0,0
+    const boxCoords = { y2: viewport.height, y1: 0, x2: viewport.width, x1: 0 }
+
+    // these convert lng and lat to a flat mercator projection to match a flat rendered mercator map
+    const convertedNortheast = lngLatToWorld(bounds.northeast)
+    const convertedSouthwest = lngLatToWorld(bounds.southwest)
+
+    // det the data above into a convenient hash for calculating
+    const markerCoords = {
+      y2: convertedNortheast[1],
+      y1: convertedSouthwest[1],
+      x1: convertedNortheast[0],
+      x2: convertedSouthwest[0]
+    }
+  
+    const boxSlope = getSlope(boxCoords)
+    const markerSlope = getSlope(markerCoords)
+    const slopes = { m1: boxSlope, m2: markerSlope }
+    return getAngle(slopes)
+  }
+
+  updateViewport = (viewport) => {  
+    const { mapData } = this.props
     if (this.state.boundsSet) {
-      viewport.bearing = this.getBearing(viewport)
+      viewport.bearing = this.getBearing(viewport, mapData)
       this.setState({viewport})
     } else {
       this.setBounds(viewport)
     }
   };
 
+  // IMPORTANT: relies on fitBounds from 'viewport-mercator-project';
   setBounds = (viewport) => {
     let { bounds } = this.props.mapData
-    if (this.screenVertical(viewport)) {
-      bounds = this.addMarginToMap(bounds)
+    if (screenVertical(viewport)) {
+      bounds = addMarginToMap(bounds)
     }
     
     const options = {
@@ -129,9 +111,7 @@ class MountainMap extends Component {
   }
   
   render() {
-    const { mapData } = this.props
-    const { geojson } = mapData;
-    const { features } = geojson;
+    const { features } = this.props.mapData.geojson
     const { viewport } = this.state;
 
     return (
@@ -160,6 +140,7 @@ class MountainMap extends Component {
   }
 }
 
+// TODO: replace map state with redux state
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {  },
