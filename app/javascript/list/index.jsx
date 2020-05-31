@@ -47,7 +47,7 @@ ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
       <Switch>
-        <Route path={`${langBase}/lists/:list`} component={App} />
+        <Route path={`${langBase}/explorer/:list`} component={App} />
       </Switch>
     </BrowserRouter>
   </Provider>,

@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     root to: 'pages#landing'
     resources :lists, only: %i[index show]
     resources :mountains, only: %i[index show]
+    get '/explorer/:name', to: 'explorer#show', as: :explorer
   end
 
   # API routing

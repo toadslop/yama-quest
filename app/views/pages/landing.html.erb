@@ -7,10 +7,12 @@
     <p class=<%= I18n.locale %>>
       <%= I18n.t('landing.text2') %>
     </p>
-    <div class="button">
-      <p class=<%= I18n.locale %>>
-        <%= link_to I18n.t('landing.enter'), list_path(1) %>
-      </p>
-    </div>
+    <%= link_to explorer_path('百名山') do %>
+      <div class="button">
+        <p class=<%= I18n.locale %>>
+          <%= I18n.t('landing.enter') %>
+        </p>
+      </div>
+    <% end %>
   </div>
 </div>
