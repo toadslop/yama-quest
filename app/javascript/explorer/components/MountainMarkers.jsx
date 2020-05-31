@@ -4,7 +4,6 @@ import { Marker } from 'react-map-gl';
 export default class MountainMarkers extends PureComponent {
   render() {
     const {data, onClick} = this.props;
-    console.log("loaded markers")
     return data.map((mountain, index) => (
       <Marker
         key={`marker-${index}`}

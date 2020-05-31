@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import LeftNav from './navbarElements/LeftNav'
 import CenterNav from './navbarElements/CenterNav'
 import RightNav from './navbarElements/RightNav'
 
-class Navbar extends Component {
+class Navbar extends PureComponent {
   render() {
     const { mobileClass } = this.props;
     return (

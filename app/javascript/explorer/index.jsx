@@ -7,6 +7,7 @@ import logger from 'redux-logger'
 import ReduxPromise from 'redux-promise';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
+// Internal imports
 import App from './components/app';
 import listReducer from './reducers/listReducer';
 import regionsListReducer from './reducers/regionsListReducer';
@@ -14,14 +15,19 @@ import localeReducer from './reducers/localeReducer';
 import sidebarReducer from './reducers/sidebarReducer';
 import mapDataReducer from './reducers/mapDataReducer';
 
+// get the div where we'll render the app
 const explorer = document.getElementById('explorer');
+
+// get the current locale passed to the frontend by the rails backend
 I18n.locale = JSON.parse(explorer.dataset.language)
 
+// set initial state from data passed in from the rails backend through the DOM
+// TODO: replace all of this with calls to the API
 const initialState = {
   list: JSON.parse(explorer.dataset.list),
   regionsList: JSON.parse(explorer.dataset.regions_list),
-  locale: I18n.locale,
-  sidebar: { visible: null },
+  locale: I18n.locale, // this locale is for making sure components update when the locale updates
+  sidebar: { visible: null }, // this is for keeping track with whether the sidebar should be visible or not in mobile
   mapData: {
     geojson: JSON.parse(explorer.dataset.geojson),
     bounds: JSON.parse(explorer.dataset.map_bounds),
@@ -31,6 +37,7 @@ const initialState = {
   }
 };
 
+// combining reducers
 const reducers = combineReducers({
   list: listReducer,
   regionsList: regionsListReducer,
@@ -39,9 +46,13 @@ const reducers = combineReducers({
   mapData: mapDataReducer
 });
 
+
 const middlewares = applyMiddleware(logger, ReduxPromise);
 const store = createStore(reducers, initialState, middlewares);
 
+// a function for determining what to put when we set
+// the url when clicking links
+// TODO: actually utilize this and move it somewhere more intuitive
 export const getLangBase = () => {
   return (I18n.locale === 'en' ? '/jp' : '')
 } 

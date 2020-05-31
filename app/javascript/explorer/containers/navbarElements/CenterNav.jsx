@@ -1,8 +1,6 @@
-import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import React, { PureComponent } from 'react';
 
-class CenterNav extends Component {
+class CenterNav extends PureComponent {
   render() {
     const { mobileClass} = this.props
     return (
@@ -16,16 +14,4 @@ class CenterNav extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    {  },
-    dispatch
-  );
-}
-
-function mapStateToProps(state) {
-  return {
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CenterNav);
+export default CenterNav;
