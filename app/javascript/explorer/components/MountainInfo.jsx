@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import withSizes from 'react-sizes';
 import { Swipeable } from 'react-swipeable'
 
+// import functions
+import { getOrder } from '../functions'
 
 //TODO Refactor this component
 class MountainInfo extends Component {
@@ -9,7 +11,12 @@ class MountainInfo extends Component {
     super(props);
     this.state = {
       onInfo: true,
-      popupHeight: 200
+      popupHeight: 200,
+      slider: {
+        pos: 0,
+        sliding: false,
+        dir: 'NEXT'
+      }
     }
   }
 

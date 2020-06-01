@@ -42,3 +42,8 @@ export const getAngle = (slopes) => {
 export const getLangBase = () => {
   return (I18n.locale === 'en' ? '/jp' : '')
 } 
+
+// a function for the carousel
+export const getOrder = ({ index, pos, numItems }) => {
+  return index - pos < 0 ? numItems - Math.abs(index - pos) : index - pos;
+};
