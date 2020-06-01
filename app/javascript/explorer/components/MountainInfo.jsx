@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import withSizes from 'react-sizes';
-import { Swipeable } from 'react-swipeable'
+import { Swipeable, useSwipeable } from 'react-swipeable'
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from 'react-responsive-carousel';
 
 // import functions
 import { getOrder } from '../functions'
@@ -12,11 +14,6 @@ class MountainInfo extends Component {
     this.state = {
       onInfo: true,
       popupHeight: 200,
-      slider: {
-        pos: 0,
-        sliding: false,
-        dir: 'NEXT'
-      }
     }
   }
 
@@ -24,7 +21,7 @@ class MountainInfo extends Component {
     const { description } = info.properties;
     const { altitude, terrain, effort, length } = description;
     return (
-      <div className="info-div">
+      <div style={{background: 'none'}}>
         <p><b>{I18n.t(`attributes.altitude`)}:</b> {altitude}m</p>
         <p><b>{I18n.t(`attributes.terrain`)}:</b> {terrain}</p>
         <p><b>{I18n.t(`attributes.effort`)}:</b> {effort}</p>
@@ -80,22 +77,22 @@ class MountainInfo extends Component {
     const { title } = info.properties
 
     return (
-      <Swipeable
-        onSwipedLeft={() => this.leftSwipe(info) }
-        onSwipedRight={() => this.rightSwipe(info) }
-        {...config} >
-        <div id="mobile-content"
-          style={{
-            width: `${Math.floor(window.innerWidth*0.6)}px`,
-            height: `${this.state.popupHeight}px`
-          }} 
-          className="main-box">
-          <h3>{I18n.t(`mountains.${title}`)}</h3>
-          <div className="popup-content">
-            {this.state.mobileContent}
-          </div>
+      <div id="mobile-content" className="main-box"
+        style={{
+          width: `${Math.floor(window.innerWidth*0.6)}px`,
+          height: `${this.state.popupHeight}px`
+        }}
+      >
+      <h3>{I18n.t(`mountains.${title}`)}</h3>
+      <Carousel>
+        <div>
+          {this.renderInfo(info)}
         </div>
-      </Swipeable>
+        <div>
+          {this.renderImg(info)}
+        </div>
+      </Carousel>
+      </div>
     )
   }
 
@@ -115,7 +112,7 @@ class MountainInfo extends Component {
   componentDidUpdate() {
     const { info } = this.props
     const { currentMountain } = this.state
-    if (!currentMountain.properties.title) { return }
+    if (!currentMountain) { return }
     if (this.props.isMobile && currentMountain.properties.title != info.properties.title) {
       this.updatePopup(info);
     }

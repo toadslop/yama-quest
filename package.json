@@ -1,9 +1,6 @@
 {
   "name": "yama_quest",
   "private": true,
-  "optionalDependencies": {
-    "fsevents": "*"
-  },
   "dependencies": {
     "@babel/core": "^7.0.0-0",
     "@babel/preset-react": "^7.9.4",
@@ -24,6 +21,7 @@
     "react-dom": "^16.13.1",
     "react-map-gl": "^5.2.5",
     "react-redux": "^7.2.0",
+    "react-responsive-carousel": "^3.2.7",
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.4.1",
     "react-sizes": "^2.0.0",
