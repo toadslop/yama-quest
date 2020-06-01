@@ -4,7 +4,6 @@ import { Swipeable } from 'react-swipeable'
 
 
 //TODO Refactor this component
-//TODO update styling with mountain name displayed above picture and content on fullscreen
 class MountainInfo extends Component {
   constructor(props) {
     super(props);
@@ -105,6 +104,7 @@ class MountainInfo extends Component {
   componentDidUpdate() {
     const { info } = this.props
     const { currentMountain } = this.state
+    if (!currentMountain.properties.title) { return }
     if (this.props.isMobile && currentMountain.properties.title != info.properties.title) {
       const content = this.renderInfo(info);
       const popupHeight = document.getElementById('mobile-content').clientHeight;

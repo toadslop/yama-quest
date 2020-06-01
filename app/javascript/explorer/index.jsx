@@ -50,13 +50,6 @@ const reducers = combineReducers({
 const middlewares = applyMiddleware(logger, ReduxPromise);
 const store = createStore(reducers, initialState, middlewares);
 
-// a function for determining what to put when we set
-// the url when clicking links
-// TODO: actually utilize this and move it somewhere more intuitive
-export const getLangBase = () => {
-  return (I18n.locale === 'en' ? '/jp' : '')
-} 
-
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
