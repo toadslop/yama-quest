@@ -92,12 +92,16 @@ class MountainInfo extends Component {
     )
   }
 
-  componentDidMount() {
-    if (this.props.isMobile) {
-      const { info } = this.props;
-      const content = this.renderInfo(info);
+  updatePopup = (info) => {
+    const content = this.renderInfo(info);
       const popupHeight = document.getElementById('mobile-content').clientHeight;
       this.setState({mobileContent: content, currentMountain: info, popupHeight})
+  }
+
+  componentDidMount() {
+    const { info } = this.props;
+    if (this.props.isMobile) {
+      this.updatePopup(info);
     }
   }
 
@@ -106,16 +110,16 @@ class MountainInfo extends Component {
     const { currentMountain } = this.state
     if (!currentMountain.properties.title) { return }
     if (this.props.isMobile && currentMountain.properties.title != info.properties.title) {
-      const content = this.renderInfo(info);
-      const popupHeight = document.getElementById('mobile-content').clientHeight;
-      this.setState({mobileContent: content, currentMountain: info, popupHeight})
+      this.updatePopup(info);
     }
   }
 
   render() {
     const { info } = this.props;
     return (
-      <div>{this.props.isMobile ? this.renderMobileContent(info) : this.renderDesktopContent(info)}</div>
+      <div>
+        {this.props.isMobile ? this.renderMobileContent(info) : this.renderDesktopContent(info)}
+      </div>
     )
   }
 }
