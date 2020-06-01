@@ -36,3 +36,9 @@ export const getAngle = (slopes) => {
   const degrees = radiansToDegrees(radians)
   return -degrees
 }
+
+// a function for determining what to put when we set
+// the url when clicking links
+export const getLangBase = () => {
+  return (I18n.locale === 'en' ? '/jp' : '')
+} 

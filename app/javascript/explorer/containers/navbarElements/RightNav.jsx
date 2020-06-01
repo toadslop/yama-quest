@@ -6,7 +6,7 @@ import { setLocale } from '../../actions';
 import { Link } from 'react-router-dom';
 
 // Internal imports
-import { getLangBase } from '../../index'; // to handle i18n rounting
+import { getLangBase } from '../../functions'; // to handle i18n rounting
 
 class RightNav extends Component {
   handleClick = () => {
