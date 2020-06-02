@@ -47,7 +47,7 @@ class MountainMap extends Component {
           latitude={coordinates[1]}
           offsetTop={0}
           anchor={'top'}
-          closeOnClick={true}
+          closeOnClick={false}
           onClose={() => this.setState({popupInfo: null})}
           dynamicPosition={true}
         >

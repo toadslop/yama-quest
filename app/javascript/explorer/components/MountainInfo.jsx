@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import withSizes from 'react-sizes';
 import "~react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Carousel } from 'react-responsive-carousel';
 
 //TODO Refactor this component
@@ -46,9 +47,7 @@ class MountainInfo extends Component {
     const { img_url } = info.properties.description;
     const imgClass = 'popup-img'
     return (
-      <div className="popup-content">
-        <img className={imgClass} src={img_url} />
-      </div>
+      <img className={imgClass} src={img_url} />
     )
   }
 
@@ -62,15 +61,15 @@ class MountainInfo extends Component {
           height: `${this.state.popupHeight}px`
         }}
       >
-      <h3>{I18n.t(`mountains.${title}`)}</h3>
-      <Carousel>
-        <div className="info">
-          {this.renderInfo(info)}
-        </div>
-        <div>
-          {this.renderImg(info)}
-        </div>
-      </Carousel>
+        <h3>{I18n.t(`mountains.${title}`)}</h3>
+        <Carousel>
+          <div className="info">
+            {this.renderInfo(info)}
+          </div>
+          <div className="popup-content">
+            {this.renderImg(info)}
+          </div>
+        </Carousel>
       </div>
     )
   }
