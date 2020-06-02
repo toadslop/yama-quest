@@ -21,7 +21,7 @@ class MountainInfo extends Component {
     const { description } = info.properties;
     const { altitude, terrain, effort, length } = description;
     return (
-      <div>
+      <div className="info2">
         <p><b>{I18n.t(`attributes.altitude`)}:</b> {altitude}m</p>
         <p><b>{I18n.t(`attributes.terrain`)}:</b> {terrain}</p>
         <p><b>{I18n.t(`attributes.effort`)}:</b> {effort}</p>
