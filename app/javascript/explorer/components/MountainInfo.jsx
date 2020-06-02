@@ -61,7 +61,7 @@ class MountainInfo extends Component {
         }}
       >
         <h3>{I18n.t(`mountains.${title}`)}</h3>
-        <Carousel>
+        <Carousel showThumbs={false} showStatus={false} transitionTime={600}>
           <div className="info">
             {this.renderInfo(info)}
           </div>
