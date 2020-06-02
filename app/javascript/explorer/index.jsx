@@ -14,7 +14,7 @@ import regionsListReducer from './reducers/regionsListReducer';
 import localeReducer from './reducers/localeReducer';
 import sidebarReducer from './reducers/sidebarReducer';
 import mapDataReducer from './reducers/mapDataReducer';
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import css from "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 
 // get the div where we'll render the app
 const explorer = document.getElementById('explorer');

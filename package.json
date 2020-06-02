@@ -10,6 +10,7 @@
     "@rails/webpacker": "4.2.2",
     "@turf/bbox": "^6.0.1",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
+    "css-loader": "^3.5.3",
     "dotenv": "^8.2.0",
     "file-loader": "^6.0.0",
     "history": "^4.10.1",
