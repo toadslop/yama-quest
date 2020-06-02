@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import withSizes from 'react-sizes';
-import { Swipeable, useSwipeable } from 'react-swipeable'
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
-
-// import functions
-import { getOrder } from '../functions'
 
 //TODO Refactor this component
 class MountainInfo extends Component {
@@ -54,16 +50,6 @@ class MountainInfo extends Component {
         <img className={imgClass} src={img_url} />
       </div>
     )
-  }
-
-  leftSwipe = (info) => {
-    const content = this.renderImg(info)
-    this.setState({ mobileContent: content, onInfo: false })
-  }
-
-  rightSwipe = (info) => {
-    const content = this.renderInfo(info);
-    this.setState({mobileContent: content, onInfo: true })
   }
 
   renderMobileContent = (info) => {
