@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import withSizes from 'react-sizes';
-import "~react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
 
 //TODO Refactor this component
