@@ -21,7 +21,7 @@ class MountainInfo extends Component {
     const { description } = info.properties;
     const { altitude, terrain, effort, length } = description;
     return (
-      <div style={{background: 'none'}}>
+      <div>
         <p><b>{I18n.t(`attributes.altitude`)}:</b> {altitude}m</p>
         <p><b>{I18n.t(`attributes.terrain`)}:</b> {terrain}</p>
         <p><b>{I18n.t(`attributes.effort`)}:</b> {effort}</p>
@@ -67,13 +67,6 @@ class MountainInfo extends Component {
   }
 
   renderMobileContent = (info) => {
-    const config = {
-      delta: 10,                             // min distance(px) before a swipe starts
-      preventDefaultTouchmoveEvent: false,   // preventDefault on touchmove, *See Details*
-      trackTouch: true,                      // track touch input
-      trackMouse: false,                     // track mouse input
-      rotationAngle: 0,                      // set a rotation angle
-    }
     const { title } = info.properties
 
     return (
@@ -85,7 +78,7 @@ class MountainInfo extends Component {
       >
       <h3>{I18n.t(`mountains.${title}`)}</h3>
       <Carousel>
-        <div>
+        <div className="info">
           {this.renderInfo(info)}
         </div>
         <div>
