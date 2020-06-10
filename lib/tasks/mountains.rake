@@ -14,6 +14,12 @@ def create_region(data_hash)
   Region.create!(name: data_hash[:region]) unless data_hash[:region].nil?
 end
 
+def create_list(data_hash)
+  return unless List.find_by_name(data_hash[:list]).nil?
+
+  List.create!(name: data_hash[:list]) unless data_hash[:list].nil?
+end
+
 namespace :mountains do
   desc 'Scrape mountain data from Momoyama'
   task scrape: :environment do
@@ -21,16 +27,17 @@ namespace :mountains do
     puts 'Scraping mountain data'
     # get html file to parse
     urls = [
-      'https://www.momonayama.net/hundred_mt_list_data/list.html',
-      'https://www.momonayama.net/mt_list_data/200/list/200_list.html',
-      'https://www.momonayama.net/mt_list_data/300/list/300_list.html'
+      ['https://www.momonayama.net/hundred_mt_list_data/list.html', '百名山'],
+      ['https://www.momonayama.net/mt_list_data/200/list/200_list.html', '二百名山'],
+      ['https://www.momonayama.net/mt_list_data/300/list/300_list.html', '三百名山'],
+      ['https://www.momonayama.net/mt_list_data/low/list/list.html', '百低山']
     ]
 
     # set up array to store the data
     mountains_array = []
 
     urls.each do |url|
-      html_doc = get_html(url)
+      html_doc = get_html(url[0])
       mountains = html_doc.search('tr')
 
       # iterate over the mountains to parse out the data
@@ -48,10 +55,17 @@ namespace :mountains do
 
         # organize data into a hash
         data_hash = {}
-        columns = %i[number name region altitude terrain_diff physical_diff length url]
+        columns = %i[number name region altitude terrain_diff physical_diff length url list]
         data_array.each_with_index do |datum, index|
           data_hash[columns[index]] = datum.text.strip unless datum.nil?
         end
+
+        # add list name to data hash 
+        data_hash[:list] = url[1]
+
+        puts 'Creating lists'
+        create_list(data_hash)
+        puts 'done'
 
         puts 'Creating regions from mountain data'
         create_region(data_hash)
@@ -69,14 +83,19 @@ namespace :mountains do
       next if Mountain.find_by_name(mountain[:name])
 
       new_mountain = Mountain.new(
-        # number: mountain[:number].to_i,
+        number: mountain[:number].to_i,
         name: mountain[:name],
         region_id: Region.find_by_name(mountain[:region]).id,
         altitude: mountain[:altitude].to_i,
         terrain_diff: mountain[:terrain_diff],
         physical_diff: mountain[:physical_diff],
         length: mountain[:length],
-        url: mountain[:url]
+        url: mountain[:url],
+      )
+      
+      new_list_mountain = ListMountain.new(
+        list_id: List.find_by_name(mountain[:list]).id,
+        mountain_id: Mountain.find_by_name(mountain[:name])
       )
       # puts new_mountain
     end
