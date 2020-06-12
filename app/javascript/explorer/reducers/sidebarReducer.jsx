@@ -1,6 +1,8 @@
+import { actionTypes } from '../actions';
+
 const sidebarReducer = (state = null, action) => {
   switch (action.type) {
-    case 'TOGGLE_SIDEBAR':
+    case actionTypes.toggleSidebar:
       return action.payload
     default:
       return state;

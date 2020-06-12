@@ -14,7 +14,7 @@ class ListNameHeader extends Component {
   render() {
     const { regionsList, sidebar } = this.props
     const mobileClass = ( sidebar.visible ? 'visible' : '')
-    console.log(this.props.regionsList)
+    
     return (
       <div className={`mountain-sidebar ${mobileClass}`}>
         <h2 className={I18n.locale}>{I18n.t('left-sidebar.area')}</h2>

@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   # API routing
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
-      get '/explorer/:list_name', to: 'explorer#list_regions', as: :list_regions
+      get '/lists/:list_name/regions', to: 'lists#list_regions', as: :list_regions
     end
   end
 end

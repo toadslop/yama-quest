@@ -1,11 +1,10 @@
+import { actionTypes } from '../actions';
+
 const regionsListReducer = (state = null, action) => {
-  console.log(action.payload)
   switch (action.type) {
-    case 'FETCH_SIDEBAR_LIST':
-      console.log(action.payload)
+    case actionTypes.fetchSidebarContent:
       return action.payload;
     default:
-      console.log("default")
       return state;
   }
 };

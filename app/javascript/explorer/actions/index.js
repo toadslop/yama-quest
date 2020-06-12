@@ -1,26 +1,31 @@
-const baseUrl = "/api/v1/"
-const explorer = "explorer"
+const baseUrl = "/api/v1"
+
+export const actionTypes = {
+  setLocale: 'SET_LOCALE',
+  toggleSidebar: 'TOGGLE_SIDEBAR',
+  fetchSidebarContent: 'FETCH_SIDEBAR_CONTENT'
+}
 
 export function setLocale() {
   const newLocale = (I18n.locale === 'en' ? 'jp' : 'en')
   return {
-    type: 'SET_LOCALE',
+    type: actionTypes.setLocale,
     payload: newLocale
   }
 }
 
 export function toggleSidebar(sidebarVisible) {
   return {
-    type: 'TOGGLE_SIDEBAR',
+    type: actionTypes.setLocale,
     payload: {visible: sidebarVisible}
   }
 }
 
 export function fetchSidebarContent(listName) {
-  const promise = fetch(`${baseUrl}/${explorer}/${listName}`).
+  const promise = fetch(`${baseUrl}/lists/${listName}/regions`).
     then(response => response.json());
   return {
-    type: 'FETCH_SIDEBAR_LIST',
+    type: actionTypes.fetchSidebarContent,
     payload: promise
   }
 }
