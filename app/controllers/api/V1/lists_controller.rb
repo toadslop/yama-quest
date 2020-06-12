@@ -1,5 +1,5 @@
 class Api::V1::ListsController < ActionController::Base
-  before_action :fetch_list, only: [:list_regions]
+  before_action :fetch_list, only: [:list_regions, :fetch_geojson]
   before_action :fetch_regions_list, only: [:show]
   before_action :fetch_geojson, only: [:show]
   before_action :fetch_map_center, only: [:show]
@@ -7,6 +7,11 @@ class Api::V1::ListsController < ActionController::Base
 
   def list_regions
     @regions_list = @list.regions_list
+  end
+
+  def fetch_geojson
+    @geojson = @list.feature_collection
+    # raise
   end
 
   private
@@ -18,10 +23,6 @@ class Api::V1::ListsController < ActionController::Base
     else
       redirect_to explorer_path(List.first)
     end
-  end
-
-  def fetch_geojson
-    @geojson = @list.feature_collection
   end
 
   def fetch_map_center

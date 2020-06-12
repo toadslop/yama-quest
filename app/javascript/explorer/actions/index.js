@@ -29,3 +29,12 @@ export function fetchSidebarContent(listName) {
     payload: promise
   }
 }
+
+export function fetchGeojson(geographic_area) {
+  const promise = fetch(`${baseUrl}/lists/${listName}/regions`).
+    then(response => response.json());
+  return {
+    type: actionTypes.fetchSidebarContent,
+    payload: promise
+  }
+}

@@ -17,9 +17,9 @@ class ListsController < ApplicationController
   private
 
   def fetch_list
-    if List.exists?(id: params[:id])
+    if List.exists?(id: params[:list_name])
       # @list = localize_name(List.find(params[:id]))
-      @list = List.find(params[:id])
+      @list = List.find(params[:list_name])
     else
       redirect_to list_path(List.first)
     end

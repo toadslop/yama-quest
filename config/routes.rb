@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
       get '/lists/:list_name/regions', to: 'lists#list_regions', as: :list_regions
+      get '/lists/:list_name/geojson', to: 'lists#fetch_geojson', as: :list_geojson
     end
   end
 end
