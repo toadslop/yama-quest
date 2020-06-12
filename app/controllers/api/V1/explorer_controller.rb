@@ -1,11 +1,13 @@
-class ExplorerController < ApplicationController
-  before_action :fetch_list, only: [:show]
+class Api::V1::ExplorerController < ActionController::Base
+  before_action :fetch_list, only: [:list_regions]
   before_action :fetch_regions_list, only: [:show]
   before_action :fetch_geojson, only: [:show]
   before_action :fetch_map_center, only: [:show]
   before_action :fetch_map_bounds, only: [:show]
 
-  def show; end
+  def list_regions
+    @regions_list = @list.regions_list
+  end
 
   private
 
@@ -16,11 +18,6 @@ class ExplorerController < ApplicationController
     else
       redirect_to explorer_path(List.first)
     end
-  end
-
-  def fetch_regions_list
-    # @regions_list = localize_name(@list.regions_list)
-    @regions_list = @list.regions_list
   end
 
   def fetch_geojson

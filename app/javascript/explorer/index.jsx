@@ -25,7 +25,7 @@ I18n.locale = JSON.parse(explorer.dataset.language)
 // TODO: replace all of this with calls to the API
 const initialState = {
   list: JSON.parse(explorer.dataset.list),
-  regionsList: JSON.parse(explorer.dataset.regions_list),
+  regionsList: [],
   locale: I18n.locale, // this locale is for making sure components update when the locale updates
   sidebar: { visible: null }, // this is for keeping track with whether the sidebar should be visible or not in mobile
   mapData: {

@@ -4,13 +4,13 @@ Rails.application.routes.draw do
     root to: 'pages#landing'
     resources :lists, only: %i[index show]
     resources :mountains, only: %i[index show]
-    get '/explorer/:name', to: 'explorer#show', as: :explorer
+    get '/explorer/:list_name', to: 'explorer#show', as: :explorer
   end
 
   # API routing
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
-      resources :lists, only: [:show]
+      get '/explorer/:list_name', to: 'explorer#list_regions', as: :list_regions
     end
   end
 end
