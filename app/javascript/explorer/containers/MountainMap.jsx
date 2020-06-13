@@ -65,9 +65,7 @@ class MountainMap extends Component {
   // are angled to minimize empty space on the map
   // IMPORTANT: RELIES ON lngLatToWorld from 'viewport-mercator-project'
 
-  getBearing = (viewport, mapData) => {
-    const { bounds } = mapData
-
+  getBearing = (viewport, bounds) => {
     // the coordinates of the viewport height with bottom-left defined as 0,0
     const boxCoords = { y2: viewport.height, y1: 0, x2: viewport.width, x1: 0 }
 
@@ -90,9 +88,9 @@ class MountainMap extends Component {
   }
 
   updateViewport = (viewport) => {  
-    const { mapData } = this.props
+    const { bounds } = this.props
     if (this.state.boundsSet) {
-      viewport.bearing = this.getBearing(viewport, mapData)
+      viewport.bearing = this.getBearing(viewport, bounds)
       this.setState({viewport})
     } else {
       this.setBounds(viewport)
@@ -101,7 +99,7 @@ class MountainMap extends Component {
 
   // IMPORTANT: relies on fitBounds from 'viewport-mercator-project';
   setBounds = (viewport) => {
-    let { bounds } = this.props.mapData
+    let { bounds } = this.props
     if (screenVertical(viewport)) {
       bounds = addMarginToMap(bounds)
     }
@@ -115,7 +113,7 @@ class MountainMap extends Component {
     this.setState({viewport, boundsSet: true})
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const { list } = this.props
     this.props.fetchGeojson('lists', list.name)
   }
@@ -129,7 +127,7 @@ class MountainMap extends Component {
   }
   
   render() {
-    const { features } = this.props.mapData.geojson
+    const { geojson } = this.props;
     const { viewport } = this.state;
     return (
       <MapGL
@@ -140,7 +138,7 @@ class MountainMap extends Component {
         onViewportChange={this.handleUpdateThrottled}
         mapboxApiAccessToken={process.env.MAPBOX_KEY}
       >
-        {this.renderMarkers(features)}
+        {this.renderMarkers(geojson.features)}
         {this.renderPopup()}
 
         <div className="map-control">
@@ -169,6 +167,8 @@ function mapStateToProps(state) {
   return {
     sidebar: state.sidebar,
     mapData: state.mapData,
+    bounds: state.mapData.bounds,
+    geojson: state.mapData.geojson,
     locale: state.locale,
     list: state.list
   };
