@@ -1,7 +1,7 @@
-GEOJSON_TEMPLATE = {
-  type: '',
-  features: []
-}
+# GEOJSON_TEMPLATE = {
+#   type: '',
+#   features: []
+# }
 
 class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
@@ -10,9 +10,9 @@ class ApplicationRecord < ActiveRecord::Base
     self.class.table_name
   end
 
-  def feature_collection(mountains)
-    collection = GEOJSON_TEMPLATE
-    collection[:type] = 'FeatureCollection'
-    collection[:features] = mountains.map `&:geojson_feature`
-  end
+  # def feature_collection(mountains)
+  #   collection = GEOJSON_TEMPLATE
+  #   collection[:type] = 'FeatureCollection'
+  #   collection[:features] = mountains.map `&:geojson_feature`
+  # end
 end

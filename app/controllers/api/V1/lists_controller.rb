@@ -11,7 +11,6 @@ class Api::V1::ListsController < ActionController::Base
 
   def fetch_geojson
     @geojson = @list.feature_collection
-    # raise
   end
 
   private

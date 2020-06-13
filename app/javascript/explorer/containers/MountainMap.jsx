@@ -121,10 +121,7 @@ class MountainMap extends Component {
   }
 
   renderMarkers = (features) => {
-    
-    console.log(features)
     if (features) {
-      console.log("in features")
       return <MountainMarkers data={features} onClick={this.onClickMarker} />
     } else {
       return <div></div>
@@ -134,7 +131,6 @@ class MountainMap extends Component {
   render() {
     const { features } = this.props.mapData.geojson
     const { viewport } = this.state;
-
     return (
       <MapGL
         {...viewport}
