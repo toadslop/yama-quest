@@ -4,7 +4,8 @@ export const actionTypes = {
   setLocale: 'SET_LOCALE',
   toggleSidebar: 'TOGGLE_SIDEBAR',
   fetchSidebarContent: 'FETCH_SIDEBAR_CONTENT',
-  fetchGeojson: 'FETCH_GEOJSON'
+  fetchGeojson: 'FETCH_GEOJSON',
+  fetchMapBounds: 'FETCH_MAP_BOUNDS'
 }
 
 export function setLocale() {
@@ -36,6 +37,15 @@ export function fetchGeojson(geographicCategory, geographicName) {
     then(response => response.json());
   return {
     type: actionTypes.fetchGeojson,
+    payload: promise
+  }
+}
+
+export function fetchMapBounds(listName) {
+  const promise = fetch(`${baseUrl}/lists/${listName}/bounds`).
+    then(response => response.json());
+  return {
+    type: actionTypes.fetchMapBounds,
     payload: promise
   }
 }

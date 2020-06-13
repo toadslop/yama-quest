@@ -11,7 +11,7 @@ import MountainInfo from '../components/MountainInfo'
 import MountainMarkers from '../components/MountainMarkers'
 
 // import action creators
-import { fetchGeojson } from '../actions';
+import { fetchGeojson, fetchMapBounds } from '../actions';
 
 // import internal fuctions
 import {
@@ -89,6 +89,7 @@ class MountainMap extends Component {
 
   updateViewport = (viewport) => {  
     const { bounds } = this.props
+
     if (this.state.boundsSet) {
       viewport.bearing = this.getBearing(viewport, bounds)
       this.setState({viewport})
@@ -115,6 +116,7 @@ class MountainMap extends Component {
 
   componentWillMount() {
     const { list } = this.props
+    this.props.fetchMapBounds(list.name)
     this.props.fetchGeojson('lists', list.name)
   }
 
@@ -158,7 +160,7 @@ class MountainMap extends Component {
 // TODO: replace map state with redux state
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
-    { fetchGeojson },
+    { fetchGeojson, fetchMapBounds },
     dispatch
   );
 }

@@ -5,6 +5,9 @@ const mapDataReducer = (state = null, action) => {
     case actionTypes.fetchGeojson:
       state.geojson = action.payload
       return state
+    case actionTypes.fetchMapBounds:
+      state.bounds = action.payload
+      return state
     default:
       return state;
   }
