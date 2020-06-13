@@ -101,6 +101,8 @@ class MountainMap extends Component {
   // IMPORTANT: relies on fitBounds from 'viewport-mercator-project';
   setBounds = (viewport) => {
     let { bounds } = this.props
+    if (!bounds) { return }
+
     if (screenVertical(viewport)) {
       bounds = addMarginToMap(bounds)
     }
@@ -114,10 +116,19 @@ class MountainMap extends Component {
     this.setState({viewport, boundsSet: true})
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const { list } = this.props
+    const viewport = {
+      height: this.mapRef._height,
+      width: this.mapRef._width
+    }
     this.props.fetchMapBounds(list.name)
     this.props.fetchGeojson('lists', list.name)
+    this.updateViewport(viewport)
+    console.log(this.state.viewport)
+  }
+
+  componentDidUpdate() {
   }
 
   renderMarkers = (features) => {
@@ -139,6 +150,7 @@ class MountainMap extends Component {
         mapStyle="mapbox://styles/haiji/ckacho7mr2xse1ipfgqs7zwye"
         onViewportChange={this.handleUpdateThrottled}
         mapboxApiAccessToken={process.env.MAPBOX_KEY}
+        ref={element => this.mapRef = element}
       >
         {this.renderMarkers(geojson.features)}
         {this.renderPopup()}

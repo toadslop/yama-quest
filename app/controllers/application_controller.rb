@@ -1,10 +1,5 @@
 class ApplicationController < ActionController::Base
   before_action :set_locale
-  # before_action :fetch_list, only: [:fetch_geojson]
-
-  # def fetch_geojson
-  #   @geojson = @list.feature_collection
-  # end
 
   def set_locale
     I18n.locale = params[:locale] || I18n.default_locale
@@ -29,14 +24,4 @@ class ApplicationController < ActionController::Base
       data
     end
   end
-
-  # private
-
-  # def fetch_list
-  #   if List.exists?(id: params[:list_name])
-  #     @list = List.find(params[:list_name])
-  #   else
-  #     @list = List.first
-  #   end
-  # end
 end
