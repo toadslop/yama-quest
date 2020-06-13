@@ -120,9 +120,9 @@ class MountainMap extends Component {
     this.props.fetchGeojson('lists', list.name)
   }
 
-  renderMarkers = () => {
-    const { features } = this.props.mapData.geojson
-    console.log(this.props.mapData)
+  renderMarkers = (features) => {
+    
+    console.log(features)
     if (features) {
       console.log("in features")
       return <MountainMarkers data={features} onClick={this.onClickMarker} />
@@ -132,6 +132,7 @@ class MountainMap extends Component {
   }
   
   render() {
+    const { features } = this.props.mapData.geojson
     const { viewport } = this.state;
 
     return (
@@ -143,7 +144,7 @@ class MountainMap extends Component {
         onViewportChange={this.handleUpdateThrottled}
         mapboxApiAccessToken={process.env.MAPBOX_KEY}
       >
-        {this.renderMarkers()}
+        {this.renderMarkers(features)}
         {this.renderPopup()}
 
         <div className="map-control">
