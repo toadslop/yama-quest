@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       get '/lists/:list_name/regions', to: 'lists#list_regions', as: :list_regions
       get '/lists/:list_name/geojson', to: 'lists#fetch_geojson', as: :list_geojson
       get '/lists/:list_name/bounds', to: 'lists#fetch_map_bounds', as: :list_bounds
+      get '/:list_name/regions/:region_id', to: 'lists#region_geojson', as: :region_geojson
     end
   end
 end

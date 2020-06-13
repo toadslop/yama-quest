@@ -30,10 +30,7 @@ const initialState = {
   sidebar: { visible: null }, // this is for keeping track with whether the sidebar should be visible or not in mobile
   mapData: {
     geojson: [],
-    bounds: JSON.parse(explorer.dataset.map_bounds),
-    viewport: null,
-    popupInfo: null,
-    boundsSet: false
+    bounds: JSON.parse(explorer.dataset.map_bounds)
   }
 };
 

@@ -4,6 +4,7 @@
 
 GEOJSON_TEMPLATE = {
   type: '',
+  bounds: [],
   features: []
 }
 
@@ -45,5 +46,28 @@ class List < ApplicationRecord
       northeast: [east_bound, north_bound],
       southwest: [west_bound, south_bound]
     }
+  end
+
+  def region_mountains(region_id)
+    mountains.where(region_id: region_id)
+  end
+
+  def bounds(mountain_set)
+    lats = mountain_set.select(:lat).order(:lat)
+    lngs = mountain_set.select(:lng).order(:lng)
+    south_bound = lats.last.lat
+    north_bound = lats.first.lat
+    west_bound = lngs.first.lng
+    east_bound = lngs.last.lng
+    [[east_bound, north_bound],[west_bound, south_bound]]
+  end
+
+  def sub_map_data(region_id)
+    mountain_set = region_mountains(region_id)
+    map_data = GEOJSON_TEMPLATE
+    map_data[:type] = 'FeatureCollection'
+    map_data[:bounds] = bounds(mountain_set)
+    map_data[:features] = mountain_set.map { |mountain| mountain.geojson_feature }
+    map_data
   end
 end

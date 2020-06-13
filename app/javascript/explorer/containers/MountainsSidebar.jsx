@@ -2,13 +2,17 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { fetchSidebarContent } from './../actions';
+import { fetchSidebarContent, fetchGeojson } from './../actions';
 
 class ListNameHeader extends Component {
 
   componentDidMount() {
     const { list } = this.props
     this.props.fetchSidebarContent(list.name)
+  }
+
+  handleClick = () => {
+    this.fetchGeojson('regions', event.id)
   }
 
   renderList = () => {
@@ -18,7 +22,14 @@ class ListNameHeader extends Component {
     } else {
       return regionsList.map((region) => {
           return (
-            <h3 key={region.id} className={`sidebar-item ${I18n.locale}`}>{I18n.t(`regions.${region.name}`)}</h3>
+            <h3
+              key={region.id}
+              id={region.id}
+              className={`sidebar-item ${I18n.locale}`}
+              onClick={this.handleClick}
+            >
+              {I18n.t(`regions.${region.name}`)}
+            </h3>
           )
         }
       )
@@ -44,7 +55,7 @@ class ListNameHeader extends Component {
 // TODO: Add functionality to change the markers displayed based on the region clicked
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
-    { fetchSidebarContent },
+    { fetchSidebarContent, fetchGeojson },
     dispatch
   );
 }

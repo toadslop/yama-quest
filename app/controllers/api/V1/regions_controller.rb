@@ -1,6 +1,5 @@
-class Api::V1::ListsController < ActionController::Base
-  before_action :fetch_list
-  before_action :fetch_region, only: [:region_geojson]
+class Api::V1::RegionsController < ActionController::Base
+  before_action :fetch_list, only: [:list_regions, :fetch_geojson, :fetch_map_bounds]
   before_action :fetch_regions_list, only: [:show]
   before_action :fetch_geojson, only: [:show]
   before_action :fetch_map_center, only: [:show]
@@ -18,10 +17,6 @@ class Api::V1::ListsController < ActionController::Base
     @map_bounds = @list.map_bounds
   end
 
-  def region_geojson
-    @geojson = @list.sub_map_data(@region.id)
-  end
-
   private
 
   def fetch_list
@@ -31,10 +26,6 @@ class Api::V1::ListsController < ActionController::Base
     else
       redirect_to explorer_path(List.first)
     end
-  end
-
-  def fetch_region
-    @region = Region.find(params[:region_id])
   end
 
   def fetch_map_center

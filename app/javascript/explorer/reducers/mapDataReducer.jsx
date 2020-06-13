@@ -1,7 +1,6 @@
 import { actionTypes } from '../actions';
 
 const mapDataReducer = (state = null, action) => {
-  console.log(action.payload)
   switch (action.type) {
     case actionTypes.fetchGeojson:
       return Object.assign({}, state, {

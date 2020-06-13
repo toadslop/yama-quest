@@ -35,7 +35,8 @@
     "turbolinks": "^5.2.0",
     "typescript": "^3.8.3",
     "viewport-mercator-project": "^7.0.1",
-    "webpack": "^4.0.0"
+    "webpack": "^4.0.0",
+    "websocket-extensions": "^0.1.4"
   },
   "scripts": {
     "start": "react-scripts start"

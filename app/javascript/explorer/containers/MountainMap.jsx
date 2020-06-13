@@ -125,11 +125,8 @@ class MountainMap extends Component {
     this.props.fetchMapBounds(list.name)
     this.props.fetchGeojson('lists', list.name)
     this.updateViewport(viewport)
-    console.log(this.state.viewport)
   }
 
-  componentDidUpdate() {
-  }
 
   renderMarkers = (features) => {
     if (features) {
