@@ -29,7 +29,7 @@ const initialState = {
   locale: I18n.locale, // this locale is for making sure components update when the locale updates
   sidebar: { visible: null }, // this is for keeping track with whether the sidebar should be visible or not in mobile
   mapData: {
-    geojson: JSON.parse(explorer.dataset.geojson),
+    geojson: [],
     bounds: JSON.parse(explorer.dataset.map_bounds),
     viewport: null,
     popupInfo: null,

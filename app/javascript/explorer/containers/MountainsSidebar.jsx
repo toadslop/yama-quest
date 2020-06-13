@@ -11,19 +11,30 @@ class ListNameHeader extends Component {
     this.props.fetchSidebarContent(list.name)
   }
 
+  renderList = () => {
+    const { regionsList } = this.props
+    if ( this.regionsList === [] ) {
+      return <div></div>
+    } else {
+      return regionsList.map((region) => {
+          return (
+            <h3 key={region.id} className={`sidebar-item ${I18n.locale}`}>{I18n.t(`regions.${region.name}`)}</h3>
+          )
+        }
+      )
+    }
+    
+  }
+
   render() {
-    const { regionsList, sidebar } = this.props
+    const { sidebar } = this.props
     const mobileClass = ( sidebar.visible ? 'visible' : '')
     
     return (
       <div className={`mountain-sidebar ${mobileClass}`}>
         <h2 className={I18n.locale}>{I18n.t('left-sidebar.area')}</h2>
         <div className="area-list">
-          {regionsList.map((region) => {
-            return(
-              <h3 key={region.id} className={`sidebar-item ${I18n.locale}`}>{I18n.t(`regions.${region.name}`)}</h3>
-            )
-          })}
+          { this.renderList() }
         </div>
       </div>
     );

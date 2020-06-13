@@ -3,7 +3,8 @@ const baseUrl = "/api/v1"
 export const actionTypes = {
   setLocale: 'SET_LOCALE',
   toggleSidebar: 'TOGGLE_SIDEBAR',
-  fetchSidebarContent: 'FETCH_SIDEBAR_CONTENT'
+  fetchSidebarContent: 'FETCH_SIDEBAR_CONTENT',
+  fetchGeojson: 'FETCH_GEOJSON'
 }
 
 export function setLocale() {
@@ -30,11 +31,11 @@ export function fetchSidebarContent(listName) {
   }
 }
 
-export function fetchGeojson(geographic_area) {
-  const promise = fetch(`${baseUrl}/lists/${listName}/regions`).
+export function fetchGeojson(geographicCategory, geographicName) {
+  const promise = fetch(`${baseUrl}/${geographicCategory}/${geographicName}/geojson`).
     then(response => response.json());
   return {
-    type: actionTypes.fetchSidebarContent,
+    type: actionTypes.fetchGeojson,
     payload: promise
   }
 }

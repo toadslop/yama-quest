@@ -10,6 +10,9 @@ import { throttle } from 'lodash';
 import MountainInfo from '../components/MountainInfo'
 import MountainMarkers from '../components/MountainMarkers'
 
+// import action creators
+import { fetchGeojson } from '../actions';
+
 // import internal fuctions
 import {
   screenVertical,
@@ -111,9 +114,24 @@ class MountainMap extends Component {
     viewport = fitBounds(options);
     this.setState({viewport, boundsSet: true})
   }
+
+  componentDidMount() {
+    const { list } = this.props
+    this.props.fetchGeojson('lists', list.name)
+  }
+
+  renderMarkers = () => {
+    const { features } = this.props.mapData.geojson
+    console.log(this.props.mapData)
+    if (features) {
+      console.log("in features")
+      return <MountainMarkers data={features} onClick={this.onClickMarker} />
+    } else {
+      return <div></div>
+    }
+  }
   
   render() {
-    const { features } = this.props.mapData.geojson
     const { viewport } = this.state;
 
     return (
@@ -125,7 +143,7 @@ class MountainMap extends Component {
         onViewportChange={this.handleUpdateThrottled}
         mapboxApiAccessToken={process.env.MAPBOX_KEY}
       >
-        <MountainMarkers data={features} onClick={this.onClickMarker} />
+        {this.renderMarkers()}
         {this.renderPopup()}
 
         <div className="map-control">
@@ -145,7 +163,7 @@ class MountainMap extends Component {
 // TODO: replace map state with redux state
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
-    {  },
+    { fetchGeojson },
     dispatch
   );
 }
@@ -154,7 +172,8 @@ function mapStateToProps(state) {
   return {
     sidebar: state.sidebar,
     mapData: state.mapData,
-    locale: state.locale
+    locale: state.locale,
+    list: state.list
   };
 }
 
