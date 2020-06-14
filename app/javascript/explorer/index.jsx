@@ -14,6 +14,7 @@ import regionsListReducer from './reducers/regionsListReducer';
 import localeReducer from './reducers/localeReducer';
 import sidebarReducer from './reducers/sidebarReducer';
 import mapDataReducer from './reducers/mapDataReducer';
+import mapViewportReducer from './reducers/mapViewportReducer';
 
 // get the div where we'll render the app
 const explorer = document.getElementById('explorer');
@@ -31,6 +32,10 @@ const initialState = {
   mapData: {
     geojson: [],
     bounds: JSON.parse(explorer.dataset.map_bounds)
+  },
+  mapViewport: {
+    height: 200,
+    width: 200
   }
 };
 
@@ -40,7 +45,8 @@ const reducers = combineReducers({
   regionsList: regionsListReducer,
   locale: localeReducer,
   sidebar: sidebarReducer,
-  mapData: mapDataReducer
+  mapData: mapDataReducer,
+  mapViewport: mapViewportReducer
 });
 
 

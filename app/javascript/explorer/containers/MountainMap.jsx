@@ -89,7 +89,7 @@ class MountainMap extends Component {
 
   updateViewport = (viewport) => {  
     const { bounds } = this.props
-    console.log(viewport)
+    console.log("viewport updated")
 
     if (this.state.boundsSet) {
       viewport.bearing = this.getBearing(viewport, bounds)
@@ -128,6 +128,9 @@ class MountainMap extends Component {
     this.updateViewport(viewport)
   }
 
+  componentWillUnmount() {
+    console.log("unmounted")
+  }
 
   renderMarkers = (features) => {
     if (features) {
