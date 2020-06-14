@@ -41,6 +41,15 @@ export function fetchGeojson(geographicCategory, geographicName) {
   }
 }
 
+export function fetchSubGeojson(listName, regionId) {
+  const promise = fetch(`${baseUrl}/${listName}/regions/${regionId}`).
+    then(response => response.json());
+  return {
+    type: actionTypes.fetchGeojson,
+    payload: promise
+  }
+}
+
 export function fetchMapBounds(listName) {
   const promise = fetch(`${baseUrl}/lists/${listName}/bounds`).
     then(response => response.json());

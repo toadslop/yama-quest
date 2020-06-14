@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { fetchSidebarContent, fetchGeojson } from './../actions';
+import { fetchSidebarContent, fetchSubGeojson } from './../actions';
 
 class ListNameHeader extends Component {
 
@@ -12,7 +12,8 @@ class ListNameHeader extends Component {
   }
 
   handleClick = () => {
-    this.fetchGeojson('regions', event.id)
+    const { list } = this.props
+    this.props.fetchSubGeojson(list.name, event.target.id)
   }
 
   renderList = () => {
@@ -55,7 +56,7 @@ class ListNameHeader extends Component {
 // TODO: Add functionality to change the markers displayed based on the region clicked
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
-    { fetchSidebarContent, fetchGeojson },
+    { fetchSidebarContent, fetchSubGeojson },
     dispatch
   );
 }
