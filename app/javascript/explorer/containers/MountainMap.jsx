@@ -11,7 +11,7 @@ import MountainInfo from '../components/MountainInfo'
 import MountainMarkers from '../components/MountainMarkers'
 
 // import action creators
-import { fetchGeojson, fetchMapBounds } from '../actions';
+import { fetchGeojson, fetchMapBounds, setViewport } from '../actions';
 
 // import internal fuctions
 import {
@@ -25,12 +25,7 @@ import {
 class MountainMap extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      viewport: {
-        height: 200,
-        width: 200
-      }
-    };
+    this.state = { popupInfo: null };
     this.handleUpdateThrottled = throttle(this.updateViewport, 100)
   }
 
@@ -89,11 +84,9 @@ class MountainMap extends Component {
 
   updateViewport = (viewport) => {  
     const { bounds } = this.props
-    console.log("viewport updated")
-
     if (this.state.boundsSet) {
       viewport.bearing = this.getBearing(viewport, bounds)
-      this.setState({viewport})
+      this.props.setViewport(viewport);
     } else {
       this.setBounds(viewport)
     }
@@ -114,7 +107,8 @@ class MountainMap extends Component {
       bounds: [bounds.northeast, bounds.southwest]
     }
     viewport = fitBounds(options);
-    this.setState({viewport, boundsSet: true})
+    this.props.setViewport(viewport)
+    this.setState({boundsSet: true})
   }
 
   componentDidMount() {
@@ -142,7 +136,7 @@ class MountainMap extends Component {
   
   render() {
     const { geojson } = this.props;
-    const { viewport } = this.state;
+    const { viewport } = this.props;
     return (
       <MapGL
         {...viewport}
@@ -173,7 +167,7 @@ class MountainMap extends Component {
 // TODO: replace map state with redux state
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
-    { fetchGeojson, fetchMapBounds },
+    { fetchGeojson, fetchMapBounds, setViewport },
     dispatch
   );
 }
@@ -185,7 +179,8 @@ function mapStateToProps(state) {
     bounds: state.mapData.bounds,
     geojson: state.mapData.geojson,
     locale: state.locale,
-    list: state.list
+    list: state.list,
+    viewport: state.mapViewport
   };
 }
 

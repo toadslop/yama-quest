@@ -5,7 +5,8 @@ export const actionTypes = {
   toggleSidebar: 'TOGGLE_SIDEBAR',
   fetchSidebarContent: 'FETCH_SIDEBAR_CONTENT',
   fetchGeojson: 'FETCH_GEOJSON',
-  fetchMapBounds: 'FETCH_MAP_BOUNDS'
+  fetchMapBounds: 'FETCH_MAP_BOUNDS',
+  setViewport: 'SET_VIEWPORT'
 }
 
 export function setLocale() {
@@ -56,5 +57,13 @@ export function fetchMapBounds(listName) {
   return {
     type: actionTypes.fetchMapBounds,
     payload: promise
+  }
+}
+
+export function setViewport(viewport) {
+  console.log("set viewport", viewport)
+  return {
+    type: actionTypes.setViewport,
+    payload: viewport
   }
 }
