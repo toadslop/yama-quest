@@ -45,7 +45,6 @@ export function fetchGeojson(geographicCategory, geographicName) {
 export function fetchSubGeojson(listName, regionId) {
   const promise = fetch(`${baseUrl}/${listName}/regions/${regionId}`).
     then(response => response.json());
-    console.log("promise", promise)
   return {
     type: actionTypes.fetchGeojson,
     payload: promise

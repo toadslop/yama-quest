@@ -16,12 +16,14 @@ class ListNameHeader extends Component {
 
   adjustViewport = () => {
     const { bounds } = this.props.mapData.geojson
-    console.log("bounds", bounds)
-    const {longitude, latitude, zoom} = new WebMercatorViewport(this.props.viewport)
+    let { viewport } = this.props
+    console.log("new bounds on click", bounds)
+    console.log("previous viewport", viewport)
+    const {longitude, latitude, zoom} = new WebMercatorViewport(viewport)
         .fitBounds([bounds[0], bounds[1]], {
-          
+          padding: 60
         });
-    const viewport = {
+    viewport = {
         ...this.props.viewport,
         longitude,
         latitude,
@@ -30,13 +32,16 @@ class ListNameHeader extends Component {
         transitionInterpolator: new FlyToInterpolator(),
         transitionEasing: d3.easeCubic
     }
+    console.log("new viewport", viewport);
     this.props.setViewport(viewport);
   };
 
   handleClick = () => {
     const { list } = this.props
     this.props.fetchSubGeojson(list.name, event.target.id).
-    then(this.adjustViewport());
+    then(() => {
+      this.adjustViewport();
+    });
   }
 
   renderList = () => {
@@ -90,7 +95,8 @@ function mapStateToProps(state) {
     locale: state.locale,
     sidebar: state.sidebar,
     list: state.list,
-    mapData: state.mapData
+    mapData: state.mapData,
+    viewport: state.mapViewport
   };
 }
 

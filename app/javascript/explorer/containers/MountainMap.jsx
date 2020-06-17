@@ -65,7 +65,6 @@ class MountainMap extends Component {
     const boxCoords = { y2: viewport.height, y1: 0, x2: viewport.width, x1: 0 }
 
     // these convert lng and lat to a flat mercator projection to match a flat rendered mercator map
-    console.log("get bearing", bounds);
     const convertedNortheast = lngLatToWorld(bounds[0])
     const convertedSouthwest = lngLatToWorld(bounds[1])
 
@@ -85,7 +84,6 @@ class MountainMap extends Component {
 
   updateViewport = (viewport) => {  
     const { bounds } = this.props.geojson
-    console.log("bounds in update viewport", bounds)
     if (this.state.boundsSet) {
       viewport.bearing = this.getBearing(viewport, bounds)
       this.props.setViewport(viewport);
@@ -98,7 +96,6 @@ class MountainMap extends Component {
   setBounds = (viewport) => {
     let { bounds } = this.props.mapData.geojson
     
-    console.log("bounds in set bonds", bounds)
     if (screenVertical(viewport)) {
       bounds = addMarginToMap(bounds)
     }
@@ -125,14 +122,6 @@ class MountainMap extends Component {
     // then((viewport)=>{
     //   this.updateViewport(viewport);
     // })
-  }
-
-  componentDidUpdate() {
-    console.log("updated", this.props.viewport)
-  }
-
-  componentWillUnmount() {
-    console.log("unmounted")
   }
 
   renderMarkers = (features) => {
