@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { WebMercatorViewport } from 'viewport-mercator-project';
+import { FlyToInterpolator } from 'react-map-gl';
+import * as d3 from 'd3-ease';
 
-import { fetchSidebarContent, fetchSubGeojson } from './../actions';
+import { fetchSidebarContent, fetchSubGeojson, setViewport } from './../actions';
 
 class ListNameHeader extends Component {
 
@@ -11,9 +14,29 @@ class ListNameHeader extends Component {
     this.props.fetchSidebarContent(list.name)
   }
 
+  adjustViewport = () => {
+    const { bounds } = this.props.mapData.geojson
+    console.log("bounds", bounds)
+    const {longitude, latitude, zoom} = new WebMercatorViewport(this.props.viewport)
+        .fitBounds([bounds[0], bounds[1]], {
+          
+        });
+    const viewport = {
+        ...this.props.viewport,
+        longitude,
+        latitude,
+        zoom,
+        transitionDuration: 5000,
+        transitionInterpolator: new FlyToInterpolator(),
+        transitionEasing: d3.easeCubic
+    }
+    this.props.setViewport(viewport);
+  };
+
   handleClick = () => {
     const { list } = this.props
-    this.props.fetchSubGeojson(list.name, event.target.id)
+    this.props.fetchSubGeojson(list.name, event.target.id).
+    then(this.adjustViewport());
   }
 
   renderList = () => {
@@ -56,7 +79,7 @@ class ListNameHeader extends Component {
 // TODO: Add functionality to change the markers displayed based on the region clicked
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
-    { fetchSidebarContent, fetchSubGeojson },
+    { fetchSidebarContent, fetchSubGeojson, setViewport },
     dispatch
   );
 }
@@ -66,7 +89,8 @@ function mapStateToProps(state) {
     regionsList: state.regionsList,
     locale: state.locale,
     sidebar: state.sidebar,
-    list: state.list
+    list: state.list,
+    mapData: state.mapData
   };
 }
 

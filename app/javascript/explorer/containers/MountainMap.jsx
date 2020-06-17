@@ -65,8 +65,9 @@ class MountainMap extends Component {
     const boxCoords = { y2: viewport.height, y1: 0, x2: viewport.width, x1: 0 }
 
     // these convert lng and lat to a flat mercator projection to match a flat rendered mercator map
-    const convertedNortheast = lngLatToWorld(bounds.northeast)
-    const convertedSouthwest = lngLatToWorld(bounds.southwest)
+    console.log("get bearing", bounds);
+    const convertedNortheast = lngLatToWorld(bounds[0])
+    const convertedSouthwest = lngLatToWorld(bounds[1])
 
     // det the data above into a convenient hash for calculating
     const markerCoords = {
@@ -83,7 +84,8 @@ class MountainMap extends Component {
   }
 
   updateViewport = (viewport) => {  
-    const { bounds } = this.props
+    const { bounds } = this.props.geojson
+    console.log("bounds in update viewport", bounds)
     if (this.state.boundsSet) {
       viewport.bearing = this.getBearing(viewport, bounds)
       this.props.setViewport(viewport);
@@ -94,9 +96,9 @@ class MountainMap extends Component {
 
   // IMPORTANT: relies on fitBounds from 'viewport-mercator-project';
   setBounds = (viewport) => {
-    let { bounds } = this.props
-    if (!bounds) { return }
-
+    let { bounds } = this.props.mapData.geojson
+    
+    console.log("bounds in set bonds", bounds)
     if (screenVertical(viewport)) {
       bounds = addMarginToMap(bounds)
     }
@@ -104,7 +106,7 @@ class MountainMap extends Component {
     const options = {
       height: viewport.height,
       width: viewport.width,
-      bounds: [bounds.northeast, bounds.southwest]
+      bounds: [bounds[0], bounds[1]]
     }
     viewport = fitBounds(options);
     this.props.setViewport(viewport)
@@ -117,9 +119,16 @@ class MountainMap extends Component {
       height: this.mapRef._height,
       width: this.mapRef._width
     }
-    this.props.fetchMapBounds(list.name)
-    this.props.fetchGeojson('lists', list.name)
-    this.updateViewport(viewport)
+    //this.props.fetchMapBounds(list.name)
+    // console.log("viewport in did mount", viewport)
+    // this.props.fetchGeojson('lists', list.name).
+    // then((viewport)=>{
+    //   this.updateViewport(viewport);
+    // })
+  }
+
+  componentDidUpdate() {
+    console.log("updated", this.props.viewport)
   }
 
   componentWillUnmount() {
@@ -176,7 +185,6 @@ function mapStateToProps(state) {
   return {
     sidebar: state.sidebar,
     mapData: state.mapData,
-    bounds: state.mapData.bounds,
     geojson: state.mapData.geojson,
     locale: state.locale,
     list: state.list,

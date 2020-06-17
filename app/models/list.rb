@@ -19,12 +19,13 @@ class List < ApplicationRecord
   end
 
   def feature_collection
-    collection = GEOJSON_TEMPLATE
-    collection[:type] = 'FeatureCollection'
-    mountains.each do |mountain|
-      collection[:features] << mountain.geojson_feature
+    geojson = GEOJSON_TEMPLATE
+    geojson[:type] = 'FeatureCollection'
+    geojson[:bounds] = bounds(mountains)
+    geojson[:features] = mountains.map do |mountain|
+      mountain.geojson_feature
     end
-    collection
+    geojson
   end
 
   def map_center
@@ -59,7 +60,7 @@ class List < ApplicationRecord
     north_bound = lats.first.lat
     west_bound = lngs.first.lng
     east_bound = lngs.last.lng
-    [[east_bound, north_bound],[west_bound, south_bound]]
+    [[east_bound, north_bound], [west_bound, south_bound]]
   end
 
   def sub_map_data(region_id)

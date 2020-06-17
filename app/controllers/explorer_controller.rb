@@ -14,7 +14,7 @@ class ExplorerController < ApplicationController
     if List.exists?(name: params[:list_name])
       @list = List.find_by_name(params[:list_name])
     else
-      redirect_to explorer_path(List.first)
+      @list = List.first
     end
   end
 
