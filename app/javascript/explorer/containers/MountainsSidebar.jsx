@@ -19,10 +19,14 @@ class ListNameHeader extends Component {
     let { viewport } = this.props
     console.log("new bounds on click", bounds)
     console.log("previous viewport", viewport)
-    const {longitude, latitude, zoom} = new WebMercatorViewport(viewport)
+    console.log('is bounds same', bounds[0][0] === bounds[1][0])
+    const {longitude, latitude, zoom} = (
+      bounds[0][0] === bounds[1][0] ? 
+      {latitude: bounds[0][1], longitude: bounds[0][0], zoom: 11} :
+      new WebMercatorViewport(viewport)
         .fitBounds([bounds[0], bounds[1]], {
-          padding: 60
-        });
+          padding: 100
+        }));
     viewport = {
         ...this.props.viewport,
         longitude,
