@@ -9,8 +9,8 @@ export const screenVertical = (viewport) => {
 
 // takes a bounds hash and adjusts it to add margin
 export const addMarginToMap = (bounds) => {
-  const shiftVert = (bounds[0][0] - bounds[0][1]) * 0.05
-  const shiftHor = (bounds[1][0] - bounds[1][1]) * 0.15
+  const shiftVert = (bounds[0][1] - bounds[0][0]) * 0.05
+  const shiftHor = (bounds[1][1] - bounds[1][0]) * 0.15
   bounds[0][0] += shiftVert;
   bounds[1][0] -= shiftVert;
   bounds[0][1] += shiftHor;

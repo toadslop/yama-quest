@@ -19,7 +19,7 @@ export function setLocale() {
 
 export function toggleSidebar(sidebarVisible) {
   return {
-    type: actionTypes.setLocale,
+    type: actionTypes.toggleSidebar,
     payload: {visible: sidebarVisible}
   }
 }

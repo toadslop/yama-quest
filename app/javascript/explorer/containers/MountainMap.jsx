@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import MapGL, { Popup, NavigationControl, FullscreenControl, ScaleControl } from 'react-map-gl';
+import { WebMercatorViewport } from 'viewport-mercator-project';
 import { fitBounds, lngLatToWorld } from 'viewport-mercator-project';
 import { throttle } from 'lodash';
 
@@ -95,19 +96,24 @@ class MountainMap extends Component {
   // IMPORTANT: relies on fitBounds from 'viewport-mercator-project';
   setBounds = (viewport) => {
     let { bounds } = this.props.mapData.geojson
-    console.log("THIS TOO", bounds)
-    if (screenVertical(viewport)) {
-      bounds = addMarginToMap(bounds)
-    }
-    console.log("THIS", bounds)
     
-    const options = {
-      height: viewport.height,
-      width: viewport.width,
-      bounds: [bounds[0], bounds[1]]
+    const {longitude, latitude, zoom} = (
+      bounds[0][0] === bounds[1][0] ? 
+      {latitude: bounds[0][1], longitude: bounds[0][0], zoom: 18} :
+      new WebMercatorViewport(viewport)
+        .fitBounds([bounds[0], bounds[1]], {
+          padding: (screenVertical(viewport) ? 50 : 100)
+        }));
+    viewport = {
+        ...this.props.viewport,
+        longitude,
+        latitude,
+        zoom
+        // transitionDuration: 5000,
+        // transitionInterpolator: new FlyToInterpolator(),
+        // transitionEasing: d3.easeCubic
     }
-    console.log("options", options)
-    viewport = fitBounds(options);
+
     this.props.setViewport(viewport)
     this.setState({boundsSet: true})
   }

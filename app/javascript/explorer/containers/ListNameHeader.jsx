@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 class ListNameHeader extends Component {
+  
   render() {
+    console.log(this.props.locale)
     const { list } = this.props
     return (
       <div>

@@ -17,9 +17,7 @@ class ListNameHeader extends Component {
   adjustViewport = () => {
     const { bounds } = this.props.mapData.geojson
     let { viewport } = this.props
-    console.log("new bounds on click", bounds)
-    console.log("previous viewport", viewport)
-    console.log('is bounds same', bounds[0][0] === bounds[1][0])
+
     const {longitude, latitude, zoom} = (
       bounds[0][0] === bounds[1][0] ? 
       {latitude: bounds[0][1], longitude: bounds[0][0], zoom: 18} :
@@ -36,7 +34,7 @@ class ListNameHeader extends Component {
         transitionInterpolator: new FlyToInterpolator(),
         transitionEasing: d3.easeCubic
     }
-    console.log("new viewport", viewport);
+
     this.props.setViewport(viewport);
   };
 
