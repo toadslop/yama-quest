@@ -22,7 +22,7 @@ class ListNameHeader extends Component {
     console.log('is bounds same', bounds[0][0] === bounds[1][0])
     const {longitude, latitude, zoom} = (
       bounds[0][0] === bounds[1][0] ? 
-      {latitude: bounds[0][1], longitude: bounds[0][0], zoom: 11} :
+      {latitude: bounds[0][1], longitude: bounds[0][0], zoom: 18} :
       new WebMercatorViewport(viewport)
         .fitBounds([bounds[0], bounds[1]], {
           padding: 100

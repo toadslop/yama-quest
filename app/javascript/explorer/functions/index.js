@@ -9,14 +9,13 @@ export const screenVertical = (viewport) => {
 
 // takes a bounds hash and adjusts it to add margin
 export const addMarginToMap = (bounds) => {
-  const { northeast, southwest } = bounds
-  const shiftVert = (northeast[0] - southwest[0]) * 0.05
-  const shiftHor = (northeast[1] - southwest[1]) * 0.15
-  northeast[0] += shiftVert;
-  southwest[0] -= shiftVert;
-  northeast[1] += shiftHor;
-  southwest[1] -= shiftHor;
-  return { northeast, southwest }
+  const shiftVert = (bounds[0][0] - bounds[0][1]) * 0.05
+  const shiftHor = (bounds[1][0] - bounds[1][1]) * 0.15
+  bounds[0][0] += shiftVert;
+  bounds[1][0] -= shiftVert;
+  bounds[0][1] += shiftHor;
+  bounds[1][1] -= shiftHor;
+  return bounds
 }
 
 export const radiansToDegrees = (radians) => {

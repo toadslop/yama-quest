@@ -86,7 +86,6 @@ class MountainMap extends Component {
     const { bounds } = this.props.geojson
     if (this.state.boundsSet) {
       viewport.bearing = this.getBearing(viewport, bounds) || viewport.bearing
-      console.log("this is the viewport", viewport)
       this.props.setViewport(viewport);
     } else {
       this.setBounds(viewport)
@@ -96,16 +95,18 @@ class MountainMap extends Component {
   // IMPORTANT: relies on fitBounds from 'viewport-mercator-project';
   setBounds = (viewport) => {
     let { bounds } = this.props.mapData.geojson
-    
+    console.log("THIS TOO", bounds)
     if (screenVertical(viewport)) {
       bounds = addMarginToMap(bounds)
     }
+    console.log("THIS", bounds)
     
     const options = {
       height: viewport.height,
       width: viewport.width,
       bounds: [bounds[0], bounds[1]]
     }
+    console.log("options", options)
     viewport = fitBounds(options);
     this.props.setViewport(viewport)
     this.setState({boundsSet: true})
