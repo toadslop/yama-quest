@@ -5,7 +5,7 @@ import { WebMercatorViewport } from 'viewport-mercator-project';
 import { FlyToInterpolator } from 'react-map-gl';
 import * as d3 from 'd3-ease';
 
-import { fetchSidebarContent, fetchSubGeojson, setViewport } from './../actions';
+import { fetchSidebarContent, fetchSubGeojson, setViewport, toggleSidebar } from './../actions';
 
 class ListNameHeader extends Component {
 
@@ -42,6 +42,8 @@ class ListNameHeader extends Component {
     const { list } = this.props
     this.props.fetchSubGeojson(list.name, event.target.id).
     then(() => {
+      const sidebarVisible = (this.props.sidebar.visible ? false : true)
+      this.props.toggleSidebar(sidebarVisible)
       this.adjustViewport();
     });
   }
@@ -86,7 +88,7 @@ class ListNameHeader extends Component {
 // TODO: Add functionality to change the markers displayed based on the region clicked
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
-    { fetchSidebarContent, fetchSubGeojson, setViewport },
+    { fetchSidebarContent, fetchSubGeojson, setViewport, toggleSidebar },
     dispatch
   );
 }
