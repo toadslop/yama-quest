@@ -29,21 +29,13 @@ class List < ApplicationRecord
     mountains.select(:lng).order(:lng).map { |mountain| mountain.lng }
   end
 
-  def midpoint(num_array)
-    (num_array.first + num_array.last) / 2
-  end
-
-  def map_center
-    { lat: midpoint(latitudes), lng: midpoint(longitudes) }
-  end
-
   def map_bounds
-    lats = mountains.select(:lat).order(:lat)
-    lngs = mountains.select(:lng).order(:lng)
-    south_bound = lats.last.lat
-    north_bound = lats.first.lat
-    west_bound = lngs.first.lng
-    east_bound = lngs.last.lng
+    lats = latitudes
+    lngs = longitudes
+    south_bound = lats.last
+    north_bound = lats.first
+    west_bound = lngs.first
+    east_bound = lngs.last
     {
       northeast: [east_bound, north_bound],
       southwest: [west_bound, south_bound]

@@ -5,8 +5,6 @@ class Mountain < ApplicationRecord
   has_many :list_mountains
   has_many :lists, through: :list_mountains
 
-  private
-
   # This returns the data necessary to render a feature as a point on mapbox map.
   def geojson_feature
     {
