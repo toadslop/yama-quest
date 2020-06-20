@@ -1,17 +1,10 @@
 # frozen_string_literal: true
 
 # This class defines lists of mountains, like the 100 famous mountains.
-
-GEOJSON_TEMPLATE = {
-  type: '',
-  bounds: [],
-  features: []
-}
-
 class List < ApplicationRecord
   validates :name, presence: true
   has_many :list_mountains, -> { select(:id, :number, :mountain_id) }
-  has_many :mountains, through: :list_mountains #, -> { select(:name, :region_id) },
+  has_many :mountains, through: :list_mountains
   has_many :regions, -> { select(:id, :name) }, through: :mountains
 
   def regions_list
@@ -19,7 +12,7 @@ class List < ApplicationRecord
   end
 
   def feature_collection
-    geojson = GEOJSON_TEMPLATE
+    geojson = {}
     geojson[:type] = 'FeatureCollection'
     geojson[:bounds] = bounds(mountains)
     geojson[:features] = mountains.map do |mountain|
@@ -28,12 +21,20 @@ class List < ApplicationRecord
     geojson
   end
 
+  def latitudes
+    mountains.select(:lat).order(:lat).map { |mountain| mountain.lat }
+  end
+
+  def longitudes
+    mountains.select(:lng).order(:lng).map { |mountain| mountain.lng }
+  end
+
+  def midpoint(num_array)
+    (num_array.first + num_array.last) / 2
+  end
+
   def map_center
-    lats = mountains.select(:lat).order(:lat)
-    lngs = mountains.select(:lng).order(:lng)
-    lat = (lats.first.lat + lats.last.lat) / 2
-    lng = (lngs.first.lng + lngs.last.lng) / 2
-    { lng: lng, lat: lat }
+    { lat: midpoint(latitudes), lng: midpoint(longitudes) }
   end
 
   def map_bounds
