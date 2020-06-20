@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ListMountain < ApplicationRecord
   belongs_to :list
   belongs_to :mountain, -> { select(:id, :name, :region_id) }

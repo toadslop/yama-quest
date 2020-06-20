@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V1::ListsController < ActionController::Base
   before_action :fetch_list
   before_action :fetch_region, only: [:region_geojson]

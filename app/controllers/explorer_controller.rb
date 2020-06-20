@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ExplorerController < ApplicationController
   before_action :fetch_list, only: [:show]
   before_action :fetch_regions_list, only: [:show]

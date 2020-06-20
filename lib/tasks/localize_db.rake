@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 def mountain_name_hash
   mountains = Mountain.select(:name)
   mountain_hash = {mountains: {}}

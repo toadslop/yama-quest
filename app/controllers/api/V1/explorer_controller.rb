@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Api::V1::ExplorerController < ActionController::Base
   before_action :fetch_list, only: [:list_regions]
   before_action :fetch_regions_list, only: [:show]

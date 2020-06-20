@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'csv'
 
 def make_attributes(class_name, no_id)
