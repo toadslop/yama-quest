@@ -5,7 +5,7 @@ import { WebMercatorViewport } from 'viewport-mercator-project';
 import { FlyToInterpolator } from 'react-map-gl';
 import * as d3 from 'd3-ease';
 
-import { fetchSidebarContent, fetchSubGeojson, setViewport, toggleSidebar } from './../actions';
+import { fetchSidebarContent, fetchSubGeojson, setViewport, toggleSidebar, fetchGeojson } from './../actions';
 
 class ListNameHeader extends Component {
 
@@ -17,7 +17,7 @@ class ListNameHeader extends Component {
   adjustViewport = () => {
     const { bounds } = this.props.mapData.geojson
     let { viewport } = this.props
-
+    console.log(bounds)
     const {longitude, latitude, zoom} = (
       bounds[0][0] === bounds[1][0] ? 
       {latitude: bounds[0][1], longitude: bounds[0][0], zoom: 18} :
@@ -41,6 +41,16 @@ class ListNameHeader extends Component {
   handleClick = () => {
     const { list } = this.props
     this.props.fetchSubGeojson(list.name, event.target.id).
+    then(() => {
+      const sidebarVisible = (this.props.sidebar.visible ? false : true)
+      this.props.toggleSidebar(sidebarVisible)
+      this.adjustViewport();
+    });
+  }
+
+  fetchAll = () => {
+    console.log("FETCH ALL")
+    this.props.fetchGeojson('lists', this.props.list.name).
     then(() => {
       const sidebarVisible = (this.props.sidebar.visible ? false : true)
       this.props.toggleSidebar(sidebarVisible)
@@ -78,6 +88,7 @@ class ListNameHeader extends Component {
       <div className={`mountain-sidebar ${mobileClass}`}>
         <h2 className={I18n.locale}>{I18n.t('left-sidebar.area')}</h2>
         <div className="area-list">
+          <h3 onClick={this.fetchAll}>All</h3>
           { this.renderList() }
         </div>
       </div>
@@ -88,7 +99,7 @@ class ListNameHeader extends Component {
 // TODO: Add functionality to change the markers displayed based on the region clicked
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
-    { fetchSidebarContent, fetchSubGeojson, setViewport, toggleSidebar },
+    { fetchSidebarContent, fetchSubGeojson, setViewport, toggleSidebar, fetchGeojson },
     dispatch
   );
 }

@@ -40,7 +40,8 @@
     "websocket-extensions": "^0.1.4"
   },
   "scripts": {
-    "start": "react-scripts start"
+    "start": "react-scripts start",
+    "build-prod": "webpack -p"
   },
   "version": "0.1.0",
   "devDependencies": {
