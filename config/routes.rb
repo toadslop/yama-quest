@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   scope '(:locale)', locale: /jp/ do
     root to: 'pages#landing'
-    get '/explorer/:list_name', to: 'explorer#show', as: :explorer
+    get '/explorer/:list_name', to: 'explorer#load', as: :explorer
   end
 
   # API routing
