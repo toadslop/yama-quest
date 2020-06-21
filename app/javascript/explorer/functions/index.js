@@ -46,3 +46,33 @@ export const getLangBase = () => {
 export const getOrder = ({ index, pos, numItems }) => {
   return index - pos < 0 ? numItems - Math.abs(index - pos) : index - pos;
 };
+
+export const subBounds = (features) => {
+  let lats = features.map((feature) => {
+    return feature.geometry.coordinates[0]
+  }).sort()
+
+  let lngs = features.map((feature) => {
+    return feature.geometry.coordinates[1]
+  }).sort()
+
+  return [[lats[lats.length-1], lngs[0]], [lats[0], lngs[lngs.length -1]]]
+}
+
+export const subFeatures = (features, regionId) => {
+  return features.filter((feature) => {
+    return feature.properties.region_id === regionId
+  })
+}
+
+export const subGeojson = (features, regionId) => {
+  const newFeatures = subFeatures(features, regionId)
+  const newBounds = subBounds(newFeatures)
+  return {
+    geojson: {
+      features: newFeatures,
+      type: 'Feature Collection',
+      bounds: newBounds
+    }
+  }
+}

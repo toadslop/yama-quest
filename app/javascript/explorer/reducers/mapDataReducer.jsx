@@ -11,7 +11,13 @@ const mapDataReducer = (state = null, action) => {
       return Object.assign({}, state, {
         bounds: action.payload
       })
-      
+
+    case actionTypes.setSubGeojson:
+      console.log("payload", action.payload)
+      return Object.assign({}, state, {
+        geojson: action.payload.geojson
+      })
+
     default:
       return state;
   }

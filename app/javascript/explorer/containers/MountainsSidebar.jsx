@@ -5,7 +5,8 @@ import { WebMercatorViewport } from 'viewport-mercator-project';
 import { FlyToInterpolator } from 'react-map-gl';
 import * as d3 from 'd3-ease';
 
-import { fetchSidebarContent, fetchSubGeojson, setViewport, toggleSidebar, fetchGeojson } from './../actions';
+import { fetchSidebarContent, setSubGeojson, setViewport, toggleSidebar, fetchGeojson } from './../actions';
+import { subGeojson } from './../functions'
 
 class ListNameHeader extends Component {
 
@@ -14,10 +15,9 @@ class ListNameHeader extends Component {
     this.props.fetchSidebarContent(list.name)
   }
 
-  adjustViewport = () => {
-    const { bounds } = this.props.mapData.geojson
+  adjustViewport = (bounds) => {
     let { viewport } = this.props
-    console.log(bounds)
+    console.log("adjust viewport", bounds)
     const {longitude, latitude, zoom} = (
       bounds[0][0] === bounds[1][0] ? 
       {latitude: bounds[0][1], longitude: bounds[0][0], zoom: 18} :
@@ -25,6 +25,7 @@ class ListNameHeader extends Component {
         .fitBounds([bounds[0], bounds[1]], {
           padding: 100
         }));
+
     viewport = {
         ...this.props.viewport,
         longitude,
@@ -34,22 +35,20 @@ class ListNameHeader extends Component {
         transitionInterpolator: new FlyToInterpolator(),
         transitionEasing: d3.easeCubic
     }
-
     this.props.setViewport(viewport);
   };
 
   handleClick = () => {
-    const { list } = this.props
-    this.props.fetchSubGeojson(list.name, event.target.id).
-    then(() => {
-      const sidebarVisible = (this.props.sidebar.visible ? false : true)
-      this.props.toggleSidebar(sidebarVisible)
-      this.adjustViewport();
-    });
+    const { geojson } = this.props.mapData
+    const newGeojson = subGeojson(geojson.features, parseInt(event.target.id))
+    const sidebarVisible = (this.props.sidebar.visible ? false : true)
+    this.props.toggleSidebar(sidebarVisible);
+    this.props.setSubGeojson(newGeojson);
+    this.adjustViewport(newGeojson.geojson.bounds);
+    
   }
 
   fetchAll = () => {
-    console.log("FETCH ALL")
     this.props.fetchGeojson('lists', this.props.list.name).
     then(() => {
       const sidebarVisible = (this.props.sidebar.visible ? false : true)
@@ -99,7 +98,7 @@ class ListNameHeader extends Component {
 // TODO: Add functionality to change the markers displayed based on the region clicked
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
-    { fetchSidebarContent, fetchSubGeojson, setViewport, toggleSidebar, fetchGeojson },
+    { fetchSidebarContent, setSubGeojson, setViewport, toggleSidebar, fetchGeojson },
     dispatch
   );
 }

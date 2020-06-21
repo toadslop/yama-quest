@@ -6,7 +6,8 @@ export const actionTypes = {
   fetchSidebarContent: 'FETCH_SIDEBAR_CONTENT',
   fetchGeojson: 'FETCH_GEOJSON',
   fetchMapBounds: 'FETCH_MAP_BOUNDS',
-  setViewport: 'SET_VIEWPORT'
+  setViewport: 'SET_VIEWPORT',
+  setSubGeojson: 'SET_SUB_GEOJSON'
 }
 
 export function setLocale() {
@@ -42,12 +43,11 @@ export function fetchGeojson(geographicCategory, geographicName) {
   }
 }
 
-export function fetchSubGeojson(listName, regionId) {
-  const promise = fetch(`${baseUrl}/${listName}/regions/${regionId}`).
-    then(response => response.json());
+export function setSubGeojson(geojson) {
+  console.log(geojson)
   return {
-    type: actionTypes.fetchGeojson,
-    payload: promise
+    type: actionTypes.setSubGeojson,
+    payload: geojson
   }
 }
 
