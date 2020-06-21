@@ -37,8 +37,4 @@ class Api::V1::ListsController < ActionController::Base
   def fetch_region
     @region = Region.find(params[:region_id])
   end
-
-  def fetch_map_center
-    @map_center = @list.map_center
-  end
 end
