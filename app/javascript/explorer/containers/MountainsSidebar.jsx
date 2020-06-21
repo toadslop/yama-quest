@@ -5,7 +5,7 @@ import { WebMercatorViewport } from 'viewport-mercator-project';
 import { FlyToInterpolator } from 'react-map-gl';
 import * as d3 from 'd3-ease';
 
-import { fetchSidebarContent, setSubGeojson, setViewport, toggleSidebar, fetchGeojson } from './../actions';
+import { fetchSidebarContent, setSubGeojson, setViewport, toggleSidebar, resetData } from './../actions';
 import { subGeojson } from './../functions'
 
 class ListNameHeader extends Component {
@@ -39,8 +39,8 @@ class ListNameHeader extends Component {
   };
 
   handleClick = () => {
-    const { geojson } = this.props.mapData
-    const newGeojson = subGeojson(geojson.features, parseInt(event.target.id))
+    const { mapData } = this.props
+    const newGeojson = subGeojson(mapData.features, parseInt(event.target.id))
     const sidebarVisible = (this.props.sidebar.visible ? false : true)
     this.props.toggleSidebar(sidebarVisible);
     this.props.setSubGeojson(newGeojson);
@@ -48,13 +48,12 @@ class ListNameHeader extends Component {
     
   }
 
-  fetchAll = () => {
-    this.props.fetchGeojson('lists', this.props.list.name).
-    then(() => {
-      const sidebarVisible = (this.props.sidebar.visible ? false : true)
-      this.props.toggleSidebar(sidebarVisible)
-      this.adjustViewport();
-    });
+  handleAllClick = () => {
+    const { masterData } = this.props
+    this.props.resetData(masterData)
+    const sidebarVisible = (this.props.sidebar.visible ? false : true)
+    this.props.toggleSidebar(sidebarVisible)
+    this.adjustViewport(masterData.bounds);
   }
 
   renderList = () => {
@@ -87,7 +86,7 @@ class ListNameHeader extends Component {
       <div className={`mountain-sidebar ${mobileClass}`}>
         <h2 className={I18n.locale}>{I18n.t('left-sidebar.area')}</h2>
         <div className="area-list">
-          <h3 onClick={this.fetchAll}>All</h3>
+          <h3 className={`sidebar-item ${I18n.locale}`} onClick={this.handleAllClick}>All</h3>
           { this.renderList() }
         </div>
       </div>
@@ -98,7 +97,7 @@ class ListNameHeader extends Component {
 // TODO: Add functionality to change the markers displayed based on the region clicked
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
-    { fetchSidebarContent, setSubGeojson, setViewport, toggleSidebar, fetchGeojson },
+    { fetchSidebarContent, setSubGeojson, setViewport, toggleSidebar, resetData },
     dispatch
   );
 }
@@ -109,8 +108,9 @@ function mapStateToProps(state) {
     locale: state.locale,
     sidebar: state.sidebar,
     list: state.list,
-    mapData: state.mapData,
-    viewport: state.mapViewport
+    mapData: state.mapData.geojson,
+    viewport: state.mapViewport,
+    masterData: state.mapData.masterData
   };
 }
 

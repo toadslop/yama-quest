@@ -7,7 +7,8 @@ export const actionTypes = {
   fetchGeojson: 'FETCH_GEOJSON',
   fetchMapBounds: 'FETCH_MAP_BOUNDS',
   setViewport: 'SET_VIEWPORT',
-  setSubGeojson: 'SET_SUB_GEOJSON'
+  setSubGeojson: 'SET_SUB_GEOJSON',
+  resetData: 'RESET_DATA'
 }
 
 export function setLocale() {
@@ -64,5 +65,12 @@ export function setViewport(viewport) {
   return {
     type: actionTypes.setViewport,
     payload: viewport
+  }
+}
+
+export function resetData(masterData) {
+  return {
+    type: actionTypes.resetData,
+    payload: masterData
   }
 }
