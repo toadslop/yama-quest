@@ -2,10 +2,6 @@
 class Api::V1::ListsController < ActionController::Base
   before_action :fetch_list
   before_action :fetch_region, only: [:region_geojson]
-  before_action :fetch_regions_list, only: [:show]
-  before_action :fetch_geojson, only: [:show]
-  before_action :fetch_map_center, only: [:show]
-  before_action :fetch_map_bounds, only: [:show]
 
   def list_regions
     @regions_list = @list.regions_list
@@ -26,12 +22,7 @@ class Api::V1::ListsController < ActionController::Base
   private
 
   def fetch_list
-    # check to see if a list was requested
-    if List.exists?(name: params[:list_name])
-      @list = List.find_by_name(params[:list_name])
-    else
-      redirect_to explorer_path(List.first)
-    end
+    @list = List.find_by_name(params[:list_name])
   end
 
   def fetch_region

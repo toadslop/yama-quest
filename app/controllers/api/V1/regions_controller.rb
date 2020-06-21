@@ -17,19 +17,4 @@ class Api::V1::RegionsController < ActionController::Base
   def fetch_map_bounds
     @map_bounds = @list.map_bounds
   end
-
-  private
-
-  def fetch_list
-    # check to see if a list was requested
-    if List.exists?(name: params[:list_name])
-      @list = List.find_by_name(params[:list_name])
-    else
-      redirect_to explorer_path(List.first)
-    end
-  end
-
-  def fetch_map_center
-    @map_center = @list.map_center
-  end
 end
