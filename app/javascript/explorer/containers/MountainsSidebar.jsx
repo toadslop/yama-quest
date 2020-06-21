@@ -39,8 +39,8 @@ class ListNameHeader extends Component {
   };
 
   handleClick = () => {
-    const { mapData } = this.props
-    const newGeojson = subGeojson(mapData.features, parseInt(event.target.id))
+    const { masterData } = this.props
+    const newGeojson = subGeojson(masterData.features, parseInt(event.target.id))
     const sidebarVisible = (this.props.sidebar.visible ? false : true)
     this.props.toggleSidebar(sidebarVisible);
     this.props.setSubGeojson(newGeojson);

@@ -45,7 +45,6 @@ export function fetchGeojson(geographicCategory, geographicName) {
 }
 
 export function setSubGeojson(geojson) {
-  console.log(geojson)
   return {
     type: actionTypes.setSubGeojson,
     payload: geojson
