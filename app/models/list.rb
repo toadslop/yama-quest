@@ -58,7 +58,7 @@ class List < ApplicationRecord
 
   def sub_map_data(region_id)
     mountain_set = region_mountains(region_id)
-    map_data = GEOJSON_TEMPLATE
+    map_data = {}
     map_data[:type] = 'FeatureCollection'
     map_data[:bounds] = bounds(mountain_set)
     map_data[:features] = mountain_set.map { |mountain| mountain.geojson_feature }

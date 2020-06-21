@@ -17,6 +17,7 @@ class Mountain < ApplicationRecord
       },
       properties: {
         title: name,
+        region_id: region_id,
         description: {
           altitude: altitude,
           terrain: terrain_diff,
