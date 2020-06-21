@@ -1,7 +1,7 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+Hokkaido:
+  id: 1
+  name: '北海戸'
 
-one:
-  name: MyString
-
-two:
-  name: MyString
+Tokohoku:
+  id: 2
+  name: '東北'

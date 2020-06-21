@@ -61,6 +61,19 @@ group :test do
   gem 'selenium-webdriver'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
+
+  # The basics
+  gem 'minitest'
+  gem 'minitest-rails'
+
+  # For better display
+  gem 'minitest-reporters'
+
+  # For managing testing data
+  gem 'database_cleaner'
+  gem 'factory_bot'
+  gem 'factory_bot_rails'
+  gem 'faker'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
