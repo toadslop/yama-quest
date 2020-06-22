@@ -4,10 +4,9 @@ Fuji:
   terrain_diff: ★★
   physical_diff: ★★
   length: '日帰り'
-  region_id: 1
   lat: 35.360747509167
   lng: 138.72735534793
-  id: 1
+  region_id: 1
 
 Fake_Mountain:
   name: 'フェーク'
@@ -15,7 +14,6 @@ Fake_Mountain:
   terrain_diff: ★★
   physical_diff: ★★
   length: '一泊二日'
-  region_id: 2
   lat: 35.360747509167
   lng: 138.72735534793
-  id: 2
+  region_id: 1
