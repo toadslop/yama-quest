@@ -14,8 +14,13 @@ class ListTest < ActiveSupport::TestCase
     assert_not duplicate_list.save, 'saved a list without a unique name'
   end
 
-  test 'should retrieve mountains in list' do
+  test 'should retrieve mountains that are in list' do
     list = List.first
     assert list.mountains
+  end
+
+  test 'should retrieve list_mountains from join table' do
+    list = List.first
+    assert list.list_mountains
   end
 end
