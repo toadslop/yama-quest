@@ -46,13 +46,14 @@ class MountainTest < ActiveSupport::TestCase
 
   test 'it should return a proper geojson feature' do
     name = 'mountain'
-    lat = 2000
-    lng = 2000
+    lat = 2000.0
+    lng = 2000.0
     altitude = 2000
     terrain_diff = '★★'
     physical_diff = '★★'
     length = '日帰り'
     img_url = 'www.url.com'
+    region_id = 1
 
     mountain = Mountain.new(
       name: name,
@@ -62,8 +63,9 @@ class MountainTest < ActiveSupport::TestCase
       terrain_diff: terrain_diff,
       physical_diff: physical_diff,
       length: length,
-      img_url: img_url
-  )
+      img_url: img_url,
+      region_id: region_id
+    )
 
     feature = {
       type: 'Feature',
@@ -73,6 +75,7 @@ class MountainTest < ActiveSupport::TestCase
       },
       properties: {
         title: name,
+        region_id: region_id,
         description: {
           altitude: altitude,
           terrain: terrain_diff,

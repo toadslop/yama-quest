@@ -13,4 +13,9 @@ class ListTest < ActiveSupport::TestCase
     duplicate_list = List.new(name: list.name)
     assert_not duplicate_list.save, 'saved a list without a unique name'
   end
+
+  test 'should retrieve mountains in list' do
+    list = List.first
+    assert list.mountains
+  end
 end
