@@ -19,6 +19,8 @@ class List < ApplicationRecord
     geojson
   end
 
+  private
+  
   def latitudes
     mountains.select(:lat).order(:lat).map { |mountain| mountain.lat }
   end

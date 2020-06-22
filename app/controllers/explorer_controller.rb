@@ -8,7 +8,6 @@ class ExplorerController < ApplicationController
   before_action :fetch_list, only: [:load]
   before_action :fetch_regions_list, only: [:load]
   before_action :fetch_geojson, only: [:load]
-  before_action :fetch_map_bounds, only: [:load]
 
   def load; end
 
@@ -28,13 +27,5 @@ class ExplorerController < ApplicationController
 
   def fetch_geojson
     @geojson = @list.feature_collection
-  end
-
-  def fetch_map_center
-    @map_center = @list.map_center
-  end
-
-  def fetch_map_bounds
-    @map_bounds = @list.map_bounds
   end
 end
