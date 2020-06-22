@@ -18,4 +18,8 @@ class RegionTest < ActiveSupport::TestCase
     region = Region.first
     assert region.mountains
   end
+
+  def teardown
+    Region.delete_all
+  end
 end

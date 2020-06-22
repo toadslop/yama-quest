@@ -88,4 +88,8 @@ class MountainTest < ActiveSupport::TestCase
 
     assert_equal mountain.geojson_feature, feature, 'geojson feature rendered incorrectly'
   end
+
+  def teardown
+    Mountain.delete_all
+  end
 end

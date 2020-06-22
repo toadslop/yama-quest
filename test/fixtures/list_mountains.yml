@@ -1,0 +1,11 @@
+first:
+  list_id: 1
+  mountain_id: 1
+  id: 1
+  number: 1
+
+second:
+  list_id: 1
+  mountain_id: 2
+  id: 2
+  number: 2

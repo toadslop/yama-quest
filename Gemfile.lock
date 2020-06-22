@@ -295,7 +295,6 @@ DEPENDENCIES
   cloudinary
   database_cleaner
   dotenv-rails
-  factory_bot
   factory_bot_rails
   faker
   font-awesome-rails
