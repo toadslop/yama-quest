@@ -1,24 +1,11 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Yama-quest is a hiking gamification app designed to promote hiking in Japan.
 
-Things you may want to cover:
+METHOD NAMING CONVENTIONS
 
-* Ruby version
+Javascript
+Methods calling the API start with 'fetch' and end with the type of data desired.
+Example: fetchGeojson
+         fetchBounds
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
