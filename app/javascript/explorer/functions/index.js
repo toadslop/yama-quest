@@ -9,14 +9,13 @@ export const screenVertical = (viewport) => {
 
 // takes a bounds hash and adjusts it to add margin
 export const addMarginToMap = (bounds) => {
-  const { northeast, southwest } = bounds
-  const shiftVert = (northeast[0] - southwest[0]) * 0.05
-  const shiftHor = (northeast[1] - southwest[1]) * 0.15
-  northeast[0] += shiftVert;
-  southwest[0] -= shiftVert;
-  northeast[1] += shiftHor;
-  southwest[1] -= shiftHor;
-  return { northeast, southwest }
+  const shiftVert = (bounds[0][1] - bounds[0][0]) * 0.05
+  const shiftHor = (bounds[1][1] - bounds[1][0]) * 0.15
+  bounds[0][0] += shiftVert;
+  bounds[1][0] -= shiftVert;
+  bounds[0][1] += shiftHor;
+  bounds[1][1] -= shiftHor;
+  return bounds
 }
 
 export const radiansToDegrees = (radians) => {
@@ -47,3 +46,33 @@ export const getLangBase = () => {
 export const getOrder = ({ index, pos, numItems }) => {
   return index - pos < 0 ? numItems - Math.abs(index - pos) : index - pos;
 };
+
+export const subBounds = (features) => {
+  let lats = features.map((feature) => {
+    return feature.geometry.coordinates[0]
+  }).sort()
+
+  let lngs = features.map((feature) => {
+    return feature.geometry.coordinates[1]
+  }).sort()
+
+  return [[lats[lats.length-1], lngs[0]], [lats[0], lngs[lngs.length -1]]]
+}
+
+export const subFeatures = (features, regionId) => {
+  return features.filter((feature) => {
+    return feature.properties.region_id === regionId
+  })
+}
+
+export const subGeojson = (features, regionId) => {
+  const newFeatures = subFeatures(features, regionId)
+  const newBounds = subBounds(newFeatures)
+  return {
+    geojson: {
+      features: newFeatures,
+      type: 'Feature Collection',
+      bounds: newBounds
+    }
+  }
+}

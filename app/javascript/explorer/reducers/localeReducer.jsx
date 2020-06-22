@@ -1,6 +1,8 @@
+import { actionTypes } from '../actions';
+
 const localeReducer = (state = null, action) => {
   switch (action.type) {
-    case 'SET_LOCALE':
+    case actionTypes.setLocale:
       I18n.locale = action.payload
       return action.payload
     default:

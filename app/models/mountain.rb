@@ -1,20 +1,13 @@
-FEATURE_TEMPLATE = {
-  type: '',
-  geometry: {
-    type: '',
-    coordinates: [0, 0]
-  },
-  properties: {
-    title: '',
-    description: ''
-  }
-}
+# frozen_string_literal: true
 
 class Mountain < ApplicationRecord
   belongs_to :region, -> { select(:id, :name) }
   has_many :list_mountains
   has_many :lists, through: :list_mountains
+  validates_associated :region
+  validates :name, :altitude, :lat, :lng, presence: true
 
+  # This returns the data necessary to render a feature as a point on mapbox map.
   def geojson_feature
     {
       type: 'Feature',
@@ -24,6 +17,7 @@ class Mountain < ApplicationRecord
       },
       properties: {
         title: name,
+        region_id: region_id,
         description: {
           altitude: altitude,
           terrain: terrain_diff,

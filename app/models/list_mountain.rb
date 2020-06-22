@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# This model is the join table for lists and mountains.
 class ListMountain < ApplicationRecord
   belongs_to :list
   belongs_to :mountain, -> { select(:id, :name, :region_id) }

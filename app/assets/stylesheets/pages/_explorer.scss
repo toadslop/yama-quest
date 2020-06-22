@@ -1,0 +1,21 @@
+// set the explorer app as a fullscreen app -- no scrolling
+#explorer {
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+ }
+ 
+ // make sure the app fills the whole window
+ .box {
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+ }
+ 
+ // this is the main box for the explorer app, i.e. excluding the sidebar
+ .main-box {
+  height: 100%;
+  width: 100%;
+ }

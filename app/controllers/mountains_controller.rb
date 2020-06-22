@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
+# This controller is currently unused. I don't think it will
+# ever be needed except perhaps on the admin side at some point.
+# For now, I'll leave it.
 class MountainsController < ApplicationController
-  def index
-    @mountains = Mountain.order(:number)
-  end
 end

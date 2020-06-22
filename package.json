@@ -11,6 +11,7 @@
     "@turf/bbox": "^6.0.1",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "css-loader": "^3.5.3",
+    "d3-ease": "^1.0.6",
     "dotenv": "^8.2.0",
     "file-loader": "^6.0.0",
     "history": "^4.10.1",
@@ -35,10 +36,12 @@
     "turbolinks": "^5.2.0",
     "typescript": "^3.8.3",
     "viewport-mercator-project": "^7.0.1",
-    "webpack": "^4.0.0"
+    "webpack": "^4.0.0",
+    "websocket-extensions": "^0.1.4"
   },
   "scripts": {
-    "start": "react-scripts start"
+    "start": "react-scripts start",
+    "build-prod": "webpack -p"
   },
   "version": "0.1.0",
   "devDependencies": {

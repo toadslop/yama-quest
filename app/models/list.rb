@@ -1,16 +1,10 @@
 # frozen_string_literal: true
 
 # This class defines lists of mountains, like the 100 famous mountains.
-
-GEOJSON_TEMPLATE = {
-  type: '',
-  features: []
-}
-
 class List < ApplicationRecord
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: true
   has_many :list_mountains, -> { select(:id, :number, :mountain_id) }
-  has_many :mountains, through: :list_mountains #, -> { select(:name, :region_id) },
+  has_many :mountains, through: :list_mountains
   has_many :regions, -> { select(:id, :name) }, through: :mountains
 
   def regions_list
@@ -18,32 +12,56 @@ class List < ApplicationRecord
   end
 
   def feature_collection
-    collection = GEOJSON_TEMPLATE
-    collection[:type] = 'FeatureCollection'
-    mountains.each do |mountain|
-      collection[:features] << mountain.geojson_feature
+    geojson = {}
+    geojson[:type] = 'FeatureCollection'
+    geojson[:bounds] = bounds(mountains)
+    geojson[:features] = mountains.map do |mountain|
+      mountain.geojson_feature
     end
-    collection
+    geojson
   end
 
-  def map_center
-    lats = mountains.select(:lat).order(:lat)
-    lngs = mountains.select(:lng).order(:lng)
-    lat = (lats.first.lat + lats.last.lat) / 2
-    lng = (lngs.first.lng + lngs.last.lng) / 2
-    { lng: lng, lat: lat }
+  def latitudes
+    mountains.select(:lat).order(:lat).map { |mountain| mountain.lat }
+  end
+
+  def longitudes
+    mountains.select(:lng).order(:lng).map { |mountain| mountain.lng }
   end
 
   def map_bounds
-    lats = mountains.select(:lat).order(:lat)
-    lngs = mountains.select(:lng).order(:lng)
-    south_bound = lats.last.lat
-    north_bound = lats.first.lat
-    west_bound = lngs.first.lng
-    east_bound = lngs.last.lng
+    lats = latitudes
+    lngs = longitudes
+    south_bound = lats.last
+    north_bound = lats.first
+    west_bound = lngs.first
+    east_bound = lngs.last
     {
       northeast: [east_bound, north_bound],
       southwest: [west_bound, south_bound]
     }
+  end
+
+  def region_mountains(region_id)
+    mountains.where(region_id: region_id)
+  end
+
+  def bounds(mountain_set)
+    lats = mountain_set.select(:lat).order(:lat)
+    lngs = mountain_set.select(:lng).order(:lng)
+    south_bound = lats.last.lat
+    north_bound = lats.first.lat
+    west_bound = lngs.first.lng
+    east_bound = lngs.last.lng
+    [[east_bound, north_bound], [west_bound, south_bound]]
+  end
+
+  def sub_map_data(region_id)
+    mountain_set = region_mountains(region_id)
+    map_data = {}
+    map_data[:type] = 'FeatureCollection'
+    map_data[:bounds] = bounds(mountain_set)
+    map_data[:features] = mountain_set.map { |mountain| mountain.geojson_feature }
+    map_data
   end
 end

@@ -14,6 +14,7 @@ import regionsListReducer from './reducers/regionsListReducer';
 import localeReducer from './reducers/localeReducer';
 import sidebarReducer from './reducers/sidebarReducer';
 import mapDataReducer from './reducers/mapDataReducer';
+import mapViewportReducer from './reducers/mapViewportReducer';
 
 // get the div where we'll render the app
 const explorer = document.getElementById('explorer');
@@ -25,15 +26,16 @@ I18n.locale = JSON.parse(explorer.dataset.language)
 // TODO: replace all of this with calls to the API
 const initialState = {
   list: JSON.parse(explorer.dataset.list),
-  regionsList: JSON.parse(explorer.dataset.regions_list),
+  regionsList: [],
   locale: I18n.locale, // this locale is for making sure components update when the locale updates
   sidebar: { visible: null }, // this is for keeping track with whether the sidebar should be visible or not in mobile
   mapData: {
     geojson: JSON.parse(explorer.dataset.geojson),
-    bounds: JSON.parse(explorer.dataset.map_bounds),
-    viewport: null,
-    popupInfo: null,
-    boundsSet: false
+    masterData: JSON.parse(explorer.dataset.geojson)
+  },
+  mapViewport: {
+    height: 200,
+    width: 200
   }
 };
 
@@ -43,7 +45,8 @@ const reducers = combineReducers({
   regionsList: regionsListReducer,
   locale: localeReducer,
   sidebar: sidebarReducer,
-  mapData: mapDataReducer
+  mapData: mapDataReducer,
+  mapViewport: mapViewportReducer
 });
 
 

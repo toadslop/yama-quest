@@ -1,44 +1,7 @@
 # frozen_string_literal: true
 
+# This controller is currently unused. I don't think it will
+# ever be needed except perhaps on the admin side at some point.
+# For now, I'll leave it.
 class ListsController < ApplicationController
-  # before_action :fetch_lists, only: [:index]
-  before_action :fetch_list, only: [:show]
-  before_action :fetch_regions_list, only: [:show]
-  before_action :fetch_geojson, only: [:show]
-  before_action :fetch_map_center, only: [:show]
-  before_action :fetch_map_bounds, only: [:show]
-  # before_action :fetch_mountains, only: [:show]
-  # before_action :fetch_regions, only: [:show]
-
-  def index; end
-
-  def show; end
-
-  private
-
-  def fetch_list
-    if List.exists?(id: params[:id])
-      # @list = localize_name(List.find(params[:id]))
-      @list = List.find(params[:id])
-    else
-      redirect_to list_path(List.first)
-    end
-  end
-
-  def fetch_regions_list
-    # @regions_list = localize_name(@list.regions_list)
-    @regions_list = @list.regions_list
-  end
-
-  def fetch_geojson
-    @geojson = @list.feature_collection
-  end
-
-  def fetch_map_center
-    @map_center = @list.map_center
-  end
-
-  def fetch_map_bounds
-    @map_bounds = @list.map_bounds
-  end
 end
