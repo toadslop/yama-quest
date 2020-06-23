@@ -4,7 +4,7 @@ require 'test_helper'
 
 class RegionTest < ActiveSupport::TestCase
   def setup
-    @region = Region.new(name: '北海道')
+    @region = FactoryBot.create(:region)
   end
 
   test 'should have a name' do

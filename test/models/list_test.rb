@@ -3,6 +3,9 @@
 require 'test_helper'
 
 class ListTest < ActiveSupport::TestCase
+  def setup
+    @list = FactoryBot.create(:list)
+  end
 
   test 'should not save without a name' do
     list = List.new
@@ -16,6 +19,7 @@ class ListTest < ActiveSupport::TestCase
   end
 
   test 'should retrieve mountains that are in list' do
+    p @list
     list = List.first
     assert list.mountains
   end
@@ -27,5 +31,7 @@ class ListTest < ActiveSupport::TestCase
 
   def teardown
     List.delete_all
+    ListMountain.delete_all
+    Mountain.delete_all
   end
 end

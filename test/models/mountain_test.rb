@@ -3,6 +3,10 @@
 require 'test_helper'
 
 class MountainTest < ActiveSupport::TestCase
+  def setup
+    @mountain = FactoryBot.create(:mountain)
+  end
+
   test 'should not save a mountain without a name' do
     mountain = Mountain.new(
       altitude: 2000,
@@ -34,13 +38,9 @@ class MountainTest < ActiveSupport::TestCase
   end
 
   test 'it should save a mountain with name, lat, lng, region_id, and altitude' do
-    mountain = Mountain.new(
-      name: 'mountain',
-      lat: 2000,
-      lng: 2000,
-      region_id: 1,
-      altitude: 2000
-    )
+    region = FactoryBot.create(:region, name: '東北')
+    mountain = FactoryBot.build(:mountain, name: '利尻岳')
+    mountain.region_id = region.id
     assert mountain.save, 'failed to save a mountain that has all required fields'
   end
 
@@ -91,5 +91,6 @@ class MountainTest < ActiveSupport::TestCase
 
   def teardown
     Mountain.delete_all
+    Region.delete_all
   end
 end
