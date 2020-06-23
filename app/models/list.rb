@@ -14,12 +14,12 @@ class List < ApplicationRecord
   def feature_collection
     geojson = {}
     geojson[:type] = 'FeatureCollection'
-    geojson[:bounds] = bounds(mountains)
-    geojson[:features] = mountains.map do |mountain|
-      mountain.geojson_feature
-    end
+    geojson[:bounds] = map_bounds
+    geojson[:features] = mountains.map { |mountain| mountain.geojson_feature }
     geojson
   end
+
+  private
 
   def latitudes
     mountains.select(:lat).order(:lat).map { |mountain| mountain.lat }
@@ -36,32 +36,6 @@ class List < ApplicationRecord
     north_bound = lats.first
     west_bound = lngs.first
     east_bound = lngs.last
-    {
-      northeast: [east_bound, north_bound],
-      southwest: [west_bound, south_bound]
-    }
-  end
-
-  def region_mountains(region_id)
-    mountains.where(region_id: region_id)
-  end
-
-  def bounds(mountain_set)
-    lats = mountain_set.select(:lat).order(:lat)
-    lngs = mountain_set.select(:lng).order(:lng)
-    south_bound = lats.last.lat
-    north_bound = lats.first.lat
-    west_bound = lngs.first.lng
-    east_bound = lngs.last.lng
     [[east_bound, north_bound], [west_bound, south_bound]]
-  end
-
-  def sub_map_data(region_id)
-    mountain_set = region_mountains(region_id)
-    map_data = {}
-    map_data[:type] = 'FeatureCollection'
-    map_data[:bounds] = bounds(mountain_set)
-    map_data[:features] = mountain_set.map { |mountain| mountain.geojson_feature }
-    map_data
   end
 end
