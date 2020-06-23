@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :mountain do
-    name { '富士山' }
+    sequence(:name) { |n| "Mountain #{n}" }
     altitude { 3776 }
     terrain_diff { '★★' }
     physical_diff { '★★' }

@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :list_mountain do
-    number { ListMountain.last ? ListMountain.last.number + 1 : 1 }
+    sequence(:number) { |n| n }
     mountain
     list
   end

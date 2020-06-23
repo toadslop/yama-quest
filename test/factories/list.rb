@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :list do
-    name { List.last ? '二百名山' : '百名山' }
-
+    sequence(:name) { |n| "List #{n}" }
+    
     factory :list_with_listmountains do
       transient do
         list_mountains_count { 5 }

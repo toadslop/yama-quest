@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :region do
-    name { "北海戸" }
+    sequence(:name) { |n| "Region #{n}" }
   end
 end
