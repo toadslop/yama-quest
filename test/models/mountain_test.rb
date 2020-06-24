@@ -22,9 +22,17 @@ class MountainTest < ActiveSupport::TestCase
     assert_not @mountain.save, 'saved mountain without altitude'
   end
 
-  test 'it should save a mountain with name, lat, lng, region_id, and altitude' do
+  test 'should save a mountain with name, lat, lng, region_id, and altitude' do
     assert  @mountain.save,
             'failed to save a mountain that has all required fields'
+  end
+
+  test 'should be able to be entered in multiple lists' do
+    list1 = FactoryBot.create(:list)
+    list2 = FactoryBot.create(:list)
+    FactoryBot.create(:list_mountain, list: list1, mountain: @mountain)
+    FactoryBot.create(:list_mountain, list: list2, mountain: @mountain)
+    assert @mountain.lists.count >= 2
   end
 
   test 'it should return a proper geojson feature' do
@@ -74,6 +82,8 @@ class MountainTest < ActiveSupport::TestCase
   end
 
   def teardown
+    ListMountain.delete_all
+    List.delete_all
     Mountain.delete_all
     Region.delete_all
   end

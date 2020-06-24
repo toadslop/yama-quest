@@ -7,7 +7,7 @@ class Mountain < ApplicationRecord
   validates_associated :region
   validates :name, :altitude, :lat, :lng, presence: true
 
-  # This returns the data necessary to render a feature as a point on mapbox map.
+  # This returns the data necessary to render a feature as a point on mapbox map
   def geojson_feature
     {
       type: 'Feature',
