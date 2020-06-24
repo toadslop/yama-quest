@@ -22,14 +22,21 @@ class ListTest < ActiveSupport::TestCase
     assert list.mountains
   end
 
-  # test 'should not retrieve a mountain that is not in the list' do
-  #   assert_not_includes @list.mountains, @list.mountains.first,
-  #                       'included a mountain not in the list'
-  # end
+  test 'should not retrieve a mountain that is not in the list' do
+    mountain = FactoryBot.create(:mountain)
+    assert_not_includes @list.mountains, mountain,
+                        'included a mountain not in the list'
+  end
 
   test 'should retrieve list_mountains from join table' do
     list = List.first
     assert list.list_mountains
+  end
+
+  test 'all mountains in a list should be unique' do
+    ListMountain.create(list_id: List.first.id, mountain_id: Mountain.first.id)
+    list_mountain = ListMountain.new(list_id: List.first.id, mountain_id: Mountain.first.id)
+    assert_not list_mountain.save
   end
 
   def teardown
