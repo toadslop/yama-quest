@@ -5,7 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.6.5'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0.2', '>= 6.0.2.2'
+gem 'rails', '>= 6.0.3.2'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
@@ -28,7 +28,6 @@ gem 'i18n-js'
 
 # to handle image upload
 gem 'cloudinary'
-
 gem 'font-awesome-rails'
 
 # Use Active Storage variant
@@ -36,6 +35,10 @@ gem 'font-awesome-rails'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
+
+# gems added to fix security issues from github security warnings
+gem "actionpack", ">= 6.0.3.2"
+gem "rack", ">= 2.2.3"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger
