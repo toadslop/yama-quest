@@ -35,7 +35,9 @@ class ListTest < ActiveSupport::TestCase
 
   test 'all mountains in a list should be unique' do
     ListMountain.create(list_id: List.first.id, mountain_id: Mountain.first.id)
-    list_mountain = ListMountain.new(list_id: List.first.id, mountain_id: Mountain.first.id)
+    list_mountain = ListMountain.new(
+      list_id: List.first.id, mountain_id: Mountain.first.id
+    )
     assert_not list_mountain.save
   end
 
