@@ -1,0 +1,15 @@
+.info-box {
+  position: absolute;
+  top: 5%;
+  left: 3%;
+  border-radius: $rounder;
+  box-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h1 {
+    text-align: center;
+  }
+}

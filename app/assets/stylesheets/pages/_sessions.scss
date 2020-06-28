@@ -5,12 +5,60 @@
 
   #session-form {
     margin: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
     width: 33%;
     background-color: rgba(0,0,0,0.8);
-
   }
+
+  h2, label {
+    color: white;
+  }
+
+  a {
+    color: $brown;
+    margin: 0;
+  }
+
+  a:visited {
+    color: $med-blue;
+  }
+}
+
+form {
+  .field {
+    margin: 16px;
+  }
+
+  label {
+    margin-bottom: 8px;
+    text-align: left;
+    font-weight: lighter;
+  }
+
+  input {
+    font-size: 24px;
+    padding: 8px 16px;
+    border-radius: 4px;
+    color: white;
+  }
+
+  input:active {
+    box-shadow: none;
+  }
+
+  .actions {
+    text-align: center;
+    input {
+      background-color: $dark-blue;
+      box-shadow: 1px 1px 1px rgba(0,0,0,0.2);
+      border-style: none;
+    }
+  }
+}
+
+.form-links {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  margin-top: 16px;
 }
