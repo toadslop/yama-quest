@@ -4,6 +4,5 @@
 # Dashboard allows access to all the various apps and pages
 # in Yama-quest.
 class DashboardController < ApplicationController
-
   def load; end
 end

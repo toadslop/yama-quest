@@ -17,9 +17,11 @@ gem 'puma', '~> 4.3.5' # app server
 gem 'rack', '>= 2.2.3'
 
 # frontend gems
+gem 'bootstrap', '~> 4.4.1'
 gem 'font-awesome-rails'
 gem 'i18n-js'
 gem 'jbuilder', '~> 2.7'
+gem 'jquery-rails'
 gem 'react-rails'
 gem 'sass-rails', '>= 6'
 gem 'turbolinks', '~> 5'
