@@ -35,6 +35,18 @@ class MountainTest < ActiveSupport::TestCase
     assert @mountain.lists.count >= 2
   end
 
+  test 'should not save a duplicate mountain' do
+    duplicate_mountain = Mountain.new(
+      name: @mountain.name,
+      altitude: @mountain.altitude,
+      lat: @mountain.lat,
+      lng: @mountain.lng,
+      region_id: @mountain.region.id
+    )
+
+    assert_not duplicate_mountain.save, 'saved an identical mountain'
+  end
+
   test 'it should return a proper geojson feature' do
     name = 'mountain'
     lat = 2000.0
