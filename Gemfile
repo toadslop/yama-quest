@@ -1,86 +1,57 @@
 # frozen_string_literal: true
+
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.6.5'
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '>= 6.0.3.2'
-# Use postgresql as the database for Active Record
-gem 'pg', '>= 0.18', '< 2.0'
-# Use Puma as the app server
-gem 'puma', '~> 4.3.5'
-# Use SCSS for stylesheets
-gem 'sass-rails', '>= 6'
-# Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
-gem 'react-rails'
-gem 'webpacker', '~> 4.0'
-# Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-gem 'turbolinks', '~> 5'
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.7'
-# Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 4.0'
-# Use Active Model has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
-gem 'bullet', group: 'development'
-gem 'i18n-js'
 
-# to handle image upload
-gem 'cloudinary'
-gem 'font-awesome-rails'
-
-# Use Active Storage variant
-# gem 'image_processing', '~> 1.2'
-
-# Reduces boot times through caching; required in config/boot.rb
+# backend gems
+gem 'actionpack', '>= 6.0.3.2'
 gem 'bootsnap', '>= 1.4.2', require: false
+gem 'cloudinary' # image storage
+gem 'devise' # for users
+gem 'pg', '>= 0.18', '< 2.0' # database
+gem 'puma', '~> 4.3.5' # app server
+gem 'rack', '>= 2.2.3'
 
-# gems added to fix security issues from github security warnings
-gem "actionpack", ">= 6.0.3.2"
-gem "rack", ">= 2.2.3"
+# frontend gems
+gem 'font-awesome-rails'
+gem 'i18n-js'
+gem 'jbuilder', '~> 2.7'
+gem 'react-rails'
+gem 'sass-rails', '>= 6'
+gem 'turbolinks', '~> 5'
+gem 'webpacker', '~> 4.0'
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger
-  # console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'pry-byebug'
   gem 'pry-rails'
 end
 
 group :development do
-  # Access an interactive console on exception pages or by calling 'console'
-  # anywhere in the code.
-  gem 'listen', '>= 3.0.5', '< 3.2'
-  gem 'web-console', '>= 3.3.0'
-
-  # Spring speeds up development by keeping your application running in the
-  # background. Read more: https://github.com/rails/spring
+  gem 'bullet'
   gem 'dotenv-rails'
+  gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'rubocop', require: false
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'web-console', '>= 3.3.0'
 end
 
 group :test do
-  # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 2.15'
-  gem 'selenium-webdriver'
-  # Easy installation and use of web drivers to run system tests with browsers
-  gem 'webdrivers'
-
-  # The basics
-  gem 'minitest'
-  gem 'minitest-rails'
-
-  # For better display
-  gem 'minitest-reporters'
-
-  # For managing testing data
   gem 'database_cleaner'
   gem 'factory_bot'
   gem 'factory_bot_rails'
   gem 'faker'
+  gem 'minitest'
+  gem 'minitest-rails'
+  gem 'minitest-reporters'
+  gem 'selenium-webdriver'
+  gem 'webdrivers'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
