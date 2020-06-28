@@ -3,3 +3,18 @@
 @import 'components/index';
 @import 'pages/index';
 @import 'font-awesome';
+
+.alert {
+  top: 16px;
+  width: 75%;
+  height: auto;
+  opacity: 0.95;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  p {
+    opacity: 1.0;
+  }
+}
