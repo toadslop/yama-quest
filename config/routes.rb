@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   scope '(:locale)', locale: /jp/ do
     root to: 'pages#landing'
     get '/explorer/:list_name', to: 'explorer#load', as: :explorer
+    get '/dashboard', to: 'dashboard#load', :as :dashboard
   end
 
   # API routing
