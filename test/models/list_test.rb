@@ -18,8 +18,7 @@ class ListTest < ActiveSupport::TestCase
   end
 
   test 'should retrieve mountains that are in list' do
-    list = List.first
-    assert list.mountains
+    assert @list.mountains
   end
 
   test 'should not retrieve a mountain that is not in the list' do
@@ -29,8 +28,7 @@ class ListTest < ActiveSupport::TestCase
   end
 
   test 'should retrieve list_mountains from join table' do
-    list = List.first
-    assert list.list_mountains
+    assert @list.list_mountains
   end
 
   test 'all mountains in a list should be unique' do
