@@ -3,10 +3,15 @@
   background-position: right;
   height: 100vh;
 
+  
+
   #session-form {
     margin: auto;
     width: 33%;
-    background-color: rgba(0,0,0,0.8);
+    background-color: rgba(0,0,0,0.6);
+    p, h3, ul {
+      color: white;
+    }
   }
 
   h2, label {
@@ -19,7 +24,7 @@
   }
 
   a:visited {
-    color: $med-blue;
+    color: $green;
   }
 }
 
@@ -41,16 +46,15 @@ form {
     color: white;
   }
 
-  input:active {
-    box-shadow: none;
-  }
-
   .actions {
     text-align: center;
     input {
       background-color: $dark-blue;
-      box-shadow: 1px 1px 1px rgba(0,0,0,0.2);
+      box-shadow: 1px 1px 1px rgba(0,0,0,1.2);
       border-style: none;
+    &:active {
+      box-shadow: none;
+    }
     }
   }
 }
