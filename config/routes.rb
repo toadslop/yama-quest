@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     root to: 'pages#landing'
     get '/explorer/:list_name', to: 'explorer#load', as: :explorer
     get '/dashboard', to: 'dashboard#load', as: :dashboard
+    resources :lists, only: [:index]
   end
 
   # API routing

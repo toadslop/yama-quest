@@ -31,6 +31,7 @@
 form {
   .field {
     margin: 16px;
+
   }
 
   label {
@@ -43,7 +44,6 @@ form {
     font-size: 24px;
     padding: 8px 16px;
     border-radius: 4px;
-    color: white;
   }
 
   .actions {
@@ -52,10 +52,18 @@ form {
       background-color: $dark-blue;
       box-shadow: 1px 1px 1px rgba(0,0,0,1.2);
       border-style: none;
+      color: white;
+      cursor: pointer;
     &:active {
       box-shadow: none;
     }
     }
+  }
+}
+
+.field {
+  em {
+    color: white;
   }
 }
 
@@ -65,4 +73,8 @@ form {
   justify-content: space-around;
   width: 100%;
   margin-top: 16px;
+}
+
+#error_explanation {
+  padding: 0 12px;
 }
