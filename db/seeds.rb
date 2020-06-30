@@ -34,9 +34,7 @@ end
 def hash_csv(model_name)
   csv_text = csv_text(model_name)
   csv = parse_csv(csv_text)
-  csv.map do |row|
-    row.to_hash
-  end
+  csv.map(&:to_hash)
 end
 
 puts 'creating regions...'
@@ -44,10 +42,9 @@ regions_hash = hash_csv('region')
 regions_hash.each do |region|
   Region.create(region)
 end
-puts '...done'
 
 puts 'creating lists...'
-famous_100 = List.create(name: '百名山')
+famous100 = List.create(name: '百名山')
 puts '...done'
 
 puts 'creating mountains...'
@@ -61,7 +58,7 @@ mountains_hash.each do |mountain|
   new_list_mountain = ListMountain.new(
     mountain: new_mountain,
     number: number,
-    list: famous_100
+    list: famous100
   )
   new_list_mountain.save
 end
@@ -84,8 +81,6 @@ parsed_csv = CSV.parse(
 parsed_csv.each do |csv_line|
   mountain = Mountain.find_by_name(csv_line[0])
   mountain.img_url = csv_line[1]
-  puts mountain.name
-  puts mountain.img_url
   mountain.save
 end
 puts 'done'
