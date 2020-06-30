@@ -12,6 +12,12 @@ module YamaQuest
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
 
+    config.generators do |g|
+      g.test_framework :minitest, spec: false, fixture: false
+      # add this if you're using FactoryGirl
+      g.fixture_replacement :factory_bot
+    end
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading

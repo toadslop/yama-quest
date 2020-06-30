@@ -78,7 +78,6 @@ group :test do
 
   # For managing testing data
   gem 'database_cleaner'
-  gem 'factory_bot'
   gem 'factory_bot_rails'
   gem 'faker'
 end
