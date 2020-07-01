@@ -5,6 +5,7 @@
 # mountains, as well as popups with information displayed by clicking
 # the mountain icons.
 class ExplorerController < ApplicationController
+  skip_before_action :authenticate_user!, only: :load
   before_action :fetch_list, only: [:load]
   before_action :fetch_regions_list, only: [:load]
   before_action :fetch_geojson, only: [:load]

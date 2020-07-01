@@ -1,9 +1,14 @@
 # frozen_string_literal: true
+
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  devise_for :user
+
   scope '(:locale)', locale: /jp/ do
     root to: 'pages#landing'
     get '/explorer/:list_name', to: 'explorer#load', as: :explorer
+    get '/dashboard', to: 'dashboard#load', as: :dashboard
+    resources :lists, only: [:index]
   end
 
   # API routing

@@ -30,9 +30,8 @@
   </head>
 
   <body>
+    <%= render 'shared/flashes' %>
     <%= yield %>
     <%= yield :after_js %>
-
-    <%= javascript_pack_tag 'application' %>
   </body>
 </html>

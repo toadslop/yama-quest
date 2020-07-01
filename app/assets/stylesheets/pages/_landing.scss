@@ -19,19 +19,9 @@ a {
 
 // a box for the info on the landing page
 #landing-info {
- position: absolute;
  background-color: $med-blue;
- top: 5%;
- left: 3%;
- border-radius: 8px;
  width: 500px;
  height: 400px;
- text-align: center;
- box-shadow: 1px 1px 1px rgba(0,0,0,0.3);
- padding: 24px;
- display: flex;
- flex-direction: column;
- align-items: center;
 
   h1 {
     color: white;

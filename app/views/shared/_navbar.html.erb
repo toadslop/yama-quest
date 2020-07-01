@@ -5,26 +5,28 @@
 <%
 =end%>
 <div class="navbar">
-  <div class="left-group">
+  <div class="left-group left-top-nav">
     <%= link_to root_path do %>
       <div class="logo-holder">
         <%= image_tag "logo.png", class: "nav-logo" %>
       </div>
     <% end %>
   </div>
-  <div class="center-group">
-    <%= link_to list_path(1) do %>
-      <i class="fas fa-mountain nav-icon"></i>
-    <% end %>
+  <div class="center-group center-top-nav">
+    <i class="fas fa-mountain nav-icon"></i>
     <i class="fas fa-user nav-icon"></i>
-    <i class="fas fa-scroll nav-icon"></i>
+    <%= link_to lists_path(1) do %>
+      <i class="fas fa-scroll nav-icon"></i>
+    <% end %>
     <i class="fas fa-home nav-icon"></i>
   </div>
-  <div class="right-group">
+  <div class="right-group right-top-nav">
+    <div class="set-lang">
     <% if I18n.locale == I18n.default_locale %>
-      <%= link_to "日", { locale: 'jp' }, class: "set_lang jp" %>
+      <%= link_to "日", { locale: 'jp' } %>
     <% else %>
-      <%= link_to "En", { locale: nil }, class: "set_lang en" %>
+      <%= link_to "En", { locale: nil } %>
     <%end%>
+    </div>
   </div>
 </div>
