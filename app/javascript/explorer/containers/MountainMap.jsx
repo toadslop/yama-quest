@@ -102,7 +102,7 @@ class MountainMap extends Component {
       {latitude: bounds[0][1], longitude: bounds[0][0], zoom: 18} :
       new WebMercatorViewport(viewport)
         .fitBounds([bounds[0], bounds[1]], {
-          padding: (screenVertical(viewport) ? 50 : 100)
+          padding: (screenVertical(viewport) ? 50 : 0)
         }));
     viewport = {
         ...this.props.viewport,
