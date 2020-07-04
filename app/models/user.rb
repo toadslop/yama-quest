@@ -5,4 +5,5 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :hiked_mountains
+  has_many :mountains, through: :hiked_mountains
 end
