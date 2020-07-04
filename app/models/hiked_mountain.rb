@@ -4,5 +4,7 @@
 class HikedMountain < ApplicationRecord
     belongs_to :user
     belongs_to :mountain
+
+    validates :user, :mountain, presence: true
 end
   
