@@ -36,6 +36,12 @@ ActiveRecord::Schema.define(version: 2020_06_28_021658) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "areas", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "list_mountains", force: :cascade do |t|
     t.integer "number"
     t.bigint "list_id", null: false
@@ -75,7 +81,18 @@ ActiveRecord::Schema.define(version: 2020_06_28_021658) do
     t.string "remaining_snow_start"
     t.string "remaining_snow_end"
     t.string "img_url"
+    t.integer "number"
+    t.bigint "area_id"
+    t.bigint "prefecture_id"
+    t.index ["area_id"], name: "index_mountains_on_area_id"
+    t.index ["prefecture_id"], name: "index_mountains_on_prefecture_id"
     t.index ["region_id"], name: "index_mountains_on_region_id"
+  end
+
+  create_table "prefectures", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "regions", force: :cascade do |t|
@@ -99,5 +116,7 @@ ActiveRecord::Schema.define(version: 2020_06_28_021658) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "list_mountains", "lists"
   add_foreign_key "list_mountains", "mountains"
+  add_foreign_key "mountains", "areas"
+  add_foreign_key "mountains", "prefectures"
   add_foreign_key "mountains", "regions"
 end
