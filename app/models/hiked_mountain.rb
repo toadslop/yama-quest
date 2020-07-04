@@ -3,6 +3,6 @@
 # This model defines link between and mountains hiked.
 class HikedMountain < ApplicationRecord
     belongs_to :user
-    has_one :mountain
+    belongs_to :mountain
 end
   
