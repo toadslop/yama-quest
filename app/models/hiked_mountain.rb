@@ -8,19 +8,38 @@ class HikedMountain < ApplicationRecord
     validates :user, :mountain, presence: true
     validates_uniqueness_of :user_id, scope: :mountain_id
 
-    def self.mountain_from_coordinates(coordinate_array)
-        latitude = coordinate_array[0]
-        longitude = coordinate_array[1]
-        Mountain.where("lng >= :start_date AND created_at <= :end_date"
+    # currently rethinking this method
+    # def self.mountain_from_coordinates(coordinate_hash)
+    #     latitude = coordinate_hash[:lat]
+    #     longitude = coordinate_hash[:lng]
+    # end
+
+    def self.to_radians(degrees)
+        degrees * Math::PI / 180
     end
 
-    def self.coordinates_to_km(coordinate_array1, coordinate_array2)
+    def self.coordinates_to_radians(coordinate_hash)
+        {
+            lng: to_radians(coordinate_hash[:lng]),
+            lat: to_radians(coordinate_hash[:lat])
+        }
+    end
+
+    def self.coordinates_to_km(coordinate_hash1, coordinate_hash2)
         earth_radius = 6378.137 #in km
-        dLat = coordinate_array2[0] * Math::PI / 180 - coordinate_array1[0] * Math::PI / 180
-        dLon = coordinate_array2[1] * Math::PI / 180 - coordinate_array1[1] * Math::PI / 180
-        a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1 * Math::PI / 180) * Math.cos(lat2 * Math::PI / 180) * Math.sin(dLon/2) * Math.sin(dLon/2)
-        c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
-        earth_radius * c
+        radian_coordinates1 = coordinates_to_radians(coordinate_hash1)
+        radian_coordinates2 = coordinates_to_radians(coordinate_hash2)
+
+        change_in_lat = radian_coordinates2[:lat] - radian_coordinates1[:lat]
+        change_in_lng = radian_coordinates2[:lng] - radian_coordinates1[:lng]
+
+        angle = Math.sin(change_in_lat/2) * Math.sin(change_in_lat/2) +
+                Math.cos(radian_coordinates1[:lat] ) * Math.cos(radian_coordinates2[:lat]) *
+                Math.sin(change_in_lng/2) * Math.sin(change_in_lng/2)
+
+        angular_distance = 2 * Math.atan2(Math.sqrt(angle), Math.sqrt(1-angle))
+
+        earth_radius * angular_distance
     end
 end
   
