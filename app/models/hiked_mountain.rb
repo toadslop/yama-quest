@@ -45,5 +45,14 @@ class HikedMountain < ApplicationRecord
     def self.summitted_mountain?(distance_from_summit)
         distance_from_summit <= 0.5
     end
+
+    # todo:
+    # open and parse gpx file method (just xml, use nokogiri)
+    # get northernmost and southermost latitudes
+    # get easternmost and westernmost longitudes
+    # query database, get all mountains that fall within those boundaries
+    # for each mountain, see if at least 1 of the submitted coordinates is within 500 meters of it's summit
+    # register each mountain as a new HikedMountain for the user
+
 end
   
