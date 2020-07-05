@@ -26,7 +26,7 @@ class HikedMountain < ApplicationRecord
     end
 
     def self.coordinates_to_km(coordinate_hash1, coordinate_hash2)
-        earth_radius = 6378.137 #in km
+        earth_radius = 6371 #in km
         radian_coordinates1 = coordinates_to_radians(coordinate_hash1)
         radian_coordinates2 = coordinates_to_radians(coordinate_hash2)
 
@@ -40,6 +40,10 @@ class HikedMountain < ApplicationRecord
         angular_distance = 2 * Math.atan2(Math.sqrt(angle), Math.sqrt(1-angle))
 
         earth_radius * angular_distance
+    end
+
+    def self.summitted_mountain?(distance_from_summit)
+        distance_from_summit <= 0.5
     end
 end
   
