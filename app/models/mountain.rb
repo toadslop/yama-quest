@@ -10,6 +10,10 @@ class Mountain < ApplicationRecord
   validates_uniqueness_of :region, scope: :name
 
   # This returns the data necessary to render a feature as a point on mapbox map
+  def coordinate_hash
+    {lat: lat, lng: lng}
+  end
+  
   def geojson_feature
     {
       type: 'Feature',
