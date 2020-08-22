@@ -1,42 +1,47 @@
 // import external components
-import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import MapGL, { Popup, NavigationControl, FullscreenControl, ScaleControl } from 'react-map-gl';
-import { WebMercatorViewport } from 'viewport-mercator-project';
-import { fitBounds, lngLatToWorld } from 'viewport-mercator-project';
-import { throttle } from 'lodash';
+import React, { Component } from "react";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import MapGL, {
+  Popup,
+  NavigationControl,
+  FullscreenControl,
+  ScaleControl,
+} from "react-map-gl";
+import { WebMercatorViewport } from "viewport-mercator-project";
+import { fitBounds, lngLatToWorld } from "viewport-mercator-project";
+import { throttle } from "lodash";
 
 // import internal components
-import MountainInfo from '../components/MountainInfo'
-import MountainMarkers from '../components/MountainMarkers'
+import MountainInfo from "../components/MountainInfo";
+import MountainMarkers from "../components/MountainMarkers";
 
 // import action creators
-import { fetchGeojson, fetchMapBounds, setViewport } from '../actions';
+import { fetchGeojson, fetchMapBounds, setViewport } from "../actions";
 
 // import internal fuctions
 import {
   screenVertical,
   addMarginToMap,
   getSlope,
-  getAngle
-} from '../functions'
+  getAngle,
+} from "../functions";
 
 // TODO: replace the state with redux state
 class MountainMap extends Component {
   constructor(props) {
     super(props);
     this.state = { popupInfo: null };
-    this.handleUpdateThrottled = throttle(this.updateViewport, 100)
+    this.handleUpdateThrottled = throttle(this.updateViewport, 100);
   }
 
-  onClickMarker = mountain => {
-    this.setState({popupInfo: mountain});
+  onClickMarker = (mountain) => {
+    this.setState({ popupInfo: mountain });
   };
 
   renderPopup() {
-    const {popupInfo} = this.state;
-    const {coordinates} = (popupInfo ? popupInfo.geometry : [0,0])
+    const { popupInfo } = this.state;
+    const { coordinates } = popupInfo ? popupInfo.geometry : [0, 0];
     return (
       popupInfo && (
         <Popup
@@ -45,9 +50,9 @@ class MountainMap extends Component {
           longitude={coordinates[0]}
           latitude={coordinates[1]}
           offsetTop={0}
-          anchor={'top'}
+          anchor={"top"}
           closeOnClick={false}
-          onClose={() => this.setState({popupInfo: null})}
+          onClose={() => this.setState({ popupInfo: null })}
           dynamicPosition={true}
         >
           <MountainInfo locale={this.props.locale} info={popupInfo} />
@@ -63,67 +68,66 @@ class MountainMap extends Component {
 
   getBearing = (viewport, bounds) => {
     // the coordinates of the viewport height with bottom-left defined as 0,0
-    const boxCoords = { y2: viewport.height, y1: 0, x2: viewport.width, x1: 0 }
+    const boxCoords = { y2: viewport.height, y1: 0, x2: viewport.width, x1: 0 };
 
     // these convert lng and lat to a flat mercator projection to match a flat rendered mercator map
-    const convertedNortheast = lngLatToWorld(bounds[0])
-    const convertedSouthwest = lngLatToWorld(bounds[1])
+    const convertedNortheast = lngLatToWorld(bounds[0]);
+    const convertedSouthwest = lngLatToWorld(bounds[1]);
 
     // det the data above into a convenient hash for calculating
     const markerCoords = {
       y2: convertedNortheast[1],
       y1: convertedSouthwest[1],
       x1: convertedNortheast[0],
-      x2: convertedSouthwest[0]
-    }
-  
-    const boxSlope = getSlope(boxCoords)
-    const markerSlope = getSlope(markerCoords)
-    const slopes = { m1: boxSlope, m2: markerSlope }
-    return getAngle(slopes)
-  }
+      x2: convertedSouthwest[0],
+    };
 
-  updateViewport = (viewport) => {  
-    const { bounds } = this.props.geojson
+    const boxSlope = getSlope(boxCoords);
+    const markerSlope = getSlope(markerCoords);
+    const slopes = { m1: boxSlope, m2: markerSlope };
+    return getAngle(slopes);
+  };
+
+  updateViewport = (viewport) => {
+    const { bounds } = this.props.geojson;
     if (this.state.boundsSet) {
-      viewport.bearing = this.getBearing(viewport, bounds) || viewport.bearing
+      viewport.bearing = this.getBearing(viewport, bounds) || viewport.bearing;
       this.props.setViewport(viewport);
     } else {
-      this.setBounds(viewport)
+      this.setBounds(viewport);
     }
   };
 
   // IMPORTANT: relies on fitBounds from 'viewport-mercator-project';
   setBounds = (viewport) => {
-    let { bounds } = this.props.mapData.geojson
-    
-    const {longitude, latitude, zoom} = (
-      bounds[0][0] === bounds[1][0] ? 
-      {latitude: bounds[0][1], longitude: bounds[0][0], zoom: 18} :
-      new WebMercatorViewport(viewport)
-        .fitBounds([bounds[0], bounds[1]], {
-          padding: (screenVertical(viewport) ? 50 : 0)
-        }));
-    viewport = {
-        ...this.props.viewport,
-        longitude,
-        latitude,
-        zoom
-        // transitionDuration: 5000,
-        // transitionInterpolator: new FlyToInterpolator(),
-        // transitionEasing: d3.easeCubic
-    }
+    let { bounds } = this.props.mapData.geojson;
 
-    this.props.setViewport(viewport)
-    this.setState({boundsSet: true})
-  }
+    const { longitude, latitude, zoom } =
+      bounds[0][0] === bounds[1][0]
+        ? { latitude: bounds[0][1], longitude: bounds[0][0], zoom: 18 }
+        : new WebMercatorViewport(viewport).fitBounds([bounds[0], bounds[1]], {
+            padding: screenVertical(viewport) ? 50 : 0,
+          });
+    viewport = {
+      ...this.props.viewport,
+      longitude,
+      latitude,
+      zoom,
+      // transitionDuration: 5000,
+      // transitionInterpolator: new FlyToInterpolator(),
+      // transitionEasing: d3.easeCubic
+    };
+
+    this.props.setViewport(viewport);
+    this.setState({ boundsSet: true });
+  };
 
   componentDidMount() {
-    const { list } = this.props
+    const { list } = this.props;
     const viewport = {
       height: this.mapRef._height,
-      width: this.mapRef._width
-    }
+      width: this.mapRef._width,
+    };
     //this.props.fetchMapBounds(list.name)
     // console.log("viewport in did mount", viewport)
     // this.props.fetchGeojson('lists', list.name).
@@ -134,12 +138,12 @@ class MountainMap extends Component {
 
   renderMarkers = (features) => {
     if (features) {
-      return <MountainMarkers data={features} onClick={this.onClickMarker} />
+      return <MountainMarkers data={features} onClick={this.onClickMarker} />;
     } else {
-      return <div></div>
+      return <div></div>;
     }
-  }
-  
+  };
+
   render() {
     const { geojson } = this.props;
     const { viewport } = this.props;
@@ -151,7 +155,7 @@ class MountainMap extends Component {
         mapStyle="mapbox://styles/haiji/ckacho7mr2xse1ipfgqs7zwye"
         onViewportChange={this.handleUpdateThrottled}
         mapboxApiAccessToken={process.env.MAPBOX_KEY}
-        ref={element => this.mapRef = element}
+        ref={(element) => (this.mapRef = element)}
       >
         {this.renderMarkers(geojson.features)}
         {this.renderPopup()}
@@ -185,7 +189,7 @@ function mapStateToProps(state) {
     geojson: state.mapData.geojson,
     locale: state.locale,
     list: state.list,
-    viewport: state.mapViewport
+    viewport: state.mapViewport,
   };
 }
 
