@@ -6,4 +6,5 @@ class User < ApplicationRecord
 
   has_many :hiked_mountains
   has_many :mountains, through: :hiked_mountains
+  has_many :treks
 end
