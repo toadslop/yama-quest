@@ -6,7 +6,6 @@ class Gpx < ApplicationRecord
         gpx_trkpts = load_gpx
         trkpts = parse_gpx(gpx_trkpts)
         bounds = get_bounds(trkpts)
-        p bounds
     end
 
     def get_bounds(trkpts)
