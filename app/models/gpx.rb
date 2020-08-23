@@ -1,4 +1,4 @@
-class GPX < ApplicationRecord
+class Gpx < ApplicationRecord
     belongs_to :trek
     validates :url, presence: true
 
