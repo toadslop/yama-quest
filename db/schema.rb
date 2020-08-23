@@ -36,10 +36,10 @@ ActiveRecord::Schema.define(version: 2020_08_23_014212) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "gpxs", force: :cascade do |t|
+  create_table "gpxes", force: :cascade do |t|
     t.string "url"
     t.bigint "trek_id", null: false
-    t.index ["trek_id"], name: "index_gpxs_on_trek_id"
+    t.index ["trek_id"], name: "index_gpxes_on_trek_id"
   end
 
   create_table "hiked_mountains", force: :cascade do |t|
@@ -118,7 +118,7 @@ ActiveRecord::Schema.define(version: 2020_08_23_014212) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "gpxs", "treks"
+  add_foreign_key "gpxes", "treks"
   add_foreign_key "hiked_mountains", "mountains"
   add_foreign_key "hiked_mountains", "users"
   add_foreign_key "list_mountains", "lists"
