@@ -84,3 +84,20 @@ parsed_csv.each do |csv_line|
   mountain.save
 end
 puts 'done'
+
+puts 'making dummy user, trek, and gpx'
+User.create!(
+  email: 'dummy@gmail.com',
+  password: '12341234'
+)
+
+Trek.create!(
+  name: 'Kinpu Hike',
+  user: User.first
+)
+
+Gpx.create!(
+  trek: Trek.first,
+  url: 'misc/testgpx.gpx'
+)
+puts 'done'

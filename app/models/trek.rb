@@ -2,9 +2,7 @@
 
 class Trek < ApplicationRecord
     belongs_to :user
+    has_one :gpx
     validates :name, presence: true
-
-    def parse_gpx(gpx_filepath)
-    end
-  end
+end
   
