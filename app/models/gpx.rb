@@ -2,14 +2,25 @@ class Gpx < ApplicationRecord
     belongs_to :trek
     validates :url, presence: true
 
-    def prepare_gpx(gpx_url)
-        gpx_trkps = Trek.get_gpx_trkpts(gpx_url)
-        coord_array = Trek.get_coord_array(gpx_trkps)
-        puts coord_array
+    def prepare
+        gpx_trkpts = load_gpx
+        trkpts = parse_gpx(gpx_trkpts)
+        bounds = get_bounds(trkpts)
+        p bounds
     end
 
-    def get_coord_array(gpx_trkpts)
-        gpx_trkpts.map do |trkpt|
+    def get_bounds(trkpts)
+        lats = get_lats(trkpts)
+        lngs = get_lngs(trkpts)
+        {
+            lat_bounds: [lats[0], lats[-1]],
+            lng_bounds: [lngs[0], lngs[-1]]
+        }
+    end
+
+    def parse_gpx(gpx_trkpts)
+        gpx = load_gpx
+        gpx.map do |trkpt|
             {
                 lng: trkpt.attributes["lat"].value,
                 lat: trkpt.attributes["lon"].value
@@ -17,20 +28,17 @@ class Gpx < ApplicationRecord
         end
     end
 
-    def get_trip_bounds
-    end
-
-    def get_gpx_trkpts(gpx_url)
-        gpx = Nokogiri::XML(File.open(gpx_url))
+    def load_gpx
+        gpx = Nokogiri::XML(File.open(url))
         gpx.search('trkpt')
     end
 
-    def get_lat_array(trkpts)
-        trkpts.map { |trkpt| trkpt.attributes["lat"].value }.sort!
+    def get_lats(trkpts)
+        trkpts.map { |trkpt| trkpt[:lat] }.sort!
     end
 
-    def get_lat_array(trkpts)
-        trkpts.map { |trkpt| trkpt.attributes["lon"].value }.sort!
+    def get_lngs(trkpts)
+        trkpts.map { |trkpt| trkpt[:lng] }.sort!
     end
   end
   
