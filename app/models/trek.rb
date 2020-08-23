@@ -5,9 +5,18 @@ class Trek < ApplicationRecord
     validates :name, presence: true
 
     def self.prepare_gpx(gpx_url)
-        trkps = Trek.get_gpx_trkpts(gpx_url)
-        lat_array = Trek.get_lat_array(trkps)
-        lng_array = Trek.get_lat_array(trkps)
+        gpx_trkps = Trek.get_gpx_trkpts(gpx_url)
+        coord_array = Trek.get_coord_array(gpx_trkps)
+        puts coord_array
+    end
+
+    def self.get_coord_array(gpx_trkpts)
+        gpx_trkpts.map do |trkpt|
+            {
+                lng: trkpt.attributes["lat"].value,
+                lat: trkpt.attributes["lon"].value
+            }
+        end
     end
 
     def self.get_gpx_trkpts(gpx_url)
@@ -16,15 +25,11 @@ class Trek < ApplicationRecord
     end
 
     def self.get_lat_array(trkpts)
-        trkpts.map do |trkpt| 
-            trkpt.attributes["lat"].value
-        end
+        trkpts.map { |trkpt| trkpt.attributes["lat"].value }.sort!
     end
 
     def self.get_lat_array(trkpts)
-        trkpts.map do |trkpt| 
-            trkpt.attributes["lon"].value
-        end
+        trkpts.map { |trkpt| trkpt.attributes["lon"].value }.sort!
     end
   end
   
