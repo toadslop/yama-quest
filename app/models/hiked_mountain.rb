@@ -15,7 +15,7 @@ class HikedMountain < ApplicationRecord
     # end
 
     def self.to_radians(degrees)
-        degrees * Math::PI / 180
+        degrees.to_f * Math::PI / 180
     end
 
     def self.coordinates_to_radians(coordinate_hash)
@@ -43,7 +43,7 @@ class HikedMountain < ApplicationRecord
     end
 
     def self.summitted_mountain?(distance_from_summit)
-        distance_from_summit <= 0.5
+        distance_from_summit <= 0.25
     end
 
     # todo:

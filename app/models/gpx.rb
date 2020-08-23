@@ -6,6 +6,10 @@ class Gpx < ApplicationRecord
         gpx_trkpts = load_gpx
         trkpts = parse_gpx(gpx_trkpts)
         bounds = get_bounds(trkpts)
+        {
+            trkpts: trkpts,
+            bounds: bounds
+        }
     end
 
     def get_bounds(trkpts)
@@ -21,8 +25,8 @@ class Gpx < ApplicationRecord
         gpx = load_gpx
         gpx.map do |trkpt|
             {
-                lng: trkpt.attributes["lat"].value,
-                lat: trkpt.attributes["lon"].value
+                lat: trkpt.attributes["lat"].value,
+                lng: trkpt.attributes["lon"].value
             }
         end
     end
