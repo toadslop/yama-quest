@@ -10,14 +10,21 @@ class Trek < ApplicationRecord
         trkpts = gpx_data[:trkpts]
         bounds = gpx_data[:bounds]
         mountains = mountains_in_bounds(bounds)
-        check_summits(mountains)
+        check_summits(mountains, trkpts)
     end
 
     def check_summits(mountains, trkpts)
         mountains.each do |mountain|
-            mountain_coords = {lng: mountain.lng, lat: mountain.lat}
+            mountain_coords = mountain.coordinate_hash
             trkpts.each do |trkpt|
-
+                distance = HikedMountain.coordinates_to_km(mountain_coords, trkpt)
+                if HikedMountain.summitted_mountain?(distance)
+                    HikedMountain.create(
+                        user: user,
+                        mountain: mountain,
+                    )
+                    break
+                end
             end
         end
     end
