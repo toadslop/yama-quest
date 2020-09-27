@@ -11,6 +11,7 @@ module YamaQuest
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
+    config.middleware.use I18n::JS::Middleware
 
     config.generators do |g|
       g.test_framework :minitest, spec: false, fixture: false
