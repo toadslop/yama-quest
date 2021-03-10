@@ -15,7 +15,7 @@
     "css-loader": "^3.5.3",
     "d3-ease": "^1.0.6",
     "dotenv": "^8.2.0",
-    "elliptic": "^6.5.3",
+    "elliptic": "^6.5.4",
     "file-loader": "^6.0.0",
     "history": "^4.10.1",
     "i18n-js": "^3.5.1",
