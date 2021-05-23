@@ -1,11 +1,6 @@
 # README
 
-Yama-quest is a hiking gamification app designed to promote hiking in Japan.
-
-METHOD NAMING CONVENTIONS
-
-Javascript
-Methods calling the API start with 'fetch' and end with the type of data desired.
-Example: fetchGeojson
-         fetchBounds
+YamaQuest is an app for hikers in Japan to track the mountains that they've climbed.
+In particular, Japan has several mountain lists (the 100 Famous Mountains, the 200 Famous Mountains, the 100 Flower Mountains, etc).
+YamaQuest allows users to easily track the mountains that they've climbed and view overall stats.
 
