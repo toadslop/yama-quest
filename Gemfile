@@ -13,7 +13,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'cloudinary' # image storage
 gem 'devise' # for users
 gem 'pg', '>= 0.18', '< 2.0' # database
-gem 'puma', '~> 4.3.5' # app server
+gem 'puma', '>= 4.3.8' # app server
 gem 'rack', '>= 2.2.3'
 
 # frontend gems
